@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/newrepos/!svn/ver/9944/trunk/Applications/sii-mobility/db
+END
+tabelle-ServiceMap.sql
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/newrepos/!svn/ver/9944/trunk/Applications/sii-mobility/db/tabelle-ServiceMap.sql
+END
+tabelle-Ingestion.sql
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/newrepos/!svn/ver/9944/trunk/Applications/sii-mobility/db/tabelle-Ingestion.sql
+END
+tabelle-Riconciliazione.sql
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/newrepos/!svn/ver/9944/trunk/Applications/sii-mobility/db/tabelle-Riconciliazione.sql
+END
