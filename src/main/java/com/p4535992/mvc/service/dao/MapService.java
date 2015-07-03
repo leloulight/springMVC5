@@ -1,5 +1,6 @@
 package com.p4535992.mvc.service.dao;
 
+import com.p4535992.mvc.object.model.site.Marker;
 import org.openrdf.repository.RepositoryConnection;
 
 import java.sql.Connection;
@@ -13,4 +14,6 @@ public interface MapService {
     RepositoryConnection getSesameRemoteConnection();
     Connection getMySQLConnection();
     String getResponseHTMLString();
+
+    Marker createMarkerFromGeoDocument(String url);
 }

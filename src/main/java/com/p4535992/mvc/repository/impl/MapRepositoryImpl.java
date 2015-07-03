@@ -1,5 +1,12 @@
 package com.p4535992.mvc.repository.impl;
 
+import com.github.p4535992.extractor.estrattori.ExtractInfoWeb;
+import com.github.p4535992.extractor.object.model.GeoDocument;
+import com.github.p4535992.util.log.SystemLog;
+import com.github.p4535992.util.sesame.SesameUtil28;
+import com.github.p4535992.util.string.StringKit;
+import com.p4535992.mvc.object.model.site.Marker;
+import com.p4535992.mvc.object.model.site.MarkerInfo;
 import com.p4535992.mvc.repository.dao.MapRepository;
 import org.openrdf.OpenRDFException;
 import org.openrdf.query.*;
@@ -15,10 +22,14 @@ import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.sql.*;
+import java.util.Objects;
 
 /**
- * Created by Marco on 11/06/2015.
+ * Created by 4535992 on 11/06/2015.
+ * @author 4535992.
+ * @version 2015-07-02.
  */
+@SuppressWarnings("unused")
 @Repository
 @Scope("singleton")
 public class MapRepositoryImpl implements MapRepository {
@@ -50,12 +61,36 @@ public class MapRepositoryImpl implements MapRepository {
     @Value("${pass}")
     private String pass;
 
+    @Override
+    public Marker createMarkerFromGeoDocument(String url){
+        ExtractInfoWeb web = ExtractInfoWeb.getInstance(
+                "com.mysql.jdbc.Driver","jdbc:mysql","localhost","3306","siimobility","siimobility","geodb");
+        web.setGateWithSpring("spring/gate/gate-beans.xml","documentProcessor",this.getClass());
+        GeoDocument geoDoc = web.ExtractGeoDocumentFromString(url,"test_20150702","test_20150702",true,false);
+        Marker marker = new Marker();
+        marker.setLatitude(geoDoc.getLat().toString().trim());
+        marker.setLongitude(geoDoc.getLng().toString().trim());
+        marker.setUrl(geoDoc.getUrl().toString().trim());
+        marker.setName(geoDoc.getDescription().trim());
 
+        MarkerInfo info = new MarkerInfo();
+        info.setAddress(geoDoc.getIndirizzo().trim());
+        info.setCity(geoDoc.getCity().trim());
+        info.setProvince(geoDoc.getProvincia());
+        info.setRegion(geoDoc.getRegione().trim());
+        info.setEmail(geoDoc.getEmail().trim());
+        info.setFax(geoDoc.getFax().trim());
+        info.setPhone(geoDoc.getTelefono().trim());
+        info.setIva(geoDoc.getIva().trim());
 
+        marker.setMarkerInfo(info);
+        return marker;
+
+    }
 
     @Override
     public RepositoryConnection getSesameLocalConnection() {
-        try {
+        /*try {
             File dataDir2 = new File(dataDir + File.separator + repositoryID + File.separator);
             repository = new SailRepository( new MemoryStore(dataDir2) );
             repository.initialize();
@@ -63,7 +98,9 @@ public class MapRepositoryImpl implements MapRepository {
 
         } catch (RepositoryException e) {
             e.printStackTrace();
-        }
+        }*/
+        SesameUtil28 sesame = new SesameUtil28();
+        sesame.connectToMemoryRepository(dataDir,repositoryID);
         return repositoryConnection;
     }
 
@@ -84,12 +121,11 @@ public class MapRepositoryImpl implements MapRepository {
     @Override
     public Connection getMySQLConnection(){
         Connection conMySQL = null;
-        Statement st = null;
-        ResultSet rs = null;
-
-        Connection conMySQL2 = null;
-        Statement st2 = null;
-        ResultSet rs2 = null;
+        Statement st;
+        ResultSet rs;
+        Connection conMySQL2;
+        Statement st2;
+        ResultSet rs2;
 
         StringBuilder builder = new StringBuilder();
         try {
@@ -115,8 +151,7 @@ public class MapRepositoryImpl implements MapRepository {
                 String colore = rs.getString("COLORE");
                 String en_name = rs.getString("EN_NAME");
                 String classe = rs.getString("CLASS");
-
-                builder.append("<input type='checkbox' name='" + en_name + "' value='" + en_name + "' class='macrocategory' /> <span class='" + classe + " macrocategory-label'>" + nome + "</span> <span class='toggle-subcategory' title='Mostra sottocategorie'>+</span>\n");
+                builder.append("<input type='checkbox' name='").append(en_name).append("' value='").append(en_name).append("' class='macrocategory' /> <span class='").append(classe).append(" macrocategory-label'>").append(nome).append("</span> <span class='toggle-subcategory' title='Mostra sottocategorie'>+</span>\n");
                 builder.append("<div class='subcategory-content'>\n");
 
                 conMySQL2 = DriverManager.getConnection(url + db, user, pass);
@@ -135,8 +170,8 @@ public class MapRepositoryImpl implements MapRepository {
                     String sub_en_name = rs2.getString("EN_NAME");
                     String sub_numero = rs2.getString("NUMERO");
 
-                    builder.append("<input type='checkbox' name='" + sub_nome + "' value='" + sub_nome + "' class='sub_" + classe + " subcategory' />\n");
-                    builder.append("<span class='" + classe + " subcategory-label'>" + sub_numero + "- " + sub_nome + "</span>\n");
+                    builder.append("<input type='checkbox' name='").append(sub_nome).append("' value='").append(sub_nome).append("' class='sub_").append(classe).append(" subcategory' />\n");
+                    builder.append("<span class='").append(classe).append(" subcategory-label'>").append(sub_numero).append("- ").append(sub_nome).append("</span>\n");
                     builder.append("<br />\n");
                 }
                 builder.append("</div>\n");
@@ -147,10 +182,8 @@ public class MapRepositoryImpl implements MapRepository {
             }
             st.close();
             conMySQL.close();
-        }catch(SQLException e){
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }catch(SQLException|ClassNotFoundException e){
+            SystemLog.exception(e);
         } finally{
             testCategoryHTML = builder.toString();
         }
@@ -181,9 +214,9 @@ public class MapRepositoryImpl implements MapRepository {
                     while (result.hasNext()) {
                         BindingSet bindingSet = result.next();
                         org.openrdf.model.Value valueOfServiceCategory = bindingSet.getValue("serviceCategory");
-                        builder.append(
-                                "<option value='" + valueOfServiceCategory.toString().replace("<http://www.w3.org/2001/XMLSchema#string>", "xsd:string")
-                                        + "'>" + valueOfServiceCategory.toString() + "</option>\n");
+                        builder.append("<option value='").append(valueOfServiceCategory.toString()
+                                .replace("<http://www.w3.org/2001/XMLSchema#string>", "xsd:string"))
+                                .append("'>").append(valueOfServiceCategory.toString()).append("</option>\n");
                     }
                 }
                 finally {
@@ -209,11 +242,8 @@ public class MapRepositoryImpl implements MapRepository {
 //        String tipo = request.getParameter("tipo");
         String tipo = "";
         String via ="";
-        if (tipo == ""){
+        if (StringKit.isNullOrEmpty(tipo)){
             tipo = "?serviceCategory";
-        }
-        else{
-            tipo = tipo.toString();
         }
             String queryString =
                 "PREFIX :<http://www.disit.dinfo.unifi.it/SiiMobility#>" +
@@ -221,7 +251,7 @@ public class MapRepositoryImpl implements MapRepository {
                 "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#> ";
         try {
             try {
-                if (tipo == "?serviceCategory"){
+                if (Objects.equals(tipo, "?serviceCategory")){
                     queryString = queryString + " SELECT DISTINCT ?orgName ?streetAddress ?serviceCategory WHERE { " +
                             " ?road :extendName '" + via.toUpperCase() + "'^^xsd:string . " +
                             " 	?service :isIn ?road . " +
@@ -259,21 +289,23 @@ public class MapRepositoryImpl implements MapRepository {
                         org.openrdf.model.Value valueOfOrgName = bindingSet.getValue("orgName");
                         org.openrdf.model.Value valueOfStreetAddress = bindingSet.getValue("streetAddress");
                         org.openrdf.model.Value valueOfServiceCategory = null;
-                        if (tipo == "?serviceCategory"){
+                        if (Objects.equals(tipo, "?serviceCategory")){
                             valueOfServiceCategory = bindingSet.getValue("serviceCategory");
                         }
 
 
-                        builder.append("<td>" + valueOfOrgName.toString() + "</td>\n");
-                        builder.append("<td>" + valueOfStreetAddress.toString() + "</td>\n");
-                        if (tipo == "?serviceCategory"){
-                            builder.append("<td>" + valueOfServiceCategory.toString() + "</td>\n");
+                        builder.append("<td>").append(valueOfOrgName.toString()).append("</td>\n");
+                        builder.append("<td>").append(valueOfStreetAddress.toString()).append("</td>\n");
+                        if (Objects.equals(tipo, "?serviceCategory")){
+                            if (valueOfServiceCategory != null) {
+                                builder.append("<td>").append(valueOfServiceCategory.toString()).append("</td>\n");
+                            }else{
+                                builder.append("<td></td>\n");
+                            }
                         }
                         else{
-                            builder.append("<td>" + tipo + "</td>\n");
+                            builder.append("<td>").append(tipo).append("</td>\n");
                         }
-
-
                         builder.append("</tr>\n");
                     }
                     builder.append("</table>\n");
@@ -284,7 +316,7 @@ public class MapRepositoryImpl implements MapRepository {
 
                 }
             } catch (RepositoryException|QueryEvaluationException|MalformedQueryException e) {
-                e.printStackTrace();
+                SystemLog.exception(e);
             } finally {
                 repositoryConnection.close();
             }

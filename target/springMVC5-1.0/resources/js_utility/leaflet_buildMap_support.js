@@ -1,9 +1,6 @@
 /**
  * Created by 4535992 on 11/06/2015.
  */
-
-
-
     //support variables
     var map;
     var ajaxRequest;

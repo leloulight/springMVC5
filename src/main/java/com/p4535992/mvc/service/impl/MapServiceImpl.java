@@ -1,5 +1,6 @@
 package com.p4535992.mvc.service.impl;
 
+import com.p4535992.mvc.object.model.site.Marker;
 import com.p4535992.mvc.repository.dao.MapRepository;
 import com.p4535992.mvc.service.dao.MapService;
 import org.openrdf.repository.RepositoryConnection;
@@ -35,5 +36,10 @@ public class MapServiceImpl implements MapService{
     @Override
     public String getResponseHTMLString() {
         return mapRepository.getResponseHTMLString();
+    }
+
+    @Override
+    public Marker createMarkerFromGeoDocument(String url){
+        return mapRepository.createMarkerFromGeoDocument(url);
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by 4535992 on 11/06/2015.
+ * @author 4535992.
+ * @version 2015-07-02.
  */
 @Controller
 @PreAuthorize("hasRole('ROLE_USER')")
@@ -48,7 +50,8 @@ public class MapController {
     @RequestMapping(value="/map2",method = RequestMethod.POST)
     public String result2(@RequestParam(required=false, value="urlParam")String url, Model model){
         System.out.println("url: " + url);
-        marker = new Marker("City",url,"43.3555664", "11.0290384");
+        marker = mapService.createMarkerFromGeoDocument(url);
+        // = new Marker("City",url,"43.3555664", "11.0290384");
         //model.addAttribute("marker",marker);
         return "redirect:/map2";
     }

@@ -5,6 +5,7 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:gate="http://gate.ac.uk/ns/spring"
     xmlns:mongo="http://www.springframework.org/schema/data/mongo"
     xmlns:webflow-config="http://www.springframework.org/schema/webflow-config"
     xmlns:util="http://www.springframework.org/schema/util"
@@ -15,6 +16,7 @@
 		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
 		http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config.xsd
 	    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://gate.ac.uk/ns/spring http://gate.ac.uk/ns/spring.xsd
 		">
 		
 	
@@ -200,9 +202,4 @@
 	-->
 
     <!--<beans:import resource="classpath:sesame-spring-context.xml" />-->
-
-
-
-
-
 </beans:beans>
