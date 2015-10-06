@@ -1,6 +1,6 @@
-/**
- * Created by 4535992 on 11/06/2015.
- */
+    /**
+    * Created by 4535992 on 11/06/2015.
+    */
     //support variables
     var map;
     var ajaxRequest;
@@ -9,6 +9,8 @@
     var clickLayer = new L.LayerGroup();
     var GPSLayer = new L.LayerGroup();
     var markerClusters = new L.MarkerClusterGroup();
+    var markerGlobal = new L.Marker();
+
     /*** Set a personal icon marker */
     var myIcon = L.icon({
         iconUrl: myURL + 'img/cluster.png',
@@ -20,18 +22,29 @@
 
     /*** Set the src of the javascript file*/
     var myURL = jQuery('script[src$="resources/js_utility/leaflet_buildMap_support.js"]').attr('src').replace('js_utility/leaflet_buildMap_support.js', '');
+    /*** Set marker variables */
     var nameVar,urlVar,latVar,lngVar;
+    var regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar;
     $( document ).ready(function() {
-        //variables et from leafletMap.jsp
+        //oppure $( window ).load(function(){
+        //variables get from leafletMap_buildMap_support.jsp
         if (!$.isEmptyObject(document.getElementById('nameForm'))) {
             nameVar = document.getElementById('nameForm').value;
             urlVar = document.getElementById('urlForm').value;
             latVar = document.getElementById('latForm').value;
             lngVar = document.getElementById('lngForm').value;
+
+            regionVar = document.getElementById('regionForm').value;
+            provinceVar = document.getElementById('provinceForm').value;
+            cityVar = document.getElementById('cityForm').value;
+            addressVar = document.getElementById('addressForm').value;
+            phoneVar = document.getElementById('phoneForm').value;
+            emailVar = document.getElementById('emailForm').value;
+            faxVar = document.getElementById('faxForm').value;
+            ivaVar = document.getElementById('ivaForm').value;
             alert("load markerForm not empty =>Name:" + nameVar + ',URL:' + urlVar + ',LAT:' + latVar + ',LNG:' + lngVar);
         }
-        initMap22();
-
+        initMap();
         if(!$.isEmptyObject(document.getElementById('markerFormParam'))){
             alert('Click markerFormParam MARKER:'+nameVar+','+urlVar+','+latVar+','+lngVar);
             //TEST URL
@@ -39,15 +52,7 @@
             addMarker22(nameVar,urlVar,latVar,lngVar);
         }
     });
-    // or:
-    /*$( window ).load(function(){
-        //variables et from leafletMap.jsp
-        nameVar = document.getElementById("nameForm").value;
-        urlVar = document.getElementById("urlForm").value;
-        latVar = document.getElementById("latForm").value;
-        lngVar = document.getElementById("lngForm").value;
-        initMap22();
-    });*/
+
 
     /***  codice per mantenere aperto più di un popup per volta ***/
     /*function addMantainOpenMultiplePopup() {
@@ -70,7 +75,14 @@
      *  window.onload = function () {initMap22();};
      *
      */
-    function initMap22() {
+    function initMap(){
+        //valori fissi per il settaggio iniziale della mappa....
+        var latitude = 43.3555664; //43.3555664
+        var longitude = 11.0290384; //11.0290384
+        initMap22(latitude,longitude);
+    }
+
+    function initMap22(latitude,longitude ) {
         try {
             if ($.isEmptyObject(markerClusters)){
                 markerClusters = new L.MarkerClusterGroup();
@@ -82,10 +94,9 @@
              alert("This browser does not support HTTP Request");
              return;
              }*/
-            var latitude = 43.3555664; //43.3555664
-            var longitude = 11.0290384; //11.0290384
             //var setBounds = [41.7, 8.4, 44.930222, 13.4];
             // set up the map
+            alert("Set Initial Map with:"+latitude+','+longitude);
             map = new L.map('map').setView([latitude, longitude], 8);
             //map = new L.map('map').setView([43.3555664, 11.0290384], 8);
             //map = L.map( 'map', {center: [10.0, 5.0],minZoom: 2,zoom: 2});
@@ -105,7 +116,7 @@
             var bounds = new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4));
             //var bounds = new L.LatLngBounds(new L.LatLng(setBounds[0],setBounds[1]), new L.LatLng(setBounds[2], setBounds[3]));
             map.setMaxBounds(bounds);
-
+            alert("MAP IS SETTED");
             //..add many functionality
             addPluginGPSControl();
             addPluginCoordinatesControl();
@@ -489,7 +500,7 @@
         }
     }
 
-    /*** Remove all marker on the plotLayer level */
+    /*** function to Remove all marker on the plotLayer level */
     function removeMarkers() {
         for (var i = 0; i < plotlayers.length; i++) {
             map.removeLayer(plotlayers[i]);
@@ -497,40 +508,105 @@
         plotlayers = [];
     }
 
+    /*** function for remove all cluster when the map is move */
     function onMapMove(e) {
         window.alert("compile onMapMove");
         removeClusterMarker();
         window.alert("compiled onMapMove");
     }
 
-    /** Set a popup when you click on the map*/
-    var popup = L.popup();
 
+    /*** function Set a popup when you click on the map*/
+    var popupGlobal = L.popup();
     function onMapClick(e) {
-        popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+        popupGlobal.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
     }
 
 
+    var popupOver,popupClick;
+    markerGlobal.on('mouseover', function (e) {
+        //evt.target is the marker that is being moused over
+        //bindPopup() does not need to be called here if it was already called
+        //somewhere else for this marker.
+        e.target.bindPopup(popupOver).openPopup();
+        //popupOver.openOn(map);
+    });
 
+    markerGlobal.on('mouseout', function (e) {
+        //e.target.bindPopup(popupOver);
+        //popupOver.closePopup();
+        e.target.closePopup();
+    });
+
+    markerGlobal.on('click', function(e) {
+        //again, evt.target will contain the marker that was clicked
+        //e.target.bindPopup(popupClick);
+        //popupClick.openPopup();
+        e.target.bindPopup(popupClick).openPopup();
+    });
+
+    /*** function for add a marker to the leaflet map */
     function addMarker22(name, url, lat, lng) {
         if ($.isEmptyObject(markerClusters)){
             markerClusters = new L.MarkerClusterGroup();
         }
-        alert("compile 22");
+        alert("compile 22...");
         /*var marker = L.marker([lat, lng]).addTo(map);
+        //...set the popup on mouse click
         marker.bindPopup('<a href="' + url + '" target="_blank">' + name + '</a>').openPopup();*/
-        var popup = new L.popup().setContent('<a href="' + url + '" target="_blank">' + name + '</a>');
-        var marker = L.marker([lat, lng]).bindPopup(popup).addTo(map);
-        markerClusters.addLayer(marker);
+        popupClick = new L.popup().setContent('<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>');
+        //var marker = L.marker([lat, lng]).bindPopup(popupClick).addTo(map);
+        markerGlobal = new L.marker([lat, lng]).addTo(map);
+        markerGlobal.bindPopup(popupClick);
+        //...set the popup on mouse over
+        //var latlngOver = L.latLng(latVar, lngVar);
+        var textOver =
+            '<ul>' +
+            '<li>Regione:'+regionVar+'</li>' +
+            '<li>Provincia:'+provinceVar+'</li>' +
+            '<li>Città:'+cityVar+'</li>' +
+            '<li>Indirizzo:'+addressVar+'</li>' +
+            '<li>Telefono/Cellulare:'+phoneVar+'</li>' +
+            '<li>Fax:'+faxVar+'</li>' +
+            '<li>Email:'+emailVar+'</li>' +
+            '<li>IVA:'+ivaVar+'</li>' +
+            '</ul>';
+        popupOver = new L.popup().setContent(textOver);
+        //..add marker to the array of cluster marker
+        markerClusters.addLayer(markerGlobal);
+        //...set to a Global variable for use with different javascript function
+        //markerGlobal = marker;
         //...add marker to the array of markers
-        plotlayers.push(marker);
+        plotlayers.push(markerGlobal);
         //map.addLayer(markerClusters);
+
+        markerGlobal.on('mouseover', function (e) {
+            //evt.target is the marker that is being moused over
+            //bindPopup() does not need to be called here if it was already called
+            //somewhere else for this marker.
+            e.target.bindPopup(popupOver).openPopup();
+            //popupOver.openOn(map);
+        });
+
+        markerGlobal.on('mouseout', function (e) {
+            //e.target.bindPopup(popupOver);
+            //popupOver.closePopup();
+            e.target.closePopup();
+        });
+
+        markerGlobal.on('click', function(e) {
+            //again, evt.target will contain the marker that was clicked
+            //e.target.bindPopup(popupClick);
+            //popupClick.openPopup();
+            e.target.bindPopup(popupClick).openPopup();
+        });
+
         map.setView([lat, lng], 8);
-        alert("compiled 22");
-        var javaMarker = {name:name, url:url, latitudine:lat,longitudine:lng};
-        return javaMarker;
+        alert("...compiled 22");
+        return {name: name, url: url, latitudine: lat, longitudine: lng};
     }
 
+    /*** function for remove all cluster marker on the leaflet map */
     function removeClusterMarker(){
         alert("compile removeClusterMarker");
         if(plotlayers.length > 0) {
@@ -543,13 +619,16 @@
         alert("compiled removeClusterMarker");
     }
 
+    /*** function fro remove all cluster marker with a click on the reset button */
     $('#pulsante-reset').click(function() {
         removeClusterMarker();
     });
 
+    /***  Set constructor variable for leaflet_buildMap_support */
     var leaflet_buildMap_support = {
         /*** Get a list of marker with coordinates and a url href and put the marker on the map*/
         addListMarkers: function (markers) {
+            alert("compiled leaflet_buildMap_support...");
             //choose a personal icon image
             /*
              var myIcon = L.icon({
@@ -578,8 +657,6 @@
          };
          */
         addMarker: function (marker) {
-
-
             //choose a personal icon image
             /*
              var myIcon = L.icon({
@@ -609,8 +686,6 @@
             map.addLayer(layerMarker);
 
         },
-
-
         addMarker: function (name, url, lat, lng) {
             var marker = {
                 "name": name,
@@ -624,7 +699,7 @@
     }
 
 
-// CLICCANDO SUL PULSANTE GPS VENGONO SALVATE LE COORDINATE ATTUALI PER LA RICERCA DI SERVIZI
+    /*** CLICCANDO SUL PULSANTE GPS VENGONO SALVATE LE COORDINATE ATTUALI PER LA RICERCA DI SERVIZI */
     $('.gps-button').click(function () {
         if (GPSControl._isActive == true) {
             selezione = 'Posizione Attuale';
@@ -635,7 +710,8 @@
         }
     });
 
-// AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA
+    /*** AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO
+     * A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA*/
     $('#info img').click(function () {
         if ($("#info").hasClass("active") == false) {
             $('#info').addClass("active");
@@ -647,4 +723,43 @@
         }
     });
 
+    /*** function open a new Popup of information when you click on the name of the bussiness entity*/
+    $('a.linkToMarkerInfo').mouseover(function(){
+        alert('MOUSE OVER LINK...');
+        var latlng = L.latLng(latVar, lngVar);
+        var text =
+            '<ul>' +
+            '<li>Regione:'+regionVar+'</li>' +
+            '<li>Provincia:'+provinceVar+'</li>' +
+            '<li>Città:'+cityVar+'</li>' +
+            '<li>Indirizzo:'+addressVar+'</li>' +
+            '<li>Telefono/Cellulare:'+phoneVar+'</li>' +
+            '<li>Fax:'+faxVar+'</li>' +
+            '<li>Email:'+emailVar+'</li>' +
+            '<li>IVA:'+ivaVar+'</li>' +
+            '</ul>';
+        leafletPopupMouseOver(markerGlobal,text,latlng);
+    });
 
+   /*** function to open a URL with javascript without jquery */
+   function openURL(url){
+       // similar behavior as an HTTP redirect
+       window.location.replace(url);
+        // similar behavior as clicking on a link
+       window.location.href = url;
+   }
+
+    /*** function to open a new popup when mouse is over a specific element*/
+    function leafletPopupMouseOver(marker,content,latlng){
+        L.popup()
+            .setLatLng(latlng)
+            .setContent(content)
+            .openOn(map);
+        marker.bindPopup(content);
+        marker.on('mouseover', function (e) {
+            this.openPopup();
+        });
+        marker.on('mouseout', function (e) {
+            this.closePopup();
+        });
+    }

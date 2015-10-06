@@ -93,35 +93,63 @@
             <div id="tabs-1">
                 <div class="use-case-1">
                     Inserisci un URL:
-                    <p>MARKER =>Name:<c:out value="${marker.name}"/>',URL:'<c:out value="${marker.url}"/>',LAT:'<c:out value="${marker.latitude}"/>',LNG:'<c:out value="${marker.longitude}"/>';</p>
-                    <c:if test="${empty marker.name}" >
-                    <c:url var="url" value="/map2" />
-                    <form:form action="${url}" method="post" >
-                        <%-- Pass the string value like input --%>
-                        <p>
-                            <input type="text" name="urlParam" value="" />
-                            <input type="submit" name="urlFormParam" value="urlForm" />
-                        </p>
-                    </form:form>
+                    <%--<c:if test="${empty marker.name}" >--%>
+                        <c:if test="${empty marker.url}" >
+                            <c:url var="url" value="/map2" />
+                            <form:form action="${url}" method="post" >
+                                <%-- Pass the string value like input --%>
+                                <p>
+                                    <input type="text" name="urlParam" value="" />
+                                    <input type="submit" name="urlFormParam" value="urlForm" />
+                                </p>
+                            </form:form>
+                        </c:if>
+                        <c:if test="${urljava==''}" >
+                            <c:url var="url" value="/map2" />
+                            <form:form action="${url}" method="post" >
+                                <%-- Pass the string value like input --%>
+                                <p>
+                                    <input type="text" name="urlParam" value="" />
+                                    <input type="submit" name="urlFormParam" value="urlForm" />
+                                </p>
+                            </form:form>
+                        </c:if>
+                    <%--</c:if>--%>
+                    <c:if test="${not empty marker.url}" >
+                        <c:url var="url2" value="/map22" />
+                        <form:form action="${url2}" method="post" >
+                            <p id="marker">
+                                <input type="text" name="urlParam" value="" />
+                                <%-- Return from javascript a marker value and pass to controller --%>
+                                <%--<input id="nameForm" type="hidden" value="<c:set var='nameVar' value='${marker.name}' />"/>
+                                <input id="urlForm" type="hidden" value="<c:set var='urlVar' value='${marker.url}' />"/>
+                                <input id="latForm" type="hidden" value="<c:set var='latVar' value='${marker.latitude}' />"/>
+                                <input id="lngForm" type="hidden" value="<c:set var='lngVar' value='${marker.longitude}' />"/>--%>
+                                <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${marker.name}" />"/>
+                                <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${marker.url}" />"/>
+                                <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${marker.latitude}" />"/>
+                                <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${marker.longitude}" />"/>
+                                <%-- Marker Infor information --%>
+                                <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${marker.markerInfo.region}" />"/>
+                                <input id="provinceForm" name="provinceParam" type="hidden" value="<c:out  value="${marker.markerInfo.province}" />"/>
+                                <input id="cityForm" name="cityParam" type="hidden" value="<c:out  value="${marker.markerInfo.city}" />"/>
+                                <input id="addressForm" name="addressParam" type="hidden" value="<c:out  value="${marker.markerInfo.address}" />"/>
+                                <input id="phoneForm" name="phoneParam" type="hidden" value="<c:out  value="${marker.markerInfo.phone}" />"/>
+                                <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${marker.markerInfo.email}" />"/>
+                                <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${marker.markerInfo.fax}" />"/>
+                                <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${marker.markerInfo.iva}" />"/>
+                            </p>
+                            <input type="submit" id="markerFormParam" name="markerFormParam" value="markerForm" />
+                        </form:form>
                     </c:if>
-                    <c:if test="${not empty marker.name}" >
-                    <c:url var="url2" value="/map22" />
-                    <form:form action="${url2}" method="post" >
-                        <p id="marker">
-                            <input type="text" name="urlParam" value="" />
-                        <%-- Return from javascript a marker value and pass to controller --%>
-                            <%--<input id="nameForm" type="hidden" value="<c:set var='nameVar' value='${marker.name}' />"/>
-                            <input id="urlForm" type="hidden" value="<c:set var='urlVar' value='${marker.url}' />"/>
-                            <input id="latForm" type="hidden" value="<c:set var='latVar' value='${marker.latitude}' />"/>
-                            <input id="lngForm" type="hidden" value="<c:set var='lngVar' value='${marker.longitude}' />"/>--%>
-                            <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${marker.name}" />"/>
-                            <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${marker.url}" />"/>
-                            <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${marker.latitude}" />"/>
-                            <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${marker.longitude}" />"/>
-                        </p>
-                        <input type="submit" id="markerFormParam" name="markerFormParam" value="markerForm" />
-                    </form:form>
-                    </c:if>
+                    <p>
+                    <ul>
+                        <li>Name:<c:out value="${marker.name}"/></li>
+                        <li>URL:<c:out value="${marker.url}"/></li>
+                        <li>LAT:<c:out value="${marker.latitude}"/></li>
+                        <li>LNG:<c:out value="${marker.longitude}"/></li>
+                    </ul>
+                    </p>
                 </div>
             </div>
             <div id="tabs-2">

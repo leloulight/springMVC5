@@ -34,6 +34,6 @@
             </c:forEach>
         </div>
         </section>
-    <P> The id of the reposiotry is:<strong>${REPO_ID}</strong>  </P>
+    <P> The id of the repository is:<strong>${REPO_ID}</strong>  </P>
 </body>
 </html>

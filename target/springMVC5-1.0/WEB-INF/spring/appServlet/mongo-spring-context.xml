@@ -36,5 +36,5 @@
     <!--<beans:constructor-arg name="mongoDbFactory" value="mongoDbFactory" />-->
     <!--</beans:bean>-->
 
-    <mongo:repositories base-package="org.p4535992.mvc"/>
+    <mongo:repositories base-package="com.github.p4535992.mvc"/>
 </beans:beans>

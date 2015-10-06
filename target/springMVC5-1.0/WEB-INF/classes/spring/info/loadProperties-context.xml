@@ -10,5 +10,5 @@
 
        <util:properties id="nodeProperty" location="classpath:config.properties" />
        <context:property-placeholder properties-ref="nodeProperty" />
-       <context:component-scan base-package="com.p4535992.mvc" />
+       <context:component-scan base-package="com.github.p4535992.mvc" />
 </beans>

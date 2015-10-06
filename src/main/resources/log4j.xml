@@ -18,7 +18,7 @@
 	<!-- PerfomanceMonitor -->
 	<appender name="file-appender" class="org.apache.log4j.FileAppender">
 	<!--   log4j.appender.file.File= C:\\webstore\\webstore-performance.log -->
-		<param name="file" value="c:\\LOG.log" />
+		<param name="file" value="C:\\Users\\tenti\\Desktop\\LOG.log" />
 		<param name="append" value="true" />
 		<param name="threshold" value="debug" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -28,7 +28,7 @@
 	
 	<!-- Auditing  Logger  -->
 	<appender name="R" class="org.apache.log4j.RollingFileAppender"> 
-	    <param name="file" value="C:\\LOG_Audit.log" />
+	    <param name="file" value="C:\\Users\\tenti\\Desktop\\LOG_Audit.log" />
 	    <param name="MaxFileSize" value="1MB"/>
 	    <!-- Keep one backup file -->
 	    <param name="MaxBackupIndex" value="1"/>
@@ -59,6 +59,8 @@
 		<level value="info" />
 	</logger>
 
+
+
 	<!-- ApplicationWebb Loggers -->
 	<logger name="net.codejava.spring">
 		<level value="info" />
@@ -68,18 +70,33 @@
 	<logger name="org.springframework.core">
 		<level value="info" />
 	</logger>
-
 	<logger name="org.springframework.beans">
 		<level value="info" />
 	</logger>
-
 	<logger name="org.springframework.context">
 		<level value="info" />
 	</logger>
-
 	<logger name="org.spring.jdbc">
 		<level value="info" />
 	</logger>
+
+    <logger name="org.hibernate">
+        <level value="off"/>
+    </logger>
+
+    <!-- GATE Logging -->
+    <logger name="gate">
+        <level value="info" />
+    </logger>
+    <logger name="gate.jape">
+        <level value="info" />
+    </logger>
+    <logger name="gate.creole.SerialController">
+        <level value="info" />
+    </logger>
+    <logger name="gate.util.profile.Profiler">
+        <level value="info" />
+    </logger>
 
 	<!-- Root Logger -->
 	<root>
@@ -88,6 +105,5 @@
 		<appender-ref ref="file-appender" />
 		<appender-ref ref="R" />
 	</root>
-	
 	
 </log4j:configuration>

@@ -32,6 +32,27 @@
 
     <repositories>
         <repository>
+            <id>repository.springframework.maven.release</id>
+            <name>Spring Framework Maven Release Repository</name>
+            <url>http://maven.springframework.org/release</url>
+        </repository>
+        <repository>
+            <id>ExtractInfo</id>
+            <url>https://github.com/p4535992/ExtractInfo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>utility</id>
+            <url>https://github.com/p4535992/utility</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
@@ -85,7 +106,7 @@
         <org.apache.tomcat.tomcat-servlet-api.version>7.0.30</org.apache.tomcat.tomcat-servlet-api.version>
         <jaxb-impl.version>2.2.7</jaxb-impl.version>
 
-        <!-- JSon-->
+        <!-- Json-->
         <json-path.version>2.0.0</json-path.version>
         <com.fasterxml.jackson.core.version>2.5.3</com.fasterxml.jackson.core.version>
         <!-- Logging -->
@@ -122,9 +143,10 @@
        <commons-codec.version>1.10</commons-codec.version>
        <!-- UTILITY -->
        <org.antlr.stringtemplate.version>3.2.1</org.antlr.stringtemplate.version>
-       <com.github.p4535992.utility.version>1.3.1</com.github.p4535992.utility.version>
-       <com.github.p4535992.gate-basic.version>1.3.1</com.github.p4535992.gate-basic.version>
-       <com.github.p4535992.ExtractInfo.version>1.3.1</com.github.p4535992.ExtractInfo.version>
+       <!-- UTILITY Github -->
+       <com.github.p4535992.utility.version>1.4</com.github.p4535992.utility.version>
+       <com.github.p4535992.gate-basic.version>1.4</com.github.p4535992.gate-basic.version>
+       <com.github.p4535992.ExtractInfo.version>1.4</com.github.p4535992.ExtractInfo.version>
     </properties>
 
     <dependencyManagement>
@@ -157,7 +179,7 @@
             </dependency>
             <dependency>
                 <groupId>com.github.p4535992</groupId>
-                <artifactId>ExtractInfo</artifactId>
+                <artifactId>extractInfo</artifactId>
                 <version>${com.github.p4535992.ExtractInfo.version}</version>
                 <exclusions>
                     <exclusion>
@@ -203,6 +225,10 @@
             <version>2.8.0</version>
         </dependency>
         -->
+        <!--<dependency>
+            <groupId>com.github.p4535992</groupId>
+            <artifactId>ExtractInfo</artifactId>
+        </dependency>-->
         <dependency>
             <groupId>com.github.p4535992</groupId>
             <artifactId>ExtractInfo</artifactId>
