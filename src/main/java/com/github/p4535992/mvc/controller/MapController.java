@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 4535992 on 11/06/2015.
  * @author 4535992.
@@ -21,6 +24,8 @@ public class MapController {
     MapService mapService;
 
     Marker marker;
+    List<Marker> arrayMarker = new ArrayList<>();
+    Integer indiceMarker = 0;
 
     @RequestMapping(value="/map",method= RequestMethod.GET)
     public String loadMap1(Model model){
@@ -39,31 +44,65 @@ public class MapController {
         //String html = mapService.getResponseHTMLString();
         //Site siteForm = new Site();
         //model.addAttribute("siteForm",siteForm);
-        if(marker != null){
+        if(!arrayMarker.isEmpty() && marker!=null){
             model.addAttribute("marker",marker);
+            model.addAttribute("arrayMarker",arrayMarker);
+            model.addAttribute("indiceMarker",indiceMarker);
+            model.addAttribute("urlParam",null);
         }else{
+            //arrayMarker.add(marker);
             model.addAttribute("marker",null);
+            model.addAttribute("arrayMarker",null);
+            model.addAttribute("urlParam",null);
         }
         return "riconciliazione2/mappa/leafletMap";
     }
 
     @RequestMapping(value="/map2",method = RequestMethod.POST)
     public String result2(@RequestParam(required=false, value="urlParam")String url, Model model){
+        String[] splitter;
+        if(url.contains(",")) {
+            splitter = url.split(",");
+            url = splitter[splitter.length];
+        }
+
         System.out.println("url: " + url);
         marker = mapService.createMarkerFromGeoDocument(url);
         // = new Marker("City",url,"43.3555664", "11.0290384");
-        //model.addAttribute("marker",marker);
+        //model.addAttribute("marker",marker); //no need is get from the HTTTP GET COMMAND
+        arrayMarker.add(marker);
+        indiceMarker++;
         return "redirect:/map2";
     }
 
     @RequestMapping(value="/map22",method = RequestMethod.POST)
     public String result3(
             @RequestParam(required=false, value="urlParam")String url,
-            @ModelAttribute(value="markerParam")Marker marker,
+            @ModelAttribute(value="markerParam")Marker markerFromJS,
             Model model){
-        marker = new Marker("","","","",null);
-        System.out.println("marker3:"+marker.toString());
-        model.addAttribute("urlJava",marker.getUrl());
+        marker = null;
+        System.out.println("url: " + url);
+        //return to the loadMap2
+        return "redirect:/map2";
+        //return result2(url,model);
+    }
+
+    @RequestMapping(value="/map3",method = RequestMethod.POST)
+    public String result4(@RequestParam(required=false, value="urlParam")String url,
+                          @ModelAttribute(value="markerParam")Marker markerFromJS,
+                          Model model){
+        String[] splitter;
+        if(url.contains(",")) {
+            splitter = url.split(",");
+            url = splitter[0];
+        }
+
+        System.out.println("url: " + url);
+        marker = mapService.createMarkerFromGeoDocument(url);
+        // = new Marker("City",url,"43.3555664", "11.0290384");
+        //model.addAttribute("marker",marker); //no need is get from the HTTTP GET COMMAND
+        arrayMarker.add(marker);
+        indiceMarker++;
         return "redirect:/map2";
     }
 

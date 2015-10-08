@@ -18,7 +18,7 @@
 	<!-- PerfomanceMonitor -->
 	<appender name="file-appender" class="org.apache.log4j.FileAppender">
 	<!--   log4j.appender.file.File= C:\\webstore\\webstore-performance.log -->
-		<param name="file" value="C:\\Users\\tenti\\Desktop\\LOG.log" />
+		<param name="file" value="log/LOG.log" />
 		<param name="append" value="true" />
 		<param name="threshold" value="debug" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -28,7 +28,7 @@
 	
 	<!-- Auditing  Logger  -->
 	<appender name="R" class="org.apache.log4j.RollingFileAppender"> 
-	    <param name="file" value="C:\\Users\\tenti\\Desktop\\LOG_Audit.log" />
+	    <param name="file" value="log/LOG_Audit.log" />
 	    <param name="MaxFileSize" value="1MB"/>
 	    <!-- Keep one backup file -->
 	    <param name="MaxBackupIndex" value="1"/>

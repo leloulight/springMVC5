@@ -45,8 +45,11 @@
     <script src="${pageContext.request.contextPath}/resources/leaflet/plugin/coordinates/Leaflet.Coordinates-0.1.4.min.js"></script>
 
     <script src="${pageContext.request.contextPath}/resources/leaflet/plugin/markercluster/leaflet.markercluster.js"></script>
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js_utility/leaflet_buildMap_support.js"></script>
   <title></title>
 </head>
+<body>
 <!-- DIV PRINCIPALE CONTENENTE LA MAPPA INTERATTIVA -->
 <%--<script>
     $.getScript("resources/js_utility/leaflet_buildMap_support.js",function(){
@@ -67,6 +70,7 @@
 
 
     <div id="map"></div>
+
 
 <%--<div id="map" style="width: 800px; height: 500px; border: 1px solid #AAA;"></div>--%>
 
@@ -93,55 +97,78 @@
             <div id="tabs-1">
                 <div class="use-case-1">
                     Inserisci un URL:
-                    <%--<c:if test="${empty marker.name}" >--%>
-                        <c:if test="${empty marker.url}" >
-                            <c:url var="url" value="/map2" />
-                            <form:form action="${url}" method="post" >
-                                <%-- Pass the string value like input --%>
-                                <p>
-                                    <input type="text" name="urlParam" value="" />
-                                    <input type="submit" name="urlFormParam" value="urlForm" />
-                                </p>
-                            </form:form>
-                        </c:if>
-                        <c:if test="${urlJava==''}" >
-                            <c:url var="url" value="/map2" />
-                            <form:form action="${url}" method="post" >
-                                <%-- Pass the string value like input --%>
-                                <p>
-                                    <input type="text" name="urlParam" value="" />
-                                    <input type="submit" name="urlFormParam" value="urlForm" />
-                                </p>
-                            </form:form>
-                        </c:if>
-                    <%--</c:if>--%>
-                    <c:if test="${not empty marker.url}" >
-                        <c:url var="url2" value="/map22" />
-                        <form:form action="${url2}" method="post" >
-                            <p id="marker">
+                    <c:url var="url" value="/map3" />
+                    <form:form action="${url}" method="post" >
+                        <p>
+                        <input type="text" name="urlParam" value="" />
+                        <%--<c:if test="${empty marker.url}" >
+                            &lt;%&ndash; Pass the string value like input &ndash;%&gt;
                                 <input type="text" name="urlParam" value="" />
-                                <%-- Return from javascript a marker value and pass to controller --%>
-                                <%--<input id="nameForm" type="hidden" value="<c:set var='nameVar' value='${marker.name}' />"/>
-                                <input id="urlForm" type="hidden" value="<c:set var='urlVar' value='${marker.url}' />"/>
-                                <input id="latForm" type="hidden" value="<c:set var='latVar' value='${marker.latitude}' />"/>
-                                <input id="lngForm" type="hidden" value="<c:set var='lngVar' value='${marker.longitude}' />"/>--%>
-                                <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${marker.name}" />"/>
-                                <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${marker.url}" />"/>
-                                <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${marker.latitude}" />"/>
-                                <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${marker.longitude}" />"/>
-                                <%-- Marker Infor information --%>
-                                <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${marker.markerInfo.region}" />"/>
-                                <input id="provinceForm" name="provinceParam" type="hidden" value="<c:out  value="${marker.markerInfo.province}" />"/>
-                                <input id="cityForm" name="cityParam" type="hidden" value="<c:out  value="${marker.markerInfo.city}" />"/>
-                                <input id="addressForm" name="addressParam" type="hidden" value="<c:out  value="${marker.markerInfo.address}" />"/>
-                                <input id="phoneForm" name="phoneParam" type="hidden" value="<c:out  value="${marker.markerInfo.phone}" />"/>
-                                <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${marker.markerInfo.email}" />"/>
-                                <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${marker.markerInfo.fax}" />"/>
-                                <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${marker.markerInfo.iva}" />"/>
-                            </p>
-                            <input type="submit" id="markerFormParam" name="markerFormParam" value="markerForm" />
-                        </form:form>
-                    </c:if>
+                                <input type="submit" name="urlFormParam" value="urlForm" />
+                        </c:if>--%>
+                        <c:if test="${(not empty arrayMarker) && (arrayMarker.size() >= indiceMarker)}" >
+                        <input id="arrayMarkerForm" name="arrayMarkerParam" type="hidden" value="<c:out value="${arrayMarker}" />"/>
+                            <p>LENGTH OF MARKERS: ${arrayMarker.size()}</p>
+                            <c:forEach items="${arrayMarker}" var="idMarker">
+                                <%--<c:set var="idMarker" value="${arrayMarker[i.index].idMarker}"/>--%>
+                                <%--<p>${idMarker.toString()}</p>--%>
+                                <p id="marker">
+                                    <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${idMarker.name}" />"/>
+                                    <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${idMarker.url}" />"/>
+                                    <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${idMarker.latitude}" />"/>
+                                    <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${idMarker.longitude}" />"/>
+                                    <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.region}" />"/>
+                                    <input id="provinceForm" name="provinceParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.province}" />"/>
+                                    <input id="cityForm" name="cityParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.city}" />"/>
+                                    <input id="addressForm" name="addressParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.address}" />"/>
+                                    <input id="phoneForm" name="phoneParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.phone}" />"/>
+                                    <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.email}" />"/>
+                                    <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.fax}" />"/>
+                                    <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.iva}" />"/>
+                                </p>
+                                <script>
+                                    //leaflet_buildMap_support.initMap();
+                                    leaflet_buildMap_support.pushMarkerToArrayMarker(
+                                            "${idMarker.name}","${idMarker.url}","${idMarker.latitude}","${idMarker.longitude}",
+                                            "${idMarker.markerInfo.region}","${idMarker.markerInfo.province}","${idMarker.markerInfo.city}",
+                                            "${idMarker.markerInfo.address}","${idMarker.markerInfo.phone}","${idMarker.markerInfo.email}",
+                                            "${idMarker.markerInfo.fax}","${idMarker.markerInfo.iva}");
+                                </script>
+                            </c:forEach>
+                        </c:if>
+                        <input type="submit" name="urlFormParam" value="urlForm" />
+                        </p>
+                    </form:form>
+                    <%-- WORK --%>
+                    <%--<c:if test="${(not empty arrayMarker) && (arrayMarker.size() >= indiceMarker)}" >
+                    <c:url var="url2" value="/map22" />
+                    <form:form action="${url2}" method="post" >
+                        <input id="arrayMarkerForm" name="arrayMarkerParam" type="hidden" value="<c:out value="${arrayMarker}" />"/>
+                        <c:forEach items="${arrayMarker}" var="idMarker" >
+                            &lt;%&ndash;<p>${idMarker.toString()}</p>&ndash;%&gt;
+                                    <p id="marker">
+                                        <input type="text" name="urlParam" value="" />
+                                        <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${idMarker.name}" />"/>
+                                        <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${idMarker.url}" />"/>
+                                        <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${idMarker.latitude}" />"/>
+                                        <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${idMarker.longitude}" />"/>
+                                        <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.region}" />"/>
+                                        <input id="provinceForm" name="provinceParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.province}" />"/>
+                                        <input id="cityForm" name="cityParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.city}" />"/>
+                                        <input id="addressForm" name="addressParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.address}" />"/>
+                                        <input id="phoneForm" name="phoneParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.phone}" />"/>
+                                        <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.email}" />"/>
+                                        <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.fax}" />"/>
+                                        <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.iva}" />"/>
+                                    </p>
+                            <script>
+                                //leaflet_buildMap_support.initMap();
+                                leaflet_buildMap_support.pushMarkerToArrayMarker();
+                            </script>
+                        </c:forEach>
+                        <input type="submit" id="markerFormParam" name="markerFormParam" value="markerForm" />
+                    </form:form>
+                    </c:if>--%>
                     <p>
                     <ul>
                         <li>Name:<c:out value="${marker.name}"/></li>
@@ -253,7 +280,7 @@
 <!--  CARICAMENTO DEL FILE utility.js CON FUNZIONI NECESSARIE  -->
 <%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js_utility/utility.js"></script>--%>
 <%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js_utility/utility_support.js"></script>--%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js_utility/leaflet_buildMap_support.js"></script>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js_utility/leaflet_buildMap_support.js"></script>--%>
 <%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js_utility/leaflet_markers_support.js"></script>--%>
 
 

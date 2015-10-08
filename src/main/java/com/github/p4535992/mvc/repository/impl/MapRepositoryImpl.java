@@ -58,6 +58,7 @@ public class MapRepositoryImpl implements MapRepository {
         ExtractInfoWeb web = ExtractInfoWeb.getInstance(
                 "com.mysql.jdbc.Driver","jdbc:mysql","localhost","3306","siimobility","siimobility","geodb");
         web.setGateWithSpring("spring/gate/gate-beans.xml","documentProcessor",this.getClass());
+        //web.setConnectionToADatabase(false);
         GeoDocument geoDoc = web.ExtractGeoDocumentFromString(url,"geodocument_2015_09_18","geodocument_2015_09_18",false,false);
         Marker marker = new Marker();
         if(geoDoc.getLat()!=null)marker.setLatitude(geoDoc.getLat().toString().trim());

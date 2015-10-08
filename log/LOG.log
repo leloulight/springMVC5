@@ -1,0 +1,145 @@
+2015-10-05 16:11:44,474 INFO  [Init] - Initialising GATE
+2015-10-05 16:12:03,630 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 16:12:05,176 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 16:12:07,006 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 16:12:07,801 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 16:12:08,211 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 16:15:59,186 INFO  [Init] - Initialising GATE
+2015-10-05 16:16:17,877 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 16:16:19,191 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 16:16:20,982 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 16:16:21,763 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 16:16:22,163 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 16:17:20,409 DEBUG [Profiler] - -----------------------------------------------
+New profiler run: Execute controller [Geolocation Pipeline]
+-----------------------------------------------
+
+2015-10-05 16:17:20,426 DEBUG [Profiler] - ---------LOG: ~Execute PR [Document Reset]---------
+Memory: 717016k; change: 717016k; max: 717016k; Net time:   0.1s; since prev. millisecs: 17
+2015-10-05 16:17:20,426 DEBUG [SerialController] - Time taken so far by Document Reset: 17
+2015-10-05 16:17:20,806 DEBUG [Profiler] - ---------LOG: ~Execute PR [UNICODE Tokenizer]---------
+Memory: 717016k; change: 0k; max: 717016k; Net time:   0.39s; since prev. millisecs: 380
+2015-10-05 16:17:20,806 DEBUG [SerialController] - Time taken so far by UNICODE Tokenizer: 380
+2015-10-05 16:17:20,862 DEBUG [SinglePhaseTransducer] - Start: prepare
+2015-10-05 16:17:20,922 DEBUG [SinglePhaseTransducer] - Start: find
+2015-10-05 16:17:21,789 DEBUG [SinglePhaseTransducer] - Start: split
+2015-10-05 16:17:21,900 DEBUG [SinglePhaseTransducer] - Start: cleanup
+2015-10-05 16:17:21,941 DEBUG [Profiler] - ---------LOG: ~Execute PR [Sentence Splitter]---------
+Memory: 731781k; change: 14765k; max: 731781k; Net time:   1.53s; since prev. millisecs: 1135
+2015-10-05 16:17:21,941 DEBUG [SerialController] - Time taken so far by Sentence Splitter: 1135
+2015-10-05 16:17:22,194 DEBUG [Profiler] - ---------LOG: ~Execute PR [POS Tagger]---------
+Memory: 734937k; change: 3156k; max: 734937k; Net time:   1.78s; since prev. millisecs: 253
+2015-10-05 16:17:22,195 DEBUG [SerialController] - Time taken so far by POS Tagger: 253
+2015-10-05 16:17:22,223 DEBUG [Profiler] - ---------LOG: ~Execute PR [HTML Annotation Set]---------
+Memory: 734937k; change: 0k; max: 734937k; Net time:   1.81s; since prev. millisecs: 29
+2015-10-05 16:17:22,224 DEBUG [SerialController] - Time taken so far by HTML Annotation Set: 29
+2015-10-05 16:17:22,371 DEBUG [Profiler] - ---------LOG: ~Execute PR [GAZETTEER ITALIANO CUSTOM]---------
+Memory: 734937k; change: 0k; max: 734937k; Net time:   1.96s; since prev. millisecs: 148
+2015-10-05 16:17:22,372 DEBUG [SerialController] - Time taken so far by GAZETTEER ITALIANO CUSTOM: 148
+2015-10-05 16:17:22,412 DEBUG [Profiler] - ---------LOG: ~Execute PR [GAZETTEER SPECIAL ID CUSTOM]---------
+Memory: 734937k; change: 0k; max: 734937k; Net time:   2.0s; since prev. millisecs: 41
+2015-10-05 16:17:22,412 DEBUG [SerialController] - Time taken so far by GAZETTEER SPECIAL ID CUSTOM: 41
+2015-10-05 16:17:22,413 DEBUG [SinglePhaseTransducer] - Start: myPreprocessing1
+2015-10-05 16:17:23,025 DEBUG [SinglePhaseTransducer] - Start: Indirizzo
+2015-10-05 16:17:39,675 DEBUG [SinglePhaseTransducer] - Start: myLocalita
+2015-10-05 16:17:40,008 DEBUG [SinglePhaseTransducer] - Start: myProvincia
+2015-10-05 16:17:40,139 DEBUG [SinglePhaseTransducer] - Start: myRegione
+2015-10-05 16:17:40,281 DEBUG [SinglePhaseTransducer] - Start: myEmailPhase
+2015-10-05 16:18:06,424 DEBUG [SinglePhaseTransducer] - Start: PartitaIVA
+2015-10-05 16:18:06,589 DEBUG [SinglePhaseTransducer] - Start: Telefono
+2015-10-05 16:18:07,484 DEBUG [SinglePhaseTransducer] - Start: Fax
+2015-10-05 16:18:07,832 DEBUG [Profiler] - ---------LOG: ~Execute PR [Jape Rules CUSTOM]---------
+Memory: 1313965k; change: 579028k; max: 1313965k; Net time:   47.42s; since prev. millisecs: 45420
+2015-10-05 16:18:07,832 DEBUG [SerialController] - Time taken so far by Jape Rules CUSTOM: 45420
+2015-10-05 16:18:08,040 DEBUG [Profiler] - ---------LOG: ~Execute PR [My Annotation Set]---------
+Memory: 1313965k; change: 0k; max: 1313965k; Net time:   47.63s; since prev. millisecs: 208
+2015-10-05 16:18:08,041 DEBUG [SerialController] - Time taken so far by My Annotation Set: 208
+2015-10-05 16:18:08,054 DEBUG [Profiler] - ---------LOG: ~Execute PR [My Annotation Set]---------
+Memory: 1313965k; change: 0k; max: 1313965k; Net time:   47.64s; since prev. millisecs: 14
+2015-10-05 16:18:08,054 DEBUG [SerialController] - Time taken so far by My Annotation Set: 222
+2015-10-05 16:18:08,132 DEBUG [Profiler] - ---------LOG: ~Execute PR [set HEAD]---------
+Memory: 1313965k; change: 0k; max: 1313965k; Net time:   47.72s; since prev. millisecs: 78
+2015-10-05 16:18:08,132 DEBUG [SerialController] - Time taken so far by set HEAD: 78
+2015-10-05 16:18:08,142 DEBUG [Profiler] - ---------LOG: ~Execute PR [set FOOTER]---------
+Memory: 1313965k; change: 0k; max: 1313965k; Net time:   47.73s; since prev. millisecs: 10
+2015-10-05 16:18:08,142 DEBUG [SerialController] - Time taken so far by set FOOTER: 10
+2015-10-05 16:18:08,314 DEBUG [Profiler] - ---------LOG: ~Execute PR [Flexible Gazetteer MySpecialID]---------
+Memory: 1313965k; change: 0k; max: 1313965k; Net time:   47.90s; since prev. millisecs: 172
+2015-10-05 16:18:08,314 DEBUG [SerialController] - Time taken so far by Flexible Gazetteer MySpecialID: 172
+2015-10-05 16:18:08,384 DEBUG [Profiler] - ---------LOG: ~Execute PR [set SPECIAL ID]---------
+Memory: 1313965k; change: 0k; max: 1313965k; Net time:   47.97s; since prev. millisecs: 70
+2015-10-05 16:18:08,384 DEBUG [SerialController] - Time taken so far by set SPECIAL ID: 70
+2015-10-05 16:18:08,384 DEBUG [Profiler] - ---------LOG: Execute controller [Geolocation Pipeline] finished---------
+Memory: 1313965k; change: 0k; max: 1313965k; Net time:   47.97s; since prev. millisecs: 0
+2015-10-05 16:44:05,557 INFO  [Init] - Initialising GATE
+2015-10-05 16:44:07,368 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 16:44:07,525 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 16:44:07,698 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 16:44:07,796 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 16:44:07,842 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 16:51:23,073 INFO  [Init] - Initialising GATE
+2015-10-05 16:51:24,610 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 16:51:24,707 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 16:51:24,863 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 16:51:24,925 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 16:51:24,964 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 17:06:31,845 INFO  [Init] - Initialising GATE
+2015-10-05 17:06:34,531 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 17:06:34,673 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 17:06:34,887 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 17:06:34,977 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 17:06:35,035 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 17:31:13,623 INFO  [Init] - Initialising GATE
+2015-10-05 17:31:15,447 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 17:31:15,658 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 17:31:15,826 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 17:31:15,948 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 17:31:15,995 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 18:05:23,565 INFO  [Init] - Initialising GATE
+2015-10-05 18:05:31,559 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 18:05:32,074 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 18:05:33,225 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 18:05:33,509 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 18:05:33,602 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 18:11:00,931 INFO  [Init] - Initialising GATE
+2015-10-05 18:11:02,673 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 18:11:02,757 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 18:11:02,931 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 18:11:02,983 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 18:11:03,019 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 18:17:36,183 INFO  [Init] - Initialising GATE
+2015-10-05 18:17:40,164 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 18:17:40,333 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 18:17:40,735 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 18:17:40,822 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 18:17:40,867 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 18:21:24,654 INFO  [Init] - Initialising GATE
+2015-10-05 18:21:26,029 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 18:21:26,101 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 18:21:26,242 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 18:21:26,287 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 18:21:26,317 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 18:24:06,099 INFO  [Init] - Initialising GATE
+2015-10-05 18:24:07,508 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 18:24:07,581 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 18:24:07,738 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 18:24:07,825 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 18:24:07,853 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 18:42:18,926 INFO  [Init] - Initialising GATE
+2015-10-05 18:42:20,345 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 18:42:20,414 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 18:42:20,556 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 18:42:20,599 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 18:42:20,630 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 19:01:11,856 INFO  [Init] - Initialising GATE
+2015-10-05 19:01:14,449 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 19:01:14,656 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 19:01:14,805 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 19:01:14,923 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 19:01:14,957 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/
+2015-10-05 19:06:32,286 INFO  [Init] - Initialising GATE
+2015-10-05 19:06:33,727 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tools/
+2015-10-05 19:06:33,802 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/LingPipe/
+2015-10-05 19:06:33,937 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/ANNIE/
+2015-10-05 19:06:33,987 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/JAPE_Plus/
+2015-10-05 19:06:34,016 INFO  [CreoleRegisterImpl] - CREOLE plugin loaded: file:/C:/Users/tenti/Desktop/Marco%20Utility/SERVER/apache-tomcat-8.0.27-windows-x64/bin/gate_files/plugins/Tagger_Framework/

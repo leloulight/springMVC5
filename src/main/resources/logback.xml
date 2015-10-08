@@ -11,13 +11,13 @@
 
     <!-- Send debug messages to a file at "c:/jcg.log" -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>C:\\Users\\tenti\\Desktop\\jcg.log</file>
+        <file>log/jcg.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
         </encoder>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>C:\\Users\\tenti\\Desktop\\jcg.%i.log.zip</FileNamePattern>
+            <FileNamePattern>log/jcg.%i.log.zip</FileNamePattern>
             <MinIndex>1</MinIndex>
             <MaxIndex>10</MaxIndex>
         </rollingPolicy>
