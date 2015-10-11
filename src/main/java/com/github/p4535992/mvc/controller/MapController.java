@@ -27,7 +27,7 @@ public class MapController {
     List<Marker> arrayMarker = new ArrayList<>();
     Integer indiceMarker = 0;
 
-    @RequestMapping(value="/map",method= RequestMethod.GET)
+    /*@RequestMapping(value="/map",method= RequestMethod.GET)
     public String loadMap1(Model model){
         String html = mapService.getResponseHTMLString();
         return "riconciliazione2/mappa/map";
@@ -37,7 +37,7 @@ public class MapController {
     public String result(@RequestParam(required=false, value="urlParam")String url,Model model){
         System.out.println("url: " + url);
         return "home";
-    }
+    }*/
 
     @RequestMapping(value="/map2",method= RequestMethod.GET)
     public String loadMap2(Model model){
@@ -58,8 +58,8 @@ public class MapController {
         return "riconciliazione2/mappa/leafletMap";
     }
 
-    @RequestMapping(value="/map2",method = RequestMethod.POST)
-    public String result2(@RequestParam(required=false, value="urlParam")String url, Model model){
+    /*@RequestMapping(value="/map2",method = RequestMethod.POST)
+    public String result2(@RequestParam(required=false, value="urlParam")String url){
         String[] splitter;
         if(url.contains(",")) {
             splitter = url.split(",");
@@ -73,24 +73,22 @@ public class MapController {
         arrayMarker.add(marker);
         indiceMarker++;
         return "redirect:/map2";
-    }
+    }*/
 
-    @RequestMapping(value="/map22",method = RequestMethod.POST)
+    /*@RequestMapping(value="/map22",method = RequestMethod.POST)
     public String result3(
             @RequestParam(required=false, value="urlParam")String url,
-            @ModelAttribute(value="markerParam")Marker markerFromJS,
-            Model model){
+            @ModelAttribute(value="markerParam")Marker markerFromJS){
         marker = null;
         System.out.println("url: " + url);
         //return to the loadMap2
         return "redirect:/map2";
         //return result2(url,model);
-    }
+    }*/
 
     @RequestMapping(value="/map3",method = RequestMethod.POST)
     public String result4(@RequestParam(required=false, value="urlParam")String url,
-                          @ModelAttribute(value="markerParam")Marker markerFromJS,
-                          Model model){
+                          @ModelAttribute(value="markerParam")Marker markerFromJS){
         String[] splitter;
         if(url.contains(",")) {
             splitter = url.split(",");
@@ -106,6 +104,10 @@ public class MapController {
         return "redirect:/map2";
     }
 
+
+    //----------------------------------------------
+    //NEW METHOD
+    //----------------------------------------------
 
 
 
