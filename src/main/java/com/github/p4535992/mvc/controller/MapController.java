@@ -39,7 +39,7 @@ public class MapController {
         return "home";
     }*/
 
-    @RequestMapping(value="/map2",method= RequestMethod.GET)
+    @RequestMapping(value="/map",method= RequestMethod.GET)
     public String loadMap2(Model model){
         //String html = mapService.getResponseHTMLString();
         //Site siteForm = new Site();
@@ -102,6 +102,17 @@ public class MapController {
         arrayMarker.add(marker);
         indiceMarker++;
         return "redirect:/map2";
+    }
+
+    @RequestMapping(value="/map4",method = RequestMethod.POST)
+    public String result(@RequestParam(required=false, value="nameParam1")String name,
+                         @RequestParam(required=false, value="latParam1")String lat,
+                         @RequestParam(required=false, value="lngParam1")String lng,
+                         @RequestParam(required=false, value="descriptionParam1")String description,
+                         Model model){
+
+        System.out.println("name: " + name +",lat:"+lat+",lng:"+lng+",description:"+description);
+        return "home";
     }
 
 

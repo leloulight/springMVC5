@@ -120,28 +120,51 @@
         alert("Loaded all JQUERY variable");
     });
 
-    /** function to get the information on hte marker ont*/
+    /** function to get the information on hte marker ont he Layer to a Array to pass */
     function getMarkers(){
         var array = [];
         alert("compile getMarkers");
         var i = 0;
-        if($.isEmptyObject(markerClusters)) {
-            alert("Marker cluster is not empty go to check the Marker.");
+        if(!$.isEmptyObject(markerClusters)) {
+            //alert("Marker cluster is not empty go to check the Marker.");
             markerClusters.eachLayer(function (layer) {
                 var lat = layer.getLatLng().lat;
-                alert("marker number(" + i + "):" + lat + "," + lng + "," + location + "," + popupContent);
                 var lng = layer.getLatLng().lng;
-                alert("marker number(" + i + "):" + lat + "," + lng + "," + location + "," + popupContent);
-                var location = layer.getLocation();
-                alert("marker number(" + i + "):" + lat + "," + lng + "," + location + "," + popupContent);
-                var popupContent = layer.getPopup();
-                alert("marker number(" + i + "):" + lat + "," + lng + "," + location + "," + popupContent);
-                array.push({name: location, lat: lat, lng: lng});
-                i++;
+                /*var location = layer.getLocation();*/
+                var popupContent = layer.getPopup().getContent();
+                var label = layer.getLabel()._content;
+                //alert("marker number(" + i + "):" + lat + "," + lng + "," + label);
+                array.push({name: label, lat: lat, lng: lng, description: popupContent});
+                //i++;
             });
         }
-        return array;
+        alert("...compiled getMarkers");
+        //var array = getMarkers();
+        for (i = 0; i < array.length; i++) {
+            addInput('nameForm'+i,array[i].name);
+            addInput('latForm'+i, array[i].lat);
+            addInput('lngForm'+i,  array[i].lng);
+            addInput('descriptionForm'+i,array[i].description);
+        }
+        alert("...compiled 2 getMarkers");
     }
+
+    function addInput(input_id,val,index) {
+        alert("compile addInput..."+input_id+","+val);
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('value', val);
+        input.setAttribute('name', input_id.replace('Form','Param'));
+        //document.body.appendChild(input);
+        document.getElementById('loadMarker').appendChild(input);
+        //setInputValue(input_id,val);
+        alert("compiled addInput...");
+    }
+
+    /*function setInputValue(input_id, val) {
+        document.getElementById(input_id).value = val;
+        //document.getElementById(input_id).setAttribute('value', val);
+    }*/
 
     /** Method that checks that the browser supports the HTML5 File API*/
     function browserSupportFileUpload() {
@@ -200,7 +223,7 @@
                 addPluginLayersStamenBaseMaps();
                 addPluginLocateControl();
                 //..add other functionality
-                map.on('click', onMapClick);
+                //map.on('click', onMapClick);
                 //Fired when the view of the map stops changing
                 map.on('moveend', onMapMove);
                 alert("MAP IS SETTED");
@@ -216,6 +239,13 @@
      * https://github.com/stefanocudini/leaflet-gps
      */
     function addPluginGPSControl() {
+        //Simple point
+        //map.addControl( new L.Control.Gps({autoActive:true}) );//inizialize control
+        //Custom marker
+        //map.addControl( new L.Control.Gps({marker: new L.Marker([0,0])}) );//inizialize control
+        //Custom a style (circle,ecc.)
+        //var newStyle = {radius: 25, weight:4, color: '#f0c', fill: true, opacity:0.8};
+        //map.addControl( new L.Control.Gps({style: newStyle }) );//inizialize control
         GPSControl = new L.Control.Gps({maxZoom: 16,style: null});
         map.addControl(GPSControl);
     }
@@ -331,6 +361,11 @@
             }
             arrayMarkerVar.length = 0; //...reset array
         }
+        markerClusters.eachLayer(function (layer) {
+            layer.closePopup();
+            map.removeLayer(layer);
+        });
+
         map.closePopup();
         map.removeLayer(markerClusters);//....remove layer
         points.clearLayers();
@@ -438,11 +473,11 @@
             // add location control to global name space for testing only
             // on a production site, omit the "lc = "!
             //var lc = new L.Control.MyLocate();
-            //var lc = new L.Control.Locate();
             // create control and add to map
             var lc = new L.control.locate({
                 position: 'topleft',  // set the location of the control
                 layer: new L.LayerGroup(),  // use your own layer for the location marker
+                //layer: markerClusters,  // use your own layer for the location marker
                 drawCircle: true,  // controls whether a circle is drawn that shows the uncertainty about the location
                 follow: false,  // follow the user's location
                 setView: true, // automatically sets the map view to the user's location, enabled if `follow` is true
@@ -474,10 +509,10 @@
                 },
                 locateOptions: {}  // define location options e.g enableHighAccuracy: true or maxZoom: 10
             });
+            //var lc = L.control.locate({follow: true,strings: {title: "Show me where I am"}});
             lc.addTo(map);
             // request location update and set location (e.g. onLoad page)
             //lc.start();
-
             map.on('startfollowing', function() {
                 map.on('dragstart', lc._stopFollowing, lc);
             }).on('stopfollowing', function() {
@@ -492,7 +527,6 @@
      */
     function addPluginSearch(){
         if (!$.isEmptyObject(markerClusters)) {
-
             var controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
             map.addControl( controlSearch );
             //map.addControl( new L.Control.Search({layer: markerClusters}) );
