@@ -15,6 +15,7 @@
 <head>
     <!-- SUPPPORT CSS LIBRARY -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui1.10.04.css" />
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 
     <!-- PLUGIN LEAFLET CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/leaflet.awesome-markers.css"/>
@@ -31,6 +32,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.scss"/>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/leaflet.label.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.mobile.css"/>
     <!-- OTHER CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
     <!-- Leaflet CSS -->
@@ -76,7 +79,10 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geocsv/leaflet.geocsv-src.js"></script>
 
+    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.js"></script>
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/leaflet_buildMap_support.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/utility_leaflet_csv.js"></script>
   <title></title>
 </head>
 <body>
@@ -111,57 +117,28 @@
                 <!-- ELENCO DELLE DUE TAB JQUERY UI -->
                 <li><a href="#tabs-1">Ricerca Web-Geolocalizzazione</a></li>
                 <li><a href="#tabs-2">Ricerca Servizi in Toscana</a></li>
+                <li><a href="#tabs-3">Markers utility</a></li>
             </ul>
             <div id="tabs-1">
-                <div id="buttonLocalize2">
-                    <button id="localizeName2" class="buttonLocalizeName2">Cercando Località</button>
-                    <input type="file" id="uploader" name="files[]" multiple>
-                </div>
                 <div class="use-case-1">
-                    Inserisci un URL:
-                    <c:url var="url" value="/map3" />
-                    <form:form action="${url}" method="post" >
-                        <p>
-                        <input type="text" name="urlParam" value="" />
-                        <c:if test="${(not empty arrayMarker) && (arrayMarker.size() >= indiceMarker)}" >
-                        <input id="arrayMarkerForm" name="arrayMarkerParam" type="hidden" value="<c:out value="${arrayMarker}" />"/>
-                            <p>LENGTH OF MARKERS: ${arrayMarker.size()}</p>
-                            <c:forEach items="${arrayMarker}" var="idMarker">
-                                <p id="marker">
-                                    <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${idMarker.name}" />"/>
-                                    <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${idMarker.url}" />"/>
-                                    <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${idMarker.latitude}" />"/>
-                                    <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${idMarker.longitude}" />"/>
-                                    <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.region}" />"/>
-                                    <input id="provinceForm" name="provinceParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.province}" />"/>
-                                    <input id="cityForm" name="cityParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.city}" />"/>
-                                    <input id="addressForm" name="addressParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.address}" />"/>
-                                    <input id="phoneForm" name="phoneParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.phone}" />"/>
-                                    <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.email}" />"/>
-                                    <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.fax}" />"/>
-                                    <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.iva}" />"/>
-                                </p>
-                                <script>
-                                    //leaflet_buildMap_support.initMap();
-                                    leaflet_buildMap_support.pushMarkerToArrayMarker(
-                                            "${idMarker.name}","${idMarker.url}","${idMarker.latitude}","${idMarker.longitude}",
-                                            "${idMarker.markerInfo.region}","${idMarker.markerInfo.province}","${idMarker.markerInfo.city}",
-                                            "${idMarker.markerInfo.address}","${idMarker.markerInfo.phone}","${idMarker.markerInfo.email}",
-                                            "${idMarker.markerInfo.fax}","${idMarker.markerInfo.iva}");
-                                </script>
-                            </c:forEach>
-                        </c:if>
-                        <input type="submit" name="urlFormParam" value="urlForm" />
-                        </p>
-                    </form:form>
-                    <p>
-                    <ul>
-                        <li>Name:<c:out value="${marker.name}"/></li>
-                        <li>URL:<c:out value="${marker.url}"/></li>
-                        <li>LAT:<c:out value="${marker.latitude}"/></li>
-                        <li>LNG:<c:out value="${marker.longitude}"/></li>
-                    </ul>
-                    </p>
+                    Seleziona una linea:
+                    <br/>
+                    <select id="elencolinee" name="elencolinee" onchange="mostraElencoFermate(this);">
+                        <option value=""> - Seleziona una Linea - </option>
+                        <option value="all">TUTTE LE LINEE</option>
+                        <option value="LINE4">Linea 4</option>
+                        <option value="LINE6">Linea 6</option>
+                        <option value="LINE17">Linea 17</option>
+                        <option value="LINE23">Linea 23</option>
+                        <option value="LINE23">Linea 31</option>
+                    </select>
+                    <br />
+                    Seleziona una fermata:
+                    <br/>
+                    <select id="elencofermate" name="elencofermate" onchange="mostraFermate(this);">
+                        <option value=""> - Seleziona una Fermata - </option>
+
+                    </select>
                 </div>
             </div>
             <div id="tabs-2">
@@ -182,18 +159,16 @@
                         <option value="PRATO">PRATO</option>
                         <option value="SIENA">SIENA</option>
                     </select>
-                    <br />
-                    Seleziona un comune:
-                    <br/>
+                    <br />Seleziona un comune:<br/>
                     <select id="elencocomuni" name="elencocomuni" onchange="mostraComune(this);">
                         <option value=""> - Seleziona un Comune - </option>
                     </select>
                     <br />
-                    Ricerca un Marker:
                     <br/>
+                    <label>Search Marker 1:</label>
                     <div id="filter-container">
                         <form class="form-search" class="noSelect" onSubmit="addCsvMarkers(); return false;">
-                            <a href="#" id="clear" class="leaflet-popup-close-button">clear&#215;</a>
+                            <a href="#" id="clear" class="leaflet-popup-close-button">&#215;</a>
                             <div class="input-append">
                                 <input type="text" id="filter-string" class="input-medium search-query search-box" autocomplete="off">
                                 <button type="submit" class="btn search-box"><i class="icon-search"></i></button>
@@ -203,7 +178,68 @@
                         </form>
                         <div id="search-results" class="leaflet-control-attribution leaflet-control pull-right"></div>
                     </div>
+                    <label>Search Marker 2:</label>
+                    <div id="formsearch" style="margin: 0 2em 1em 2em;float:left">
+                        <input id="textsearch" type="text" value="" />
+                    </div>
                     <br />
+                </div>
+            </div>
+            <div id="tabs-3">
+                <div class="use-case-3">
+                UPLOAD a CSV File.
+                <br />Set Field Separator CSV file (default "|"):
+                <br /><input id="fieldSeparator" type="text" name="fieldSeparatorCSVParam" value="" maxlength="1" size="1"/>
+                <br /> Set Line Separator CSV file (default "\n"):
+                <br /><input id="lineSeparator" type="text" name="lineSeparatorCSVParam" value="" maxlength="1" size="1"/>
+                <br />Choose CSV file:
+                <input type="file" id="uploader" name="files[]" multiple accept="text/csv">
+                <br />
+                <div id="buttonLocalize2">
+                    <button id="localizeName2" class="buttonLocalizeName2">Cercando Località</button><br />
+                </div>
+                <br />
+                Inserisci un URL:
+                <c:url var="url" value="/map3" />
+                <form:form action="${url}" method="post" >
+                    <input type="text" name="urlParam" value="" />
+                    <c:if test="${(not empty arrayMarker) && (arrayMarker.size() >= indiceMarker)}" >
+                        <input id="arrayMarkerForm" name="arrayMarkerParam" type="hidden" value="<c:out value="${arrayMarker}" />"/>
+                        LENGTH OF MARKERS: ${arrayMarker.size()}
+                        <c:forEach items="${arrayMarker}" var="idMarker">
+                            <p id="marker">
+                                <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${idMarker.name}" />"/>
+                                <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${idMarker.url}" />"/>
+                                <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${idMarker.latitude}" />"/>
+                                <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${idMarker.longitude}" />"/>
+                                <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.region}" />"/>
+                                <input id="provinceForm" name="provinceParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.province}" />"/>
+                                <input id="cityForm" name="cityParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.city}" />"/>
+                                <input id="addressForm" name="addressParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.address}" />"/>
+                                <input id="phoneForm" name="phoneParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.phone}" />"/>
+                                <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.email}" />"/>
+                                <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.fax}" />"/>
+                                <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.iva}" />"/>
+                            </p>
+                            <script>
+                                //leaflet_buildMap_support.initMap();
+                                leaflet_buildMap_support.pushMarkerToArrayMarker(
+                                        "${idMarker.name}","${idMarker.url}","${idMarker.latitude}","${idMarker.longitude}",
+                                        "${idMarker.markerInfo.region}","${idMarker.markerInfo.province}","${idMarker.markerInfo.city}",
+                                        "${idMarker.markerInfo.address}","${idMarker.markerInfo.phone}","${idMarker.markerInfo.email}",
+                                        "${idMarker.markerInfo.fax}","${idMarker.markerInfo.iva}");
+                            </script>
+                        </c:forEach>
+                    </c:if>
+                    <input type="submit" name="urlFormParam" value="urlForm" />
+                </form:form>
+                <ul>
+                    <li>Name:<c:out value="${marker.name}"/></li>
+                    <li>URL:<c:out value="${marker.url}"/></li>
+                    <li>LAT:<c:out value="${marker.latitude}"/></li>
+                    <li>LNG:<c:out value="${marker.longitude}"/></li>
+                </ul>
+                <input type="button" value="Get Markers" id="getMarkers"  />
                 </div>
             </div>
         </div>

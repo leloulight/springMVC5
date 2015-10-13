@@ -53,7 +53,7 @@
 		ResultSet rs2 = null;
 
 		String url = "jdbc:mysql://localhost:3306/";
-		String db = "siimobility_Tenti";
+		String db = "siimobility";
 		String driver = "com.mysql.jdbc.Driver";
 		String user = "siimobility";
 		String pass = "siimobility";
@@ -88,29 +88,29 @@
     		<div id="tabs">
   				<ul>
   					<!-- ELENCO DELLE DUE TAB JQUERY UI -->
-    				<li><a href="#tabs-1">Ricerca Web-Geolocalizzazione</a></li>
+    				<li><a href="#tabs-1">Ricerca Fermata Bus Firenze</a></li>
     				<li><a href="#tabs-2">Ricerca Servizi in Toscana</a></li>
   				</ul>
   			<div id="tabs-1">
     			<div class="use-case-1">
-<!-- 					Seleziona una linea: -->
-<!-- 					<br/> -->
-<!-- 					<select id="elencolinee" name="elencolinee" onchange="mostraElencoFermate(this);"> -->
-<!-- 						<option value=""> - Seleziona un protocollo - </option> -->
-<!-- 						<option value="all">TUTTE LE LINEE</option> -->
-<!-- 						 option value="LINE4">Linea 4</option> -->
-<!-- 						<option value="HTTP">HTTP</option>						 -->
-<!-- 						<option value="FTP">FTP</option> -->
-<!-- 						<option value="TELNET">TELNET</option> -->
-<!-- 					</select> -->
-<!-- 					<br /> -->
-					Inserisci un URL:
+					Seleziona una linea:
 					<br/>
-					<input id="elencofermate" name="elencofermate" onchange="mostraFermate(this);"/>
-<!-- 					<select id="elencofermate" name="elencofermate" onchange="mostraFermate(this);"> -->
-<!-- 						<option value=""> - Seleziona una Fermata - </option> -->
+					<select id="elencolinee" name="elencolinee" onchange="mostraElencoFermate(this);">
+						<option value=""> - Seleziona una Linea - </option>
+						<option value="all">TUTTE LE LINEE</option>
+						<option value="LINE4">Linea 4</option>
+						<option value="LINE6">Linea 6</option>
+						<option value="LINE17">Linea 17</option>
+						<option value="LINE23">Linea 23</option>
+						<option value="LINE23">Linea 31</option>
+					</select>
+					<br />
+					Seleziona una fermata:
+					<br/>
+					<select id="elencofermate" name="elencofermate" onchange="mostraFermate(this);">
+						<option value=""> - Seleziona una Fermata - </option>
 						
-<!-- 					</select> -->
+					</select>
 				</div>
       		</div>
   			<div id="tabs-2">
@@ -218,7 +218,7 @@
 			%>
 
 		 	<br />
-<!-- 			<input type="checkbox" name="near-bus-stops" value="NearBusStops" class="macrocategory" /> <span class="near-bus-stops macrocategory-label">Fermate Autobus</span> -->
+			<input type="checkbox" name="near-bus-stops" value="NearBusStops" class="macrocategory" /> <span class="near-bus-stops macrocategory-label">Fermate Autobus</span>
 			</div>
 			<hr />
  			Raggio di Ricerca: 
@@ -280,11 +280,11 @@
 	            popup: this._popup
 	        });
 	    }
-	});
-
+	}); 
+	
 	// CREAZIONE MAPPA CENTRATA NEL PUNTO
 	var map = L.map('map').setView([43.3555664, 11.0290384], 8);
-
+	
 	// SCELTA DEL TILE LAYER ED IMPOSTAZIONE DEI PARAMETRI DI DEFAULT
 	L.tileLayer('http://c.tiles.mapbox.com/v3/examples.map-szwdot65/{z}/{x}/{y}.png', { // NON MALE
 	//L.tileLayer('http://{s}.tile.cloudmade.com/{key}/22677/256/{z}/{x}/{y}.png', {
@@ -293,58 +293,58 @@
 			//L.tileLayer('http://tilesworld1.waze.com/tiles/{z}/{x}/{y}.png', {
 		//		L.tileLayer('http://maps.yimg.com/hx/tl?v=4.4&x={x}&y={y}&z={z}', {
 			//L.tileLayer('http://a.tiles.mapbox.com/v3/examples.map-bestlap85.h67h4hc2/{z}/{x}/{y}.png', { MAPBOX MA NON FUNZIA
-		//L.tileLayer('http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/998/256/{z}/{x}/{y}.png', {
-		//	L.tileLayer('http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/121900/256/{z}/{x}/{y}.png', {
+		//L.tileLayer('http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/998/256/{z}/{x}/{y}.png', { 
+		//	L.tileLayer('http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/121900/256/{z}/{x}/{y}.png', { 
 		attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2012 CloudMade',
 		key: 'BC9A493B41014CAABB98F0471D759707',
 		minZoom: 8
 	}).addTo(map);
-
+		
 	// DEFINIZIONE DEI CONFINI MASSIMI DELLA MAPPA
 	var bounds = new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4));
-	map.setMaxBounds(bounds);
-
+	map.setMaxBounds(bounds);	
+	
 	// GENERAZIONE DEI LAYER PRINCIPALI
 	var busStopsLayer = new L.LayerGroup();
 	var servicesLayer = new L.LayerGroup();
 	var clickLayer = new L.LayerGroup();
 	var GPSLayer = new L.LayerGroup();
-
+	
 	// AGGIUNTA DEL PLUGIN PER LA GEOLOCALIZZAZIONE
 	var GPSControl = new L.Control.Gps({
 		maxZoom: 16,
 		style: null
-	});
+	}); 
 	map.addControl(GPSControl);
-
+	
 	// ASSOCIA FUNZIONI AGGIUNTIVE ALL'APERTURA DI UN POPUP SU PARTICOLARI TIPI DI DATI
 	map.on('popupopen', function(e) {
-
+		
 		$('#raggioricerca').prop('disabled', false);
 		$('#numerorisultati').prop('disabled', false);
-
+		
 		var markerPopup = e.popup._source;
 		  var tipoServizio = markerPopup.feature.properties.tipo;
 		  var nome = markerPopup.feature.properties.nome;
-
+		  
 		  selezione = 'Servizio: ' + markerPopup.feature.properties.nome;
 		  coordinateSelezione = markerPopup.feature.geometry.coordinates[1] + ";" + markerPopup.feature.geometry.coordinates[0];
 		  $('#selezione').html(selezione);
 		  if (tipoServizio == 'fermata'){
-
+			  
 		  	// SE IL SERVIZIO E' UNA FERMATA MOSTRA GLI AVM NEL MENU CONTESTUALE
 		  	  selezione = 'Fermata Bus: ' + markerPopup.feature.properties.nome;
 		  	  coordinateSelezione = markerPopup.feature.geometry.coordinates[1] + ";" + markerPopup.feature.geometry.coordinates[0];
 		  	  $('#selezione').html(selezione);
-			  mostraAVMAJAX(nome);
+			  mostraAVMAJAX(nome);  
 		  }
 		  if (tipoServizio == 'parcheggio_auto'){
 			// SE IL SERVIZIO E' UN PARCHEGGIO MOSTRA LO STATO DI OCCUPAZIONE NEL MENU CONTESTUALE
 		  	  mostraParcheggioAJAX(nome);
 		  }
 	});
-
-	// DEFINIZIONE MARKERS DI DIFFERENTI COLORI
+	
+	// DEFINIZIONE MARKERS DI DIFFERENTI COLORI 
 	var markerAccommodation = L.AwesomeMarkers.icon({
 	    markerColor: 'red'
 	  });
@@ -398,26 +398,26 @@
 	var layerTourismService = L.layerGroup();
 	var layerTransferService = L.layerGroup();
 	var layerWineAndFood = L.layerGroup();
-
-	// AL CLICK CERCO L'INDIRIZZO APPROSSIMATIVO
+	
+	// AL CLICK CERCO L'INDIRIZZO APPROSSIMATIVO	
 	 map.on('click', function (e) {
-
+		 
 	 	if (selezioneAttiva == true){
-
+	 	
 	 	if (ricercaInCorso == false){
 	 	$('#raggioricerca').prop('disabled', false);
 	 	$('#numerorisultati').prop('disabled', false);
-
+	 	
 	 	ricercaInCorso = true;
 		$('#info-aggiuntive .content').html("Indirizzo Approssimativo: <img src=\"/WebAppGrafo/img/ajax-loader.gif\" width=\"16\" />");
 		clickLayer.clearLayers();
 		//clickLayer = new L.LatLng(e.latlng);
 		clickLayer = L.layerGroup([new L.marker(e.latlng)]).addTo(map);
-		var latLngPunto = e.latlng;
+		var latLngPunto = e.latlng;	
 		coordinateSelezione = latLngPunto.lat + ";" + latLngPunto.lng;
 		var latPunto = new String(latLngPunto.lat);
 		var lngPunto = new String(latLngPunto.lng);
-
+		
 		selezione = 'Coord: ' + latPunto.substring(0,7) + "," + lngPunto.substring(0,7);
 		$('#selezione').html(selezione);
 		$.ajax({
@@ -436,27 +436,27 @@
 		});
 	 	}
 	 	}
-	});
+	}); 
 
 	// VARIABILI PER LA FUNZIONALITA' DI RICERCA INDIRIZZO APPROSSIMATIVO
 	var selezioneAttiva = false;
 	var ricercaInCorso = false;
-
+	
 	$( document ).ready(function() {
 		// all'apertura della pagina CREO LE TABS JQUERY UI NEL MENU IN ALTO
 		$( "#tabs" ).tabs();
 	});
-
-
+	
+	
 	// VARIABILI PER LA FUNZIONALITA' DI RICERCA SERVIZI
 	var selezione;
 	var coordinateSelezione;
 	var numeroRisultati;
-
-
+	
+	
 	// MOSTRA ELENCO FERMATE DI UNA LINEA
 	function mostraElencoFermate(selectOption) {
-		if (selectOption.options.selectedIndex != 0){
+		if (selectOption.options.selectedIndex != 0){	
 			$('#elencoprovince')[0].options.selectedIndex = 0;
 			$('#elencocomuni').html('<option value=""> - Seleziona un Comune - </option>');
 			$('#loading').show();
@@ -470,15 +470,15 @@
 				},
 				success : function(msg) {
 					$('#elencofermate').html(msg);
-					$('#loading').hide();
+					$('#loading').hide();	
 				}
-			});
+			});	
 		}
 	}
-
+	
 	// MOSTRA ELENCO COMUNI DI UNA PROVINCIA
 	function mostraElencoComuni(selectOption) {
-		if (selectOption.options.selectedIndex != 0){
+		if (selectOption.options.selectedIndex != 0){	
 			$('#elencolinee')[0].options.selectedIndex = 0;
 			$('#elencofermate').html('<option value=""> - Seleziona una Fermata - </option>');
 			$('#loading').show();
@@ -497,11 +497,11 @@
 			});
 		}
 	}
-
-
-
+	
+	
+	
 	// FUNZIONI DI RICERCA PRINCIPALI
-
+	
 	// MOSTRA AVM DI UNA PARTICOLARE FERMATA
 function mostraAVMAJAX(nomeFermata){
 	$('#info-aggiuntive .content').html("Ricerca AVM in corso: <img src=\"/WebAppGrafo/img/ajax-loader.gif\" width=\"16\" />");
@@ -514,8 +514,8 @@ function mostraAVMAJAX(nomeFermata){
 			nomeFermata: nomeFermata
 		},
 		success : function(msg) {
-			$('#info-aggiuntive .content').html(msg);
-		}
+			$('#info-aggiuntive .content').html(msg);		
+		}	
 	});
 }
 	// MOSTRA STATO OCCUPAZIONE DI UN PARCHEGGIO
@@ -538,13 +538,13 @@ function mostraParcheggioAJAX(nomeParcheggio){
 	// MOSTRA ELENCO FERMATE DI UNA LINEA (DROPDOWN IN ALTO)
 function mostraFermate(selectOption) {
 	$('#info-aggiuntive .content').html('');
-	if (selectOption.options.selectedIndex != 0){
-
+	if (selectOption.options.selectedIndex != 0){	
+		
 		GPSControl._isActive = false;
 		svuotaLayers();
 		$('#loading').show();
 		if (selectOption.options[selectOption.options.selectedIndex].value == 'all'){
-
+	
 		$('#raggioricerca').prop('disabled', 'disabled');
 		$('#raggioricerca')[0].options.selectedIndex = 0;
 		$('#numerorisultati').prop('disabled', 'disabled');
@@ -552,7 +552,7 @@ function mostraFermate(selectOption) {
 		/* TEMPORANEAMENTE DISABILITATO (FUNZIONALITA' PER LA VISUALIZZAZIONE DI UNA ROUTE COME ELENCO DI SEGMENTI)
 		if ($('#elencolinee')[0].options[$('#elencolinee')[0].options.selectedIndex].value == 'LINE17'){
 			// SE E' LA LINEA 17 FACCIO VEDERE LE ROUTESECTION
-
+			
 			$.ajax({
 				url : "${pageContext.request.contextPath}/ajax/json/get-bus-route.jsp",
 				type : "GET",
@@ -562,11 +562,11 @@ function mostraFermate(selectOption) {
 					numeroRoute: '438394'
 				},
 				success : function(msg) {
-					var busRouteLayer = L.geoJson(msg).addTo(map);
+					var busRouteLayer = L.geoJson(msg).addTo(map);	
 				}
-			});
+			});	  
 		}
-
+		
 		*/
 		$.ajax({
 			url : "${pageContext.request.contextPath}/ajax/json/get-bus-stops-of-line.jsp",
@@ -587,7 +587,7 @@ function mostraFermate(selectOption) {
 				onEachFeature: function(feature, layer){
 					var popupContent = "FERMATA : " + feature.properties.popupContent + "<br />";
 					popupContent += "<a href='http://log.disit.org/service/?sparql=http%3A%2F%2F150.217.15.64%2Fopenrdf-workbench%2Frepositories%2Fsiimobilityultimate%2Fquery&uri=" + feature.properties.serviceId + "' title='Linked Open Graph' target='_blank'>LINKED OPEN GRAPH</a>";
-
+				
 					layer.bindPopup(popupContent);
 					layer.on({
 						//mouseover: aggiornaAVM
@@ -598,7 +598,7 @@ function mostraFermate(selectOption) {
 				var confiniMappa = busStopsLayer.getBounds();
 				map.fitBounds(confiniMappa, {padding: [50, 50]});
 				$('#loading').hide();
-
+				
 			},
 			error: function (request, status, error) {
 				$('#loading').hide();
@@ -617,7 +617,7 @@ function mostraFermate(selectOption) {
 				nomeFermata: selectOption.options[selectOption.options.selectedIndex].value
 			},
 			success : function(msg) {
-
+				
 				//$('#elencofermate').html(msg);
 				selezione = 'Fermata Bus: ' + selectOption.options[selectOption.options.selectedIndex].value;
 				$('#selezione').html(selezione);
@@ -631,13 +631,13 @@ function mostraFermate(selectOption) {
 				onEachFeature: function(feature, layer){
 					var popupContent = "FERMATA : " + feature.properties.popupContent + "<br />";
 					popupContent += "<a href='http://log.disit.org/service/?sparql=http%3A%2F%2F150.217.15.64%2Fopenrdf-workbench%2Frepositories%2Fsiimobilityultimate%2Fquery&uri=" + feature.properties.serviceId + "' title='Linked Open Graph' target='_blank'>LINKED OPEN GRAPH</a>";
-
-
+					
+					
 					layer.bindPopup(popupContent);
 					layer.on({
 						//mouseover: aggiornaAVM
-					});
-				},
+					});	
+				},			
 			}).addTo(map);
 				map.setView(new L.LatLng(latBusStop, longBusStop), 16);
 				$('#loading').hide();
@@ -674,7 +674,7 @@ function ricercaServizi(nomeFermata) {
 	}
 	else{
 		alert("Attenzione, non è stata selezionata alcuna risorsa di partenza per la ricerca");
-	}
+	}	
 }
 
 // FUNZIONE PRINCIPALE DI RICERCA SERVIZI
@@ -682,15 +682,15 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 	$('#info-aggiuntive .content').html('');
 	numeroRisultati = $('#numerorisultati')[0].options[$('#numerorisultati')[0].options.selectedIndex].value;
 	var centroRicerca;
-	// IN BASE AL CONTENUTO DELLA VARIABILE selezione VIENE ESEGUITA UNA RICERCA DIVERSA
+	// IN BASE AL CONTENUTO DELLA VARIABILE selezione VIENE ESEGUITA UNA RICERCA DIVERSA 
 	if (coordinateSelezione != "" && undefined != coordinateSelezione){
 		if (coordinateSelezione == "Posizione Attuale"){
 			// SE HO RICHIESTO LA POSIZIONE ATTUALE ESTRAGGO LE COORDINATE
-			centroRicerca = GPSControl._currentLocation.lat + ";" + GPSControl._currentLocation.lng;
-		}
+			centroRicerca = GPSControl._currentLocation.lat + ";" + GPSControl._currentLocation.lng;	
+		}	
 		if (selezione.indexOf("Fermata Bus:") != -1){
 			centroRicerca = coordinateSelezione;
-
+			
 		}
 		if (selezione.indexOf("Coord:") != -1){
 			centroRicerca = coordinateSelezione;
@@ -698,7 +698,7 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 		if (selezione.indexOf("Servizio:") != -1){
 			centroRicerca = coordinateSelezione;
 		}
-
+	
 		// FUNZIONE AJAX DI CARICAMENTO SERVIZI ATTORNO AD UN PUNTO
 		$.ajax({
 			url : "${pageContext.request.contextPath}/ajax/json/get-services.jsp",
@@ -706,7 +706,7 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 			async: true,
 			dataType: 'json',
 			data : {
-
+				
 				centroRicerca: centroRicerca,
 				raggio: $('#raggioricerca')[0].options[$('#raggioricerca')[0].options.selectedIndex].value,
 				categorie: categorie,
@@ -800,9 +800,9 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 							}
 						});
 						}
-
+					
 					$('#loading').hide();
-
+					
 					if (msg.features.length > 0){
 					// SE HO ALMENO UN RISULTATO AGGIUNGO IL LAYER ALLA MAPPA
 					var numeroServizi = 0;
@@ -828,16 +828,16 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 					        }
 					        else{
 					        	numeroServizi++;
-					        }
+					        }	
 					    }
 					}).addTo(map);
-
+					
 					// centratura e zoomatura della mappa in base ai risultati
 					var confiniMappa = servicesLayer.getBounds();
 					map.fitBounds(confiniMappa, {padding: [50, 50]});
 					// AVVISO NUMERO DI RISULTATI
 					if (msg.features.length < numeroRisultati || numeroRisultati == 0){
-
+						
 						alert(numeroServizi + " servizi e " + numeroBus + " fermate autobus recuperati");
 					}
 					else{
@@ -879,7 +879,7 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 				async: true,
 				dataType: 'json',
 				data : {
-
+					
 					nomeLinea: $('#elencolinee')[0].options[$('#elencolinee')[0].options.selectedIndex].value,
 					raggio: 100,
 					categorie: categorie,
@@ -891,10 +891,10 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 					if (msg.features.length > 0){
 						// SE C'E' ALMENO UN RISULTATO AGGIUNGO IL LAYER ALLA MAPPA
 						servicesLayer = L.geoJson(msg, {
-
+					 
 					    pointToLayer: function(feature, latlng) {
 					    	var tipoMarker = switchCategorie(feature.properties.tipo);
-					    	return new L.Marker(latlng, {icon: tipoMarker});
+					    	return new L.Marker(latlng, {icon: tipoMarker});  
 					    },
 					    onEachFeature: function (feature, layer) {
 					    	// POPOLAZIONE POPUP PER OGNI ELEMENTO
@@ -907,13 +907,13 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 					        layer.bindPopup(contenutoPopup);
 					    }
 					}).addTo(map);
-
+					
 					// CENTRATURA E ZOOMATURA
 					var confiniMappa = servicesLayer.getBounds();
 					map.fitBounds(confiniMappa, {padding: [50, 50]});
 					// AVVISO NUMERO SERVIZI TROVATI
 					alert(msg.features.length + " servizi recuperati");
-
+					
 					}
 					else{
 						alert("La ricerca non ha prodotto risultati");
@@ -925,11 +925,11 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
 					alert('Si è verificato un errore');
 			    }
 			});
-
+			
 		}
-
+		
 	}
-
+		
 	}
 
 

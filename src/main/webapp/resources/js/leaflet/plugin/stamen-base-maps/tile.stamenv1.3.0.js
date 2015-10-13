@@ -37,6 +37,20 @@ var SUBDOMAINS = "a. b. c. d.".split(" "),
             ],
             "attribution": [].join(" ")
         },
+        "disit2": {
+            "url": "http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg",
+            "type": "jpeg",
+            "subdomains": "1 2 3 4".split(" "),
+            "minZoom": 11,
+            "maxZoom": 18,
+            "extent": [
+                {"lat": 37.853, "lon": -122.577},
+                {"lat": 37.684, "lon": -122.313}
+            ],
+            "attribution": [
+                'Tiles Courtesy of <a href=\"http://www.mapquest.com/\">MapQuest</a> &mdash; Map data {attribution.OpenStreetMap}'
+            ].join(" ")
+        },
         /** end modification 453992*/
         "trees-cabs-crime": {
             "url": "http://{S}.tiles.mapbox.com/v3/stamen.trees-cabs-crime/{Z}/{X}/{Y}.png",

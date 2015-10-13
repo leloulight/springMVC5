@@ -2,23 +2,24 @@
  * Created by 4535992 on 11/06/2015.
  */
 
-/*** Get a javascript file for load a extranll resource on the page*/
-function loadJS(src, callback) {
-    var s = document.createElement('script');
-    s.src = src;
-    s.async = true;
-    s.onreadystatechange = s.onload = function() {
-        var state = s.readyState;
-        if (!callback.done && (!state || /loaded|complete/.test(state))) {
-            callback.done = true;
-            callback();
-        }
-    };
-    document.getElementsByTagName('head')[0].appendChild(s);
-}
-loadJS('/script/script.js', function() {
-    // put your code here to run after script is loaded
-});
+    /*** Get a javascript file for load a external resource on the page*/
+    function loadJS(src, callback) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.async = true;
+        s.onreadystatechange = s.onload = function() {
+            var state = s.readyState;
+            if (!callback.done && (!state || /loaded|complete/.test(state))) {
+                callback.done = true;
+                callback();
+            }
+        };
+        document.getElementsByTagName('head')[0].appendChild(s);
+    }
+
+    loadJS('/script/script.js', function() {
+        // put your code here to run after script is loaded
+    });
 
 // ASSOCIA FUNZIONI AGGIUNTIVE ALL'APERTURA DI UN POPUP SU PARTICOLARI TIPI DI DATI
 map.on('popupopen', function(e) {
@@ -187,7 +188,6 @@ function mostraParcheggioAJAX(nomeParcheggio){
 function mostraFermate(selectOption) {
     $('#info-aggiuntive .content').html('');
     if (selectOption.options.selectedIndex != 0){
-
         GPSControl._isActive = false;
         svuotaLayers();
         $('#loading').show();
@@ -217,7 +217,7 @@ function mostraFermate(selectOption) {
 
              */
             $.ajax({
-                url : "${pageContext.request.contextPath}/ajax/json/get-bus-stops-of-line.jsp",
+                url : "resources/ajax/json/get-bus-stops-of-line.jsp",
                 type : "GET",
                 async: true,
                 dataType: 'json',
