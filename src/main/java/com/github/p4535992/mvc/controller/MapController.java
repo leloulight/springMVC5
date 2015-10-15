@@ -1,7 +1,9 @@
 package com.github.p4535992.mvc.controller;
 
 import com.github.p4535992.mvc.object.model.site.Marker;
+import com.github.p4535992.mvc.object.model.site.MarkerInfo;
 import com.github.p4535992.mvc.service.dao.MapService;
+import com.github.p4535992.util.html.JSoupKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -55,6 +57,8 @@ public class MapController {
             model.addAttribute("arrayMarker",null);
             model.addAttribute("urlParam",null);
         }
+        String html = mapService.getResponseHTMLString();
+        model.addAttribute("HTML",html);
         return "riconciliazione2/mappa/leafletMap";
     }
 
@@ -105,13 +109,22 @@ public class MapController {
     }
 
     @RequestMapping(value="/map4",method = RequestMethod.POST)
-    public String result(@RequestParam(required=false, value="nameParam1")String name,
-                         @RequestParam(required=false, value="latParam1")String lat,
-                         @RequestParam(required=false, value="lngParam1")String lng,
-                         @RequestParam(required=false, value="descriptionParam1")String description,
-                         Model model){
+    public String result(@RequestParam(required=false, value="nameParam1")List<String> name,
+                         @RequestParam(required=false, value="latParam1")List<String> lat,
+                         @RequestParam(required=false, value="lngParam1")List<String> lng,
+                         @RequestParam(required=false, value="descriptionParam1")List<String> description,
+                         @RequestParam(required=false, value="supportUploaderParam") String fileUrl,
+                         Model model) throws Exception {
+        Marker mk;
+        MarkerInfo mki;
+        for(int i = 0; i < name.size(); i++){
+            System.out.println("name: " + name.get(i) +",lat:"+lat.get(i)+",lng:"+lng.get(i)+",description:"+description.get(i));
 
-        System.out.println("name: " + name +",lat:"+lat+",lng:"+lng+",description:"+description);
+            List<List<List<String>>> info = JSoupKit.TablesExtractor(description.get(i),false);
+            mk = new Marker(name.get(i),fileUrl,lat.get(i),lng.get(i));
+
+        }
+
         return "home";
     }
 

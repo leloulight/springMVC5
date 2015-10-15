@@ -3,6 +3,7 @@ package com.github.p4535992.mvc.repository.impl;
 import com.github.p4535992.extractor.estrattori.ExtractInfoWeb;
 import com.github.p4535992.extractor.object.model.GeoDocument;
 import com.github.p4535992.mvc.object.model.site.Marker;
+import com.github.p4535992.util.database.sql.SQLHelper;
 import com.github.p4535992.util.log.SystemLog;
 
 import com.github.p4535992.util.repositoryRDF.sesame.Sesame28Kit;
@@ -52,6 +53,15 @@ public class MapRepositoryImpl implements MapRepository {
     private String user;
     @Value("${pass}")
     private String pass;
+
+    @Value("${dbServiceMap}")
+    private String dbServiceMap;
+    @Value("${urlServiceMap}")
+    private String urlServiceMap;
+    @Value("${userServiceMap}")
+    private String userServiceMap;
+    @Value("${passServiceMap}")
+    private String passServiceMap;
 
     @Override
     public Marker createMarkerFromGeoDocument(String url){
@@ -117,19 +127,11 @@ public class MapRepositoryImpl implements MapRepository {
         ResultSet rs2;
 
         StringBuilder builder = new StringBuilder();
-        try {
-            // POPOLAZIONE DEI CHECKBOX DELLE SERVICE CATEGORY E DELLE SOTTOCATEGORIE
-            String urlMySQL = url + db;
-            String suser = user;
-            String spass = pass;
-            Class.forName("com.mysql.jdbc.Driver");
-            conMySQL = DriverManager.getConnection(url + db, suser, spass);
-
-            String query = "SELECT * FROM tbl_service_category ORDER BY ID ASC";
-
+        try{
+            conMySQL  = SQLHelper.getMySqlConnection(urlServiceMap,dbServiceMap,userServiceMap,passServiceMap);
+            String query = "SELECT ID,NOME,COLORE,EN_NAME,CLASS FROM siimobility.tbl_service_category ORDER BY ID ASC";
             // create the java statement
             st = conMySQL.createStatement();
-
             // execute the query, and get a java resultset
             rs = st.executeQuery(query);
 
@@ -140,16 +142,16 @@ public class MapRepositoryImpl implements MapRepository {
                 String colore = rs.getString("COLORE");
                 String en_name = rs.getString("EN_NAME");
                 String classe = rs.getString("CLASS");
-                builder.append("<input type='checkbox' name='").append(en_name).append("' value='").append(en_name).append("' class='macrocategory' /> <span class='").append(classe).append(" macrocategory-label'>").append(nome).append("</span> <span class='toggle-subcategory' title='Mostra sottocategorie'>+</span>\n");
+                builder.append("<input type='checkbox' name='").append(en_name).append("' value='")
+                        .append(en_name).append("' class='macrocategory' /> <span class='")
+                        .append(classe).append(" macrocategory-label'>").append(nome)
+                        .append("</span> <span class='toggle-subcategory' title='Mostra sottocategorie'>+</span>\n");
                 builder.append("<div class='subcategory-content'>\n");
 
-                conMySQL2 = DriverManager.getConnection(url + db, user, pass);
-
-                String query2 = "SELECT * FROM tbl_service_subcategory WHERE IDCATEGORY = " + id + " ORDER BY ID ASC";
-
+                conMySQL2 = SQLHelper.getMySqlConnection(urlServiceMap, dbServiceMap, userServiceMap, passServiceMap);
+                String query2 = "SELECT * FROM siimobility.tbl_service_subcategory WHERE IDCATEGORY = " + id + " ORDER BY ID ASC";
                 // create the java statement
                 st2 = conMySQL2.createStatement();
-
                 // execute the query, and get a java resultset
                 rs2 = st2.executeQuery(query2);
 
@@ -177,8 +179,8 @@ public class MapRepositoryImpl implements MapRepository {
             }
             st.close();
             conMySQL.close();
-        }catch(SQLException|ClassNotFoundException e){
-            SystemLog.exception(e);
+        } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            e.printStackTrace();
         } finally{
             testCategoryHTML = builder.toString();
         }

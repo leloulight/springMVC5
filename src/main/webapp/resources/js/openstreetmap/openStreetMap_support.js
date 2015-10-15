@@ -1,13 +1,13 @@
 /**
  * Created by 4535992 on 15/06/2015.
  */
-var map, mappingLayer, vectorLayer, selectMarkerControl, selectedFeature;
+var mapLayer, mappingLayer, vectorLayer, selectMarkerControl, selectedFeature;
 var superlat;
 var superlon;
-/*funzione per la cattura dell'evento click sulle icone nella mappa OpenStreetMap*/
+/**funzione per la cattura dell'evento click sulle icone nella mappa OpenStreetMap*/
 function onFeatureSelect(feature) {
     selectedFeature = feature;
-    popup = new OpenLayers.Popup.FramedCloud(
+    var popup = new OpenLayers.Popup.FramedCloud(
         "tempId",
         feature.geometry.getBounds().getCenterLonLat(),
         null,
@@ -19,31 +19,31 @@ function onFeatureSelect(feature) {
         null);
 
     feature.popup = popup;
-    map.addPopup(popup);
-    map.setCenter(
+    mapLayer.addPopup(popup);
+    mapLayer.setCenter(
         new OpenLayers.LonLat(selectedFeature.attributes.Lon,selectedFeature.attributes.Lat).transform(
             new OpenLayers.Projection("EPSG:4326"),
-            map.getProjectionObject())
+            mapLayer.getProjectionObject())
 
         , 18
     );
 
-    /*funzione per la cattura dell'evento di chiusura dell'icona di popup sulla mappa OpenStreetMap*/
+    /**function per la cattura dell'evento di chiusura dell'icona di popup sulla mappa OpenStreetMap*/
     function onPopupClose(feature) {
-        map.removePopup(feature.popup);
+        mapLayer.removePopup(feature.popup);
         feature.popup.destroy();
         feature.popup = null
     }
 
-    /*funzione per la cattura dell'evento di deselezione dell'icone o selzione di un'altra icona
+    /**function per la cattura dell'evento di deselezione dell'icone o selezione di un'altra icona
      * sulla mappa OpenStreetMap*/
     function onFeatureUnselect(feature) {
-        map.removePopup(feature.popup);
+        mapLayer.removePopup(feature.popup);
         feature.popup.destroy();
         feature.popup = null;
     }
 
-    /*funzione per la inizializzaione dell mappa OpenStreetMap, attraverso uno dei tanti
+    /**function per la inizializzaione dell mappa OpenStreetMap, attraverso uno dei tanti
      * Costruttori possibili abilitati dall'API*/
     function initMap2(position){
 
@@ -63,34 +63,34 @@ function onFeatureSelect(feature) {
         }
     }
 
-    /*mostra la posizione dell'utente sulla mappa OpenStreetMap*/
+    /**mostra la posizione dell'utente sulla mappa OpenStreetMap*/
     function displayPosition(position){
-        map = new OpenLayers.Map( 'map');
+        mapLayer = new OpenLayers.Map( 'map');
         mappingLayer = new OpenLayers.Layer.OSM("Simple OSM Map");
-        map.addLayer(mappingLayer);
+        mapLayer.addLayer(mappingLayer);
         vectorLayer = new OpenLayers.Layer.Vector("Vector Layer", {projection: "EPSG:4326"});
         selectMarkerControl = new OpenLayers.Control.SelectFeature(vectorLayer, {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
-        map.addControl(selectMarkerControl);
+        mapLayer.addControl(selectMarkerControl);
         selectMarkerControl.activate();
-        map.addLayer(vectorLayer);
+        mapLayer.addLayer(vectorLayer);
 
-        zoom =18;
+        var zoom =18;
 //           alert(position.coords.latitude);
 //           alert(position.coords.longitude);
-        map.setCenter(
+        mapLayer.setCenter(
             new OpenLayers.LonLat(position.coords.longitude,position.coords.latitude).transform(
                 new OpenLayers.Projection("EPSG:4326"),
                 map.getProjectionObject())
             , zoom
         );
-        lat=position.coords.latitude;
-        lon=position.coords.longitude;
+        var lat=position.coords.latitude;
+        var lon=position.coords.longitude;
         superlat=lat;
         superlon=lon;
         var imageIcon = "/img/me.png";
         placeLocationMarker(lat,lon,"YOU ARE HERE",imageIcon,false,false);
     }
-    /*funzione per il controllo di errore nell'atto della geolocalizzazione dell'utente*/
+    /**funzione per il controllo di errore nell'atto della geolocalizzazione dell'utente*/
     function displayError(error) {
         var errors = {
             1: 'Permission denied',
@@ -101,12 +101,12 @@ function onFeatureSelect(feature) {
     }
     i=0;
 
-    /*funzione per il piazzamento delle icone/immagini sulla mappa openstreetmap*/
+    /**funzione per il piazzamento delle icone/immagini sulla mappa openstreetmap*/
     function placeLocationMarker(lat,lon,string,url,b,menu){
         var randomLat = lat;
         var randomLon = lon;
         var randomLonLat = new OpenLayers.Geometry.Point( randomLon, randomLat);
-        randomLonLat.transform("EPSG:4326", map.getProjectionObject());
+        randomLonLat.transform("EPSG:4326", mapLayer.getProjectionObject());
 
         if(url==null||menu==true){
             if(string=="YOU ARE HERE"){url= "img/me.png";}
@@ -151,7 +151,7 @@ function onFeatureSelect(feature) {
         if((b==false && randomFeature.attributes.salutation=="YOU ARE HERE")||menu==true){
             var popup = new OpenLayers.Popup.FramedCloud(
                 "tempId",
-                new OpenLayers.LonLat( randomLon, randomLat).transform("EPSG:4326", map.getProjectionObject()),
+                new OpenLayers.LonLat( randomLon, randomLat).transform("EPSG:4326", mapLayer.getProjectionObject()),
                 null,
 //                       randomFeature.attributes.salutation,
 //                               + " Lat:" + randomFeature.attributes.Lat + " Lon:" + randomFeature.attributes.Lon,
@@ -160,11 +160,11 @@ function onFeatureSelect(feature) {
                 true,
                 null);
             randomFeature.popup = popup;
-            map.addPopup(popup);
+            mapLayer.addPopup(popup);
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////77
-    /*funzione che stampa sulla mappa tutte le locazioni vicine all'utente e ripsettivamente
+    /**funzione che stampa sulla mappa tutte le locazioni vicine all'utente e ripsettivamente
      * cattura tutte per ogni locazione tutte le immagini a lui vicine */
     function allLocationCoordinates(coord){
         var images =[];
@@ -177,18 +177,18 @@ function onFeatureSelect(feature) {
 
     }
 
-    /*funzione che abilita il centramento della mappa alla locazione desiderata*/
+    /**funzione che abilita il centramento della mappa alla locazione desiderata*/
     function centraEPopup(name,lat,lng){
-        map.setCenter(
+        mapLayer.setCenter(
             new OpenLayers.LonLat(lng,lat).transform(
                 new OpenLayers.Projection("EPSG:4326"),
-                map.getProjectionObject())
+                mapLayer.getProjectionObject())
 
             , 18
         );
         placeLocationMarker(lat,lng,name,null,false,true);
     }
-    /*funzione che non fa nulla Ã¨ stata messa per evitare il lancio di un'eccezione in fase
+    /**funzione che non fa nulla Ã¨ stata messa per evitare il lancio di un'eccezione in fase
      * di chiamata dell'API foursquare*/
     function nothing(){}
 

@@ -110,8 +110,8 @@
         <json-path.version>2.0.0</json-path.version>
         <com.fasterxml.jackson.core.version>2.5.3</com.fasterxml.jackson.core.version>
         <!-- Logging -->
-        <logback.version>1.1.3</logback.version>
-        <org.slf4j.version>1.7.12</org.slf4j.version>
+        <!--<logback.version>1.1.3</logback.version>-->
+        <!--<org.slf4j.version>1.7.12</org.slf4j.version>-->
         <commons-logging.version>1.1.1</commons-logging.version>
         <spring-boot-starter-logging.version>1.2.4.RELEASE</spring-boot-starter-logging.version>
         <org.apache.logging.log4j.core.version>2.3</org.apache.logging.log4j.core.version>
@@ -231,7 +231,7 @@
         </dependency>-->
         <dependency>
             <groupId>com.github.p4535992</groupId>
-            <artifactId>ExtractInfo</artifactId>
+            <artifactId>extractInfo</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.p4535992</groupId>

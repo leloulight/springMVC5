@@ -11,17 +11,61 @@
      opacity: 1.0
      });*/
     var map;
+
+    //DEFINE DIFFERNET MARKER WITH DIFFERNET COLOR
+    var markerAccommodation = L.AwesomeMarkers.icon({markerColor: 'red'});
+    var markerCulturalActivity = L.AwesomeMarkers.icon({markerColor: 'orange'});
+    var markerEducation = L.AwesomeMarkers.icon({markerColor: 'green'});
+    var markerEmergency = L.AwesomeMarkers.icon({markerColor: 'blue'});
+    var markerEntertainment = L.AwesomeMarkers.icon({markerColor: 'purple'});
+    var markerFinancialService = L.AwesomeMarkers.icon({markerColor: 'darkred'});
+    var markerGovernmentOffice = L.AwesomeMarkers.icon({markerColor: 'darkblue'});
+    var markerHealthCare = L.AwesomeMarkers.icon({markerColor: 'darkgreen'});
+    var markerShopping = L.AwesomeMarkers.icon({markerColor: 'darkpurple'});
+    var markerTourismService = L.AwesomeMarkers.icon({markerColor: 'cadetblue'});
+    var markerTransferService = L.AwesomeMarkers.icon({markerColor: 'yellow'});
+    var markerWineAndFood = L.AwesomeMarkers.icon({markerColor: 'black'});
+    var markerBusStops = L.AwesomeMarkers.icon({markerColor: 'pink'});
+
+    // DIFFERENTI LAYERS PER LE DIFFERENTI CATEGORIE
+    var layerAccommodation = L.layerGroup();
+    var layerCulturalActivity = L.layerGroup();
+    var layerEducation = L.layerGroup();
+    var layerEmergency = L.layerGroup();
+    var layerEntertainment = L.layerGroup();
+    var layerFinancialService = L.layerGroup();
+    var layerGovernmentOffice = L.layerGroup();
+    var layerHealthCare = L.layerGroup();
+    var layerShopping = L.layerGroup();
+    var layerTourismService = L.layerGroup();
+    var layerTransferService = L.layerGroup();
+    var layerWineAndFood = L.layerGroup();
+
+    //Service Map
+    // GENERAZIONE DEI LAYER PRINCIPALI
+    var busStopsLayer = new L.LayerGroup();
+    var servicesLayer = new L.LayerGroup();
     var clickLayer = new L.LayerGroup();
     var GPSLayer = new L.LayerGroup();
-    /***
-     * Set the Leaflet.markercluster for Leaflet
-     * https://github.com/Leaflet/Leaflet.markercluster
-     */
-    var markerClusters = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50});
+    var layerMarker = new L.FeatureGroup();
+
+    // VARIABILI PER LA FUNZIONALITA' DI RICERCA INDIRIZZO APPROSSIMATIVO
+    var selezioneAttiva = false;
+    var ricercaInCorso = false;
 
     // VARIABILI PER LA FUNZIONALITA' DI RICERCA SERVIZI
-    var GPSControl;
     var selezione;
+    var coordinateSelezione;
+    var numeroRisultati;
+
+    /** Set the Leaflet.markercluster for Leaflet. https://github.com/Leaflet/Leaflet.markercluster */
+    var markerClusters = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50});
+    /** Set the Leaflet Plugin Search. https://github.com/p4535992/leaflet-search.*/
+    var controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
+
+    // VARIABILI PER LA FUNZIONALITA' DI RICERCA SERVIZI
+    var GPSControl = new L.Control.Gps({maxZoom: 16,style: null}); // AGGIUNTA DEL PLUGIN PER LA GEOLOCALIZZAZIONE
+
 
     //Variabili suppport java SPRING
     var nameVar,urlVar,latVar,lngVar; //basic info
@@ -55,6 +99,7 @@
             setLineSeparatorCSV($(this).val());
         });
 
+
         //oppure $( window ).load(function(){
         //loading map...
         //$('#caricamento').delay(500).fadeOut('slow');
@@ -66,6 +111,11 @@
         if((!$.isEmptyObject(arrayMarkerVar)) && arrayMarkerVar.length > 0){
             addMultipleMarker(arrayMarkerVar);
         }
+
+        $('#textsearch').on('keyup', function(e) {
+            controlSearch.searchText( e.target.value );
+        });
+
         //set a listener on the uploader button
         $("#uploader").on('change',handleFilesCSV);
         //var uploader = document.getElementById("#uploader");
@@ -117,48 +167,142 @@
             }
         });
 
+        //FUNZIONE PER MOSTRARE/NASCONDERE LE SUB CATEGORY
+        $(".toggle-subcategory").click(function () {
+            $tsc = $(this);
+            //getting the next element
+            $content = $tsc.next();
+            if (!$content.is(":visible")){
+                $('.subcategory-content').hide();
+                $('.toggle-subcategory').html('+');
+            }
+            //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+            $content.slideToggle(200, function () {
+                //execute this after slideToggle is done
+                //change text of header based on visibility of content div
+                $tsc.text(function () {
+                    //change text based on condition
+                    return $content.is(":visible") ? "-" : "+";
+                });
+            });
+        });
+
+        //CHECKBOX SELECT/DESELECT ALL
+        $('#macro-select-all').change(function (){
+            if($('#macro-select-all').prop('checked')){
+                $('.macrocategory').prop('checked', 'checked');
+                $('.macrocategory').trigger( "change" );
+            }
+            else{
+                $('.macrocategory').prop('checked', false);
+                $('.macrocategory').trigger( "change" );
+            }
+
+        });
+
+        //FUNZIONE PER MOSTRARE/NASCONDERE I MENU
+        $(".header").click(function () {
+            $header = $(this);
+            //getting the next element
+            $content = $header.next();
+            //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+            $content.slideToggle(200, function () {
+                //execute this after slideToggle is done
+                //change text of header based on visibility of content div
+                $header.text(function () {
+                    //change text based on condition
+                    return $content.is(":visible") ? "- Nascondi Menu" : "+ Mostra Menu";
+                });
+            });
+        });
+
+        // SELEZIONA/DESELEZIONA TUTTE LE CATEGORIE - SOTTOCATEGORIE
+        $('.macrocategory').change(function (){
+            $cat = $(this).next().attr('class');
+            $cat = $cat.replace(" macrocategory-label","");
+            //console.log($cat);
+            if($(this).prop('checked')){$('.sub_' + $cat).prop('checked', 'checked');}
+            else{$('.sub_' + $cat).prop('checked', false);}
+        });
+
+        // AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA
+        $('#info img').click(function(){
+            if ($("#info").hasClass("active") == false){
+                $('#info').addClass("active");
+                selezioneAttiva = true;
+            }
+            else{
+                $('#info').removeClass("active");
+                selezioneAttiva = false;
+            }
+        });
+
         alert("Loaded all JQUERY variable");
     });
 
-    /** function to get the information on hte marker ont he Layer to a Array to pass */
+    /**
+     * function to get the information on the marker ont he Layer to a Array to pass
+     * by create a list of input to pass to a specific form.
+     * */
     function getMarkers(){
         var array = [];
         alert("compile getMarkers");
-        var i = 0;
-        if(!$.isEmptyObject(markerClusters)) {
-            //alert("Marker cluster is not empty go to check the Marker.");
-            markerClusters.eachLayer(function (layer) {
-                var lat = layer.getLatLng().lat;
-                var lng = layer.getLatLng().lng;
-                /*var location = layer.getLocation();*/
-                var popupContent = layer.getPopup().getContent();
-                var label = layer.getLabel()._content;
-                //alert("marker number(" + i + "):" + lat + "," + lng + "," + label);
-                array.push({name: label, lat: lat, lng: lng, description: popupContent});
-                //i++;
-            });
-        }
+        try{
+            if(!$.isEmptyObject(markerClusters)) {
+                alert("Marker cluster is not empty go to check the Marker.");
+                markerClusters.eachLayer(function (layer) {
+                    try {
+                        //alert("marker number(n):");
+                        var lat = layer.getLatLng().lat;
+                        //alert("marker number(n):" + lat);
+                        var lng = layer.getLatLng().lng;
+                        //alert("marker number(n):" + lat + "," + lng);
+                        var label = layer.getLabel()._content;
+                        //alert("marker number(n):" + lat + "," + lng + "," + label);
+                        /*var location = layer.getLocation();*/
+                        var popupContent = layer.getPopup().getContent();
+                        //alert("marker number(" + i + "):" + lat + "," + lng + "," + label + "," + popupContent);
+                        array.push({name: label, lat: lat, lng: lng, description: popupContent});
+                        //i++;
+                    }catch(e){
+                        //do nothing
+                    }
+                });
+            }
+        }catch(e){alert(e.message);}
         alert("...compiled getMarkers");
         //var array = getMarkers();
-        for (i = 0; i < array.length; i++) {
-            addInput('nameForm'+i,array[i].name);
-            addInput('latForm'+i, array[i].lat);
-            addInput('lngForm'+i,  array[i].lng);
-            addInput('descriptionForm'+i,array[i].description);
+        for (var i = 0; i < array.length; i++) {
+            try {
+                addInput('nameForm' + i, array[i].name, i);
+                addInput('latForm' + i, array[i].lat, i);
+                addInput('lngForm' + i, array[i].lng, i);
+                addInput('descriptionForm' + i, array[i].description, i);
+            }catch(e){alert(e.message);}
         }
+        //alert(document.getElementById('uploader').value);
+        //<input type="submit" name="GetMarkersParam" value="getMarkers" />
+        var input = document.createElement('input');
+        input.setAttribute('id', 'supportUploaderForm');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('value', document.getElementById('uploader').value);
+        input.setAttribute('name',"supportUploaderParam");
+        document.getElementById('loadMarker').appendChild(input);
+
         alert("...compiled 2 getMarkers");
     }
 
     function addInput(input_id,val,index) {
-        alert("compile addInput..."+input_id+","+val);
+        //alert("compile addInput..."+input_id+","+val);
         var input = document.createElement('input');
+        input.setAttribute('id', input_id);
         input.setAttribute('type', 'hidden');
         input.setAttribute('value', val);
-        input.setAttribute('name', input_id.replace('Form','Param'));
+        input.setAttribute('name', input_id.replace(index,'').replace('Form','Param1'));
         //document.body.appendChild(input);
         document.getElementById('loadMarker').appendChild(input);
         //setInputValue(input_id,val);
-        alert("compiled addInput...");
+        //alert("compiled addInput...");
     }
 
     /*function setInputValue(input_id, val) {
@@ -184,8 +328,7 @@
         if(map==null) {
             alert("Init Map...");
             //valori fissi per il settaggio iniziale della mappa....
-            var latitude = 43.3555664; //43.3555664 40.46
-            var longitude = 11.0290384; //11.0290384  -3.75
+            // CREAZIONE MAPPA CENTRATA NEL PUNTO
             try {
                 if ($.isEmptyObject(markerClusters)) {
                     markerClusters = new L.MarkerClusterGroup();
@@ -202,9 +345,12 @@
                     }
                 });
                 //Set map with leave all popup open...
+                var latitude = 43.3555664; //43.3555664 40.46
+                var longitude = 11.0290384; //11.0290384  -3.75
                 map = new L.map('map', {attributionControl:false}).setView([latitude, longitude], 5);
                 //map = new L.map('map', {center: center, zoom: 2, maxZoom: 9, layers: [basemap],attributionControl:false})
                 // .setView([latitude, longitude], 5);
+                //var map = L.map('map').setView([43.3555664, 11.0290384], 8);
 
                 //Build your map
                 L.tileLayer('http://c.tiles.mapbox.com/v3/examples.map-szwdot65/{z}/{x}/{y}.png', { // NON MALE
@@ -214,18 +360,49 @@
                     //minZoom: 8,
                     maxZoom: 18
                 }).addTo(map);
-                //Set a bound window for the leaflet map
+                //Set a bound window for the leaflet map for Toscany region
                 //var bounds = new L.LatLngBounds(new L.LatLng(setBounds[0],setBounds[1]), new L.LatLng(setBounds[2], setBounds[3]));
-                //map.setMaxBounds(new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4)));
+                /*map.setMaxBounds(new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4)));*/
                 //..add many functionality
                 addPluginGPSControl();
                 addPluginCoordinatesControl();
                 addPluginLayersStamenBaseMaps();
                 addPluginLocateControl();
+                addPluginSearch();
                 //..add other functionality
                 //map.on('click', onMapClick);
                 //Fired when the view of the map stops changing
                 map.on('moveend', onMapMove);
+
+                //other function form Service Map
+                // ASSOCIA FUNZIONI AGGIUNTIVE ALL'APERTURA DI UN POPUP SU PARTICOLARI TIPI DI DATI
+                map.on('popupopen', function(e) {
+
+                    $('#raggioricerca').prop('disabled', false);
+                    $('#numerorisultati').prop('disabled', false);
+
+                    var markerPopup = e.popup._source;
+                    var tipoServizio = markerPopup.feature.properties.tipo;
+                    var nome = markerPopup.feature.properties.nome;
+
+                    selezione = 'Servizio: ' + markerPopup.feature.properties.nome;
+                    coordinateSelezione = markerPopup.feature.geometry.coordinates[1] + ";" + markerPopup.feature.geometry.coordinates[0];
+                    $('#selezione').html(selezione);
+                    if (tipoServizio == 'fermata'){
+
+                        // SE IL SERVIZIO E' UNA FERMATA MOSTRA GLI AVM NEL MENU CONTESTUALE
+                        selezione = 'Fermata Bus: ' + markerPopup.feature.properties.nome;
+                        coordinateSelezione = markerPopup.feature.geometry.coordinates[1] + ";" + markerPopup.feature.geometry.coordinates[0];
+                        $('#selezione').html(selezione);
+                        mostraAVMAJAX(nome);
+                    }
+                    if (tipoServizio == 'parcheggio_auto'){
+                        // SE IL SERVIZIO E' UN PARCHEGGIO MOSTRA LO STATO DI OCCUPAZIONE NEL MENU CONTESTUALE
+                        mostraParcheggioAJAX(nome);
+                    }
+                });
+
+
                 alert("MAP IS SETTED");
                 //$('#caricamento').delay(500).fadeOut('slow');
             } catch (e) {
@@ -246,7 +423,9 @@
         //Custom a style (circle,ecc.)
         //var newStyle = {radius: 25, weight:4, color: '#f0c', fill: true, opacity:0.8};
         //map.addControl( new L.Control.Gps({style: newStyle }) );//inizialize control
-        GPSControl = new L.Control.Gps({maxZoom: 16,style: null});
+        if($.isEmptyObject(GPSControl)){
+            GPSControl = new L.Control.Gps({maxZoom: 16,style: null});
+        }
         map.addControl(GPSControl);
     }
 
@@ -285,9 +464,44 @@
     }
 
     /*** function Set a popup when you click on the map*/
-    var popupGlobal = L.popup();
+    //var popupGlobal = L.popup();
     function onMapClick(e) {
-        popupGlobal.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+        //popupGlobal.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+        // AL CLICK CERCO L'INDIRIZZO APPROSSIMATIVO
+        if (selezioneAttiva == true){
+
+            if (ricercaInCorso == false){
+                $('#raggioricerca').prop('disabled', false);
+                $('#numerorisultati').prop('disabled', false);
+
+                ricercaInCorso = true;
+                $('#info-aggiuntive .content').html("Indirizzo Approssimativo: <img src=\"resources/img/ajax-loader.gif\" width=\"16\" />");
+                clickLayer.clearLayers();
+                //clickLayer = new L.LatLng(e.latlng);
+                clickLayer = L.layerGroup([new L.marker(e.latlng)]).addTo(map);
+                var latLngPunto = e.latlng;
+                coordinateSelezione = latLngPunto.lat + ";" + latLngPunto.lng;
+                var latPunto = new String(latLngPunto.lat);
+                var lngPunto = new String(latLngPunto.lng);
+
+                selezione = 'Coord: ' + latPunto.substring(0,7) + "," + lngPunto.substring(0,7);
+                $('#selezione').html(selezione);
+                $.ajax({
+                    url : "${pageContext.request.contextPath}/resources/ajax/get-address.jsp",
+                    type : "GET",
+                    async: true,
+                    //dataType: 'json',
+                    data : {
+                        lat: latPunto,
+                        lng: lngPunto
+                    },
+                    success : function(msg) {
+                        $('#info-aggiuntive .content').html(msg);
+                        ricercaInCorso = false;
+                    }
+                });
+            }
+        }
     }
 
     /*** function for add a marker to the leaflet map */
@@ -327,7 +541,7 @@
                             '<tr><th>Fax:</th><td>'+faxVar+'</td></tr>'+
                             '<tr><th>Email:</th><td>'+emailVar +'</td></tr>'+
                             '<tr><th>IVA:</th><td>'+ivaVar+'</td></tr>';
-            popupContent += "</table></popup-content>";
+            popupContent += "</table></div>";
             var popupOver = new L.popup().setContent(popupContent);
             //marker.bindPopup(popupClick);
             marker.bindPopup(popupOver);
@@ -527,7 +741,7 @@
      */
     function addPluginSearch(){
         if (!$.isEmptyObject(markerClusters)) {
-            var controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
+            controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
             map.addControl( controlSearch );
             //map.addControl( new L.Control.Search({layer: markerClusters}) );
             //searchLayer is a L.LayerGroup contains searched markers
@@ -550,6 +764,77 @@
             if(clicks > 1) clicks = 0;
         }
     }*/
+
+    //-------------------------------------------------
+    //OLD METHODS Service-Map
+    //-------------------------------------------------
+    // RESET DI TUTTI I LAYERS SULLA MAPPA
+    function svuotaLayers(){
+        //clickLayer.clearLayers();
+        busStopsLayer.clearLayers();
+        servicesLayer.clearLayers();
+        GPSLayer.clearLayers();
+    }
+
+    // CANCELLAZIONE DEL CONTENUTO DEL BOX INFO AGGIUNTIVE
+    function svuotaInfoAggiuntive(){
+        $('#info-aggiuntive .content').html('');
+    }
+
+    function cancellaSelezione(){
+        $('#selezione').html('Nessun punto selezionato');
+        selezione = null;
+        coordinateSelezione = null;
+    }
+
+
+    // FUNZIONE DI RESET GENERALE
+    function resetTotale(){
+        clickLayer.clearLayers();
+        svuotaInfoAggiuntive();
+        svuotaLayers();
+        cancellaSelezione();
+        $('#macro-select-all').prop('checked', false);
+        $('.macrocategory').prop('checked', false);
+        $('.macrocategory').trigger( "change" );
+        $('#raggioricerca')[0].options.selectedIndex = 0;
+        $('#raggioricerca').prop('disabled', false);
+        $('#numerorisultati')[0].options.selectedIndex = 0;
+        $('#numerorisultati').prop('disabled', false);
+        $('#elencolinee')[0].options.selectedIndex = 0;
+        $('#elencoprovince')[0].options.selectedIndex = 0;
+        $('#elencofermate').html('<option value=""> - Seleziona una Fermata - </option>');
+        $('#elencocomuni').html('<option value=""> - Seleziona un Comune - </option>');
+        $('#info').removeClass("active");
+        selezioneAttiva = false;
+    }
+
+
+    // MOSTRA ELENCO FERMATE DI UNA LINEA
+    function mostraElencoFermate(selectOption) {
+        if (selectOption.options.selectedIndex != 0){
+            $('#elencoprovince')[0].options.selectedIndex = 0;
+            $('#elencocomuni').html('<option value=""> - Seleziona un Comune - </option>');
+            $('#loading').show();
+            $.ajax({
+                url : "${pageContext.request.contextPath}/ajax/bus-stops-list.jsp",
+                type : "GET",
+                async: true,
+                //dataType: 'json',
+                data : {
+                    nomeLinea: selectOption.options[selectOption.options.selectedIndex].value
+                },
+                success : function(msg) {
+                    $('#elencofermate').html(msg);
+                    $('#loading').hide();
+                }
+            });
+        }
+    }
+
+
+
+
 
 
 

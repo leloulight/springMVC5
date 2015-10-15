@@ -56,10 +56,10 @@ function parseCSV(data){
 $json = csvToJson($csv);
 
 function csvToJson($csv) {
-    $rows = explode("\n", trim($csv));
-    $data = array_slice($rows, 1);
-    $keys = array_fill(0, count($data), $rows[0]);
-    $json = array_map(function ($row, $key) {
+    var $rows = explode("\n", trim($csv));
+    var $data = array_slice($rows, 1);
+    var $keys = array_fill(0, count($data), $rows[0]);
+    var $json = array_map(function ($row, $key) {
         return array_combine(str_getcsv($key), str_getcsv($row));
     }, $data, $keys);
 

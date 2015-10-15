@@ -93,6 +93,18 @@
 		<url-pattern>/resources/*</url-pattern>
 	</servlet-mapping>
 
+	<!--To add this servlet to your web-application, add the following lines to its WEB-INF/web.xml file.
+	http://logback.qos.ch/manual/configuration.html -->
+	<servlet>
+		<servlet-name>ViewStatusMessages</servlet-name>
+		<servlet-class>ch.qos.logback.classic.ViewStatusMessagesServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ViewStatusMessages</servlet-name>
+		<url-pattern>/lbClassicStatus</url-pattern>
+	</servlet-mapping>
+
 
 	<!-- JSPs -->
 	<welcome-file-list>

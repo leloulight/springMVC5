@@ -276,7 +276,7 @@
                         layer.on('click', function (e) { e.target.bindPopup(popupClick).openPopup();});
                         //layer.on('dblclick',function (e) { map.removeLayer(e.target)});
                     }
-                    popupContent += "</table></popup-content>";
+                    popupContent += "</table></div>";
                     layer.bindPopup(popupContent,popupOpts);
                 },
                 pointToLayer: function (feature, latlng) {
@@ -355,6 +355,7 @@
                 $("#clear").fadeIn();
                 //map.removeLayer(markerClusters);
                 //points.clearLayers();
+
                 markerClusters2 = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50});
                 points.addData(dataCsv);
                 markerClusters2.addLayer(points);

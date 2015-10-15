@@ -265,9 +265,9 @@
     };
 
     //http://stackoverflow.com/questions/3199887/send-json-object-to-mysql-using-jquery-javascript-php
-    function storeJsonObjectToMySQL(myObj){
+    function storeJsonObjectToMySQL(jsonUrl,myObj){
         $.ajax({
-            url: someURL,
+            url: jsonUrl,
             type: 'post',
             data: JSON.stringify(myObj),
             contentType: 'application/json',
@@ -278,3 +278,35 @@
             }
         });
     }
+
+//third party jsonp service
+function formatJSON(rawjson) {	//callback that remap fields name
+    var json = {},
+        key, loc, disp = [];
+    for(var i in rawjson)
+    {
+        disp = rawjson[i].display_name.split(',');
+        key = disp[0] +', '+ disp[1];
+
+        loc = L.latLng( rawjson[i].lat, rawjson[i].lon );
+
+        json[ key ]= loc;	//key,value format
+    }
+
+    return json;
+}
+
+function addPluginControlByJsonpFile(jsonpurl,jsonpName){
+    var searchOpts = {
+        url: jsonpurl,
+        jsonpParam: jsonpName,
+        formatData: formatJSON,
+        animateLocation: false,
+        markerLocation: true,
+        zoom: 10,
+        minLength: 2,
+        autoType: false
+    };
+
+    map.addControl( new L.Control.Search(searchOpts) );
+}

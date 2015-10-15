@@ -220,7 +220,7 @@
                     <c:url var="url2" value="/map4" />
                     <form:form action="${url2}" method="post" onSubmit="getMarkers();">
                         <div id="loadMarker">
-                            <%--<input type="button" value="Get Markers" id="getMarkers"  />--%>
+                                <%--<input type="button" value="Get Markers" id="getMarkers"  />--%>
                             <input type="submit" name="GetMarkersParam" value="getMarkers" />
                         </div>
                     </form:form>
@@ -244,7 +244,7 @@
                     </div>
                     <label>Search Marker 2:</label>
                     <div id="formsearch" style="margin: 0 2em 1em 2em;float:left">
-                        <input id="textsearch" type="text" value="" />
+                        <label>Search <input id="textsearch" type="text" value="" /></label>
                     </div>
                     <br />
                 </div>
@@ -272,7 +272,8 @@
             ${HTML}
             <!-- END OF THE CONNECTION -->
             <br />
-            <!-- <input type="checkbox" name="near-bus-stops" value="NearBusStops" class="macrocategory" /> <span class="near-bus-stops macrocategory-label">Fermate Autobus</span> -->
+            <input type="checkbox" name="near-bus-stops" value="NearBusStops" class="macrocategory" />
+            <span class="near-bus-stops macrocategory-label">Fermate Autobus</span>
         </div>
         <hr />
         Raggio di Ricerca:
