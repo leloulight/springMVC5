@@ -1,20 +1,3 @@
-<%@page import="java.io.IOException"%>
-<%@page import="org.openrdf.model.Value"%>
-<%@ page import="java.util.*"%>
-<%@ page import="org.openrdf.repository.Repository"%>
-<%@ page import="org.openrdf.repository.http.HTTPRepository"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.util.List"%>
-<%@ page import="org.openrdf.OpenRDFException"%>
-<%@ page import="org.openrdf.repository.RepositoryConnection"%>
-<%@ page import="org.openrdf.query.TupleQuery"%>
-<%@ page import="org.openrdf.query.TupleQueryResult"%>
-<%@ page import="org.openrdf.query.BindingSet"%>
-<%@ page import="org.openrdf.query.QueryLanguage"%>
-<%@ page import="java.io.File"%>
-<%@ page import="java.net.URL"%>
-<%@ page import="org.openrdf.rio.RDFFormat"%>
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -32,8 +15,7 @@
     <input type="button" onclick="iniziaGeocodeOSM();" value="Inizia GEOCODING OSM" />
     
     <input type="button" onclick="iniziaGeocodeGoogle();" value="Inizia GEOCODING Google" />
-    
-    
+
     <table id="triconc">
     	<tr>
     	<td>COD_SER</td>
@@ -41,57 +23,10 @@
     	<td>VIA</td>    	    	
     	<td>NUMERO</td>    	    	
     	<td>LAT</td>    	    	
-    	<td>LONG</td>    	    	
-    	  <td>LOC_TYPE</td>  
-    	   	</tr>
-    	
-    	
-    	<%
-    		
-    	Connection conMySQL = null;
-    	  Statement st = null;
-    	  ResultSet rs = null;
-    	 
-    	  String url = "jdbc:mysql://localhost:3306/";
-    	  String db = "tesi";
-    	  String driver = "com.mysql.jdbc.Driver";
-    	  String user = "ubuntu";
-    	  String pass = "ubuntu";
-    	  
-    	conMySQL = DriverManager.getConnection(url + db, user, pass);
-
-    	String query = "SELECT * FROM `riconciliazione_servizi_non_trovati` WHERE NUMERO <> '0' AND NUMERO <> '' AND NUMERO NOT LIKE '%sn%' AND COD_TOP = '' AND COMUNE IN (SELECT DISTINCT DEN_UFF FROM tbl_elenco_comuni) AND VIA NOT LIKE '%-%' AND COD_SER NOT IN (SELECT DISTINCT COD_SER FROM  `riconciliazione_servizi_ultima_parola` ) AND COD_SER NOT IN (SELECT DISTINCT COD_SER FROM  `riconciliazione_coordinate` ) ORDER BY ID ASC";
-
-    	// create the java statement
-    	st = conMySQL.createStatement();
-
-    	// execute the query, and get a java resultset
-    	rs = st.executeQuery(query);
-
-    	// iterate through the java resultset
-    	while (rs.next())
-    	{
-    	 
-    		String comune = rs.getString("COMUNE");
-    		String via = rs.getString("VIA");
-    		String numero = rs.getString("NUMERO");
-    		String COD_SER = rs.getString("COD_SER");
-    	
-    		
-    		out.println("<tr>");
-    		out.println("<td>" + COD_SER.replace("<", "").replace(">", "") + "</td>");
-    		out.println("<td>" + comune + "</td>");
-    		out.println("<td>" + via + "</td>");
-    		out.println("<td>" + numero + "</td>");
-    		out.println("<td></td>");
-    		out.println("<td></td>");
-    		out.println("<td></td>");
-    		
-    		out.println("</tr>");
-    	}
-    	%>    	  
-    	   	
- 
+    	<td>LONG</td>
+		<td>LOC_TYPE</td>
+		</tr>
+		${RICONCILIAZIONE_GEOCODE}
     </table>
      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript">
@@ -162,8 +97,6 @@
      		comune = arrayComune.join('+');
      		
      		var search = via + "+" + numero + "," + comune;
-     			  
-     			
      			geocoder.geocode( { 'address': search}, function(results, status) {
      			    if (status == google.maps.GeocoderStatus.OK) {
      			    	if (results[0].geometry.location_type == 'ROOFTOP' || results[0].geometry.location_type == 'RANGE_INTERPOLATED'){

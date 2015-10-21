@@ -473,5 +473,28 @@ function mostraServiziAJAX_new(categorie, selezione, coordinateSelezione, select
         }
 
     }
+}
 
+// FUNZIONE DI RICERCA DEI SERVIZI ALL'INTERNO DI UN COMUNE
+function mostraComune(selectOption) {
+    $('#raggioricerca')[0].options.selectedIndex = 0;
+    $('#raggioricerca').prop('disabled', 'disabled');
+    selezione = "COMUNE di " + selectOption.options[selectOption.options.selectedIndex].value;
+    $('#selezione').html(selezione);
+    if (selectOption.options.selectedIndex != 0){
+        var categorie = [];
+        $('#categorie :checked').each(function() {
+            categorie.push($(this).val());
+        });
+        var stringaCategorie = categorie.join(";");
+        if (stringaCategorie == ""){
+            alert("Selezionate almeno una categoria nel menu di destra");
+        }
+        else{
+            $('#loading').show();
+            svuotaLayers();
+            coordinateSelezione = null;
+            mostraServiziAJAX_new(stringaCategorie, selezione, coordinateSelezione, selectOption);
+        }
+    }
 }

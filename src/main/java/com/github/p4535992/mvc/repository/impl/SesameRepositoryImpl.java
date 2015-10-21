@@ -60,11 +60,12 @@ public class SesameRepositoryImpl implements SesameRepository{
         return repositoryID;
     }
 
-
-    public Connection getMySQLConnection() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
-       return SQLHelper.getMySqlConnection("localhost","geodb","siimobility","siimobility");
-
+    @Override
+    public String riconciliazione() {
+        return null;
     }
+
+
     //APPUNTI JAVASCRIPT
     /*
     //JavaScript Code:

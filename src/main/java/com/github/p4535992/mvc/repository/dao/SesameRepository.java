@@ -10,4 +10,7 @@ public interface SesameRepository {
     RepositoryConnection getSesameConnection();
 
     String getRepositoryID();
+
+    //
+    String riconciliazione();
 }

@@ -88,6 +88,8 @@
 
     /*** On ready document  */
     $( document ).ready(function() {
+        initMap();
+
         /*** remove all cluster marker with a click on the reset button */
         $('#pulsante-reset').click(function() {
             removeClusterMarker();
@@ -105,7 +107,7 @@
         //$('#caricamento').delay(500).fadeOut('slow');
         // all'apertura della pagina CREO LE TABS JQUERY UI NEL MENU IN ALTO
         $( "#tabs" ).tabs();
-        initMap();
+
 
         //if you have add a new marker from spring put in the map.
         if((!$.isEmptyObject(arrayMarkerVar)) && arrayMarkerVar.length > 0){
@@ -236,6 +238,7 @@
                 selezioneAttiva = false;
             }
         });
+
 
         alert("Loaded all JQUERY variable");
     });
@@ -512,27 +515,38 @@
             if ($.isEmptyObject(markerClusters)) {
                 markerClusters = new L.MarkerClusterGroup();
             }
-            //...set the popup on mouse click
-            var text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
-            var popupClick = new L.popup().setContent(text);
             //var marker = L.marker([lat, lng]).bindPopup(popupClick).addTo(map);
             //var cc = L.latLng(43.7778535, 11.2593572);
+            var text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
             try {
-                marker = new L.marker([parseFloat(lat), parseFloat(lng)], {draggable:false}, { icon: deathIcon},{title: name} )
+                /*marker = new L.marker([parseFloat(lat), parseFloat(lng)], {draggable:false}, { icon: deathIcon},{title: name} )
                     .bindLabel(text, { noHide: true }).addTo(map);
+                */
+                var title = name,	//value searched
+                    loc = [parseFloat(lat), parseFloat(lng)],		//position found
+                    marker = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(text, { noHide: true });//se property searched
+                    //marker.bindPopup('title: '+ title );
             }catch(e){
                 try{
-                    marker = new L.marker([lat, lng], {draggable:false}, { icon: deathIcon},{title: name})
-                        .bindLabel(text, { noHide: true }).addTo(map);
+                    /*marker = new L.marker([lat, lng], {draggable:false}, { icon: deathIcon},{title: name})
+                        .bindLabel(text, { noHide: true }).addTo(map);*/
+                    var title = name,	//value searched
+                        loc = [lat,lng],		//position found
+                        marker = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(text, { noHide: true });//se property searched
                 }catch(e){
+                    alert(e.message);
                     alert("Sorry the program can't find Geographical coordinates for this Web address,check if the Web address is valid");
                 }
             }
             //...set the popup on mouse over
             //var latlngOver = L.latLng(latVar, lngVar);
+            //...set the popup on mouse click
+
+            //var popupClick = new L.popup().setContent(text);
             var popupContent = '<div class="popup-content"><table class="table table-striped table-bordered table-condensed">';
-            popupContent += attr = '<a target="_blank" href="' + url + '">'+ name + '</a>';
-            popupContent += '<tr><th>'+title+'</th><td>'+ attr +'</td></tr>'+
+            var  attr = '<a target="_blank" href="' + url + '">'+ name + '</a>';
+            popupContent += '<tr><th>title</th><td>'+ title +'</td></tr>'+
+                            '<tr><th>Site</th><td>'+ attr +'</td></tr>'+
                             '<tr><th>Regione:</th><td>'+regionVar+'</td></tr>'+
                             '<tr><th>Provincia:</th><td>'+provinceVar+'</td></tr>'+
                             '<tr><th>Città:</th><td>'+cityVar+'</td></tr>'+
@@ -547,12 +561,11 @@
             marker.bindPopup(popupOver);
             //..set some action for the marker
             //evt.target is the marker where set the action
-            marker.on('mouseover', function (e) {e.target.bindPopup(popupOver).openPopup();});
-            marker.on('mouseout', function (e) { e.target.closePopup();});
-            marker.on('click', function (e) { e.target.bindPopup(popupClick).openPopup();});
+            //marker.on('mouseover', function (e) {e.target.bindPopup(popupOver).openPopup();});
+            //marker.on('mouseout', function (e) { e.target.closePopup();});
+            marker.on('click', function (e) { e.target.bindPopup(popupOver).openPopup();});
            //marker.on('dblclick',function (e) { map.removeLayer(e.target)});
             /*marker.on('click', onMarkerClick(), this);*/
-
             //..add marker to the array of cluster marker
             markerClusters.addLayer(marker);
             //...set to a Global variable for use with different javascript function
@@ -561,7 +574,8 @@
             map.setView([lat, lng], 8);
             //return {name: name, url: url, latitudine: lat, longitudine: lng};
         }catch(e) {
-            alert("Sorry the program can't create the Marker for this Web address, check if the Web address is valid");
+            alert(e.message);
+            alert("Sorry the program can't create the Marker");
         }
     }
 
@@ -740,14 +754,16 @@
      * https://github.com/p4535992/leaflet-search.
      */
     function addPluginSearch(){
+        alert("compile addPluginSearch...");
         if (!$.isEmptyObject(markerClusters)) {
-            controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
+            controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topleft'});
             map.addControl( controlSearch );
             //map.addControl( new L.Control.Search({layer: markerClusters}) );
             //searchLayer is a L.LayerGroup contains searched markers
             //Short way:
             //L.map('map', { searchControl: {layer: searchLayer} });
         }
+        alert("...compiled addPluginSearch");
     }
 
     /** Move marker to confirm that label moves when marker moves (first click)

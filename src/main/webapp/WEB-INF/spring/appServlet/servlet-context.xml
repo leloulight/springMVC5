@@ -31,6 +31,13 @@
     <context:annotation-config />
     <context:component-scan base-package="com.github.p4535992.mvc" />
 
+    <!-- If you want to explicit use a java class -->
+	<!--<beans:bean class="com.github.p4535992.mvc.repository.impl.MapRepositoryImpl" >
+        <beans:constructor-arg index="0" value="${sesameRepositoryID}"/>
+        <beans:constructor-arg index="1" value="${sesameDataDir}"/>
+        <beans:constructor-arg index="2" value="${sesameServer}"/>
+    </beans:bean>-->
+
     <!-- ================================================================================== -->
     <!--  RESOURCE FOLDERS CONFIGURATION                                  -->
     <!--  Dispatcher configuration for serving static resources           -->

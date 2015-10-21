@@ -242,7 +242,7 @@
         };
     }
 
-
+    var titleGlobal ;
     function loadCSVFromURL(urlCSV){
         try {
             //var scripts = document.getElementById('uploader');
@@ -262,6 +262,7 @@
                         var popupClick;
                         if (title === titleFieldCSV) {
                             layer.bindLabel(feature.properties[clave], {className: 'map-label',noHide: true});
+                            titleGlobal = feature.properties[clave];
                             //layer.setTitle(feature.properties[clave]); //with plugin search
                         }
                         if (attr.indexOf('http') === 0) {
@@ -271,8 +272,8 @@
                         if (attr) {
                             popupContent += '<tr><th>'+title+'</th><td>'+ attr +'</td></tr>';
                         }
-                        layer.on('mouseover', function (e) {e.target.bindPopup(popupContent).openPopup();});
-                        layer.on('mouseout', function (e) { e.target.closePopup();});
+                        //layer.on('mouseover', function (e) {e.target.bindPopup(popupContent).openPopup();});
+                        //layer.on('mouseout', function (e) { e.target.closePopup();});
                         layer.on('click', function (e) { e.target.bindPopup(popupClick).openPopup();});
                         //layer.on('dblclick',function (e) { map.removeLayer(e.target)});
                     }
@@ -280,6 +281,16 @@
                     layer.bindPopup(popupContent,popupOpts);
                 },
                 pointToLayer: function (feature, latlng) {
+                    /*return new L.Marker(new L.latLng(latlng), {title: titleGlobal},{
+                            icon: L.icon({
+                                iconUrl: 'resources/js/leaflet/images/marcador-bankia.png',
+                                //iconUrl: 'http://www.megalithic.co.uk/images/mapic/' + feature.properties.Icon + '.gif',//from a field Icon data.
+                                shadowUrl: 'resources/js/leaflet/images/marker-shadow.png',
+                                iconSize: [25, 41],
+                                shadowSize: [41, 41],
+                                shadowAnchor: [13, 20]
+                            })
+                        } );*/
                     return new L.marker(latlng,{
                         icon: L.icon({
                             iconUrl: 'resources/js/leaflet/images/marcador-bankia.png',
@@ -398,14 +409,11 @@
                             map.fitBounds(bounds);
                         }
                     }
-                } catch (err) {
-                    // pass
-                    alert(err.message);
-
-                }
+                } catch (err) {alert(err.message);}
                 if (total > 0) {
                     $('#search-results').html("Showing " + hits + " of " + total);
                 }
+                addPluginSearch();
                 alert("...compiled addCsvMarkers");
                 return false;
             }

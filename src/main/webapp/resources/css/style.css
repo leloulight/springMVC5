@@ -529,3 +529,41 @@ input.search-query {
 	padding-bottom: 3px !important;
 }
 
+/*<div class="leaflet-control-search leaflet-control search-exp">
+	<label class="search-input" for="searchtext9" style="display: none;"></label>
+	<input type="text" class="search-input" size="9" autocomplete="off" placeholder="Search..." style="display: block;" id="searchtext9">
+	<ul class="search-tooltip" style="display: block;">
+		<li class="search-tip">Seattle</li>
+		<li class="search-tip">Portland</li>
+		<li class="search-tip">Anchorage</li>
+	</ul>
+	<a class="search-cancel" href="#" title="Cancel" style="display: block;"><span>⊗
+	</span></a><a class="search-button" href="#" title="Search..."></a>
+	<div class="search-alert" style="display: none;"></div>
+</div>*/
+
+.leaflet-control-search .search-input {
+	position: relative;
+	background: #fff none repeat scroll 0 0;
+	border: 1px solid #666;
+	border-radius: 2px;
+	display: block;
+	float: left;
+	font-size: 1.25em;
+	height: 24px;
+	margin: 3px;
+	padding: 0 30px 0 0.125em;
+}
+.leaflet-control-search .search-input {
+	position: relative;
+	background: #fff none repeat scroll 0 0;
+	border: 1px solid #666;
+	border-radius: 2px;
+	display: block;
+	float: left;
+	height: 18px;
+	margin: 3px 0 3px 3px;
+	padding: 0 18px 0 2px;
+}
+
+
