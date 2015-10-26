@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<head>
 <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery2.1.4.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css" />
@@ -9,24 +10,32 @@
 </head>
 <body>
 <P>  The time on the server is ${serverTime}. </P>
-<p> Go to the ServiceMap:   <input type="button" value="goMap" id="goMap"  />
-</p>
-<br/>
+<p> Go to the ServiceMap:   <input type="button" value="goMap" id="goMap"  /></p>
 <P> Go to Logback Logging details page:  <input type="button" value="gologBack" id="gologBack"  /></P>
+<P> Go to to GTFS Map:  <input type="button" value="goGTFSMap" id="goGTFSMap"  /></P>
+<%--<P> Go to to GTFS Map HTML:  <input type="button" value="goGTFSMapH" id="goGTFSMapH"  /></P>--%>
 <script>
 	$( document ).ready(function() {
 		$('#goMap').click(function () {
 			//alert(location); //http://localhost:8080/
 			//var map = location.toString().split("/");
 			//alert(map[2]);
-			window.location.replace(location+'/map');
+			window.location.replace(location+'map');
 		});
+
+		$('#goGTFSMap').click(function () {
+			window.location.replace(location+'static/test/gtfs.html');
+		});
+
+        $('#goGTFSMapH').click(function () {
+            window.location.replace(location+'/static/gtfsMap.html');
+        });
 
 		$('#gologBack').click(function () {
 			//alert(location); //http://localhost:8080/
 			//var map = location.toString().split("/");
 			//alert(map[2]);
-			window.location.replace(location+'/lbClassicStatus');
+			window.location.replace(location+'lbClassicStatus');
 		});
 
 

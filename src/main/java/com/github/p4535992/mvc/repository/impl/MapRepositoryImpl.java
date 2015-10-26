@@ -188,7 +188,7 @@ public class MapRepositoryImpl implements MapRepository {
             }
             st.close();
             conMySQL.close();
-        } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally{
             testCategoryHTML = builder.toString();
@@ -698,8 +698,7 @@ public class MapRepositoryImpl implements MapRepository {
                     }//if
                 }//for
             }//while
-        } catch (ClassNotFoundException | SQLException | InstantiationException |
-                IllegalAccessException | MalformedQueryException | QueryEvaluationException
+        } catch ( SQLException | MalformedQueryException | QueryEvaluationException
                 | RepositoryException e) {
             RICONCILIAZIONE_ALTERNATIVE.append(e.getMessage()).append("\n");
         }
@@ -833,7 +832,7 @@ public class MapRepositoryImpl implements MapRepository {
                     RICONCILIAZIONE_BUS.append(e.getMessage()).append("\n");
                     //out.println("<pre><code>" + queryString2 + "<code></pre>");
                     RICONCILIAZIONE_BUS.append("Numero Servizi: ").append(numeroServizi).append("\n");
-                } catch (ClassNotFoundException | InstantiationException | SQLException | IllegalAccessException e) {
+                } catch (SQLException  e) {
                     RICONCILIAZIONE_BUS.append(e.getMessage()).append("\n");
                 } finally {result.close();}
             }
@@ -1125,7 +1124,7 @@ public class MapRepositoryImpl implements MapRepository {
             }
             finally{ con.close();}
         }
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException | RepositoryException e) {
+        } catch ( SQLException | RepositoryException e) {
             e.printStackTrace();
         }
         return RICONCILIAZIONE_COMUNI_SBAGLIATI.toString();
@@ -1238,7 +1237,7 @@ public class MapRepositoryImpl implements MapRepository {
                 //out.println("Numero Servizi: " + numeroServizi);
             }
         }//while
-        } catch (ClassNotFoundException|SQLException|IllegalAccessException|InstantiationException e) {
+        } catch (SQLException e) {
             RICONCILIAZIONE_CONTAINS.append(e.getMessage());
         }
         return RICONCILIAZIONE_CONTAINS.toString();
@@ -1275,7 +1274,7 @@ public class MapRepositoryImpl implements MapRepository {
                 RICONCILIAZIONE_GEOCODE.append("<td></td>\n");
                 RICONCILIAZIONE_GEOCODE.append("</tr>\n");
             }
-        }catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException e) {
+        }catch ( SQLException  e) {
             RICONCILIAZIONE_GEOCODE.append(e.getMessage());
         }
         return RICONCILIAZIONE_GEOCODE.toString();
@@ -1409,7 +1408,7 @@ public class MapRepositoryImpl implements MapRepository {
                     RICONCILIAZIONE_GEODOCE_STARADA.append(e.getMessage()).append("\n");
                     //out.println("<pre><code>" + queryString2 + "<code></pre>");
                     RICONCILIAZIONE_GEODOCE_STARADA.append("Numero Servizi: ").append(numeroServizi).append("\n");
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+                } catch ( SQLException e) {
                     RICONCILIAZIONE_GEODOCE_STARADA.append(e.getMessage()).append("\n");
                 } finally {
                     result.close();
@@ -1510,7 +1509,7 @@ public class MapRepositoryImpl implements MapRepository {
                 // NUOVA QUERY
                 String ultimaParola = via.substring(via.lastIndexOf(" ")+1);
                 if (ultimaParola.length() >= 2){
-                    // se l'ultima parola è più corta di due lettere ??
+                    // se l'ultima parola pi corta di due lettere
                     String queryString2 = "PREFIX SiiMobility:<http://www.disit.dinfo.unifi.it/SiiMobility#> " +
                             "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> " +
                             "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
@@ -1584,7 +1583,7 @@ public class MapRepositoryImpl implements MapRepository {
                 //out.println("Numero Servizi: " + numeroServizi);
             }
         }
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException e) {
+        } catch (SQLException  e) {
             RICONCILIAZIONE_LAST_WORD.append(e.getMessage()).append("\n");
         }
         return RICONCILIAZIONE_LAST_WORD.toString();
@@ -1750,7 +1749,7 @@ public class MapRepositoryImpl implements MapRepository {
                 //out.println("Numero Servizi: " + numeroServizi);
             }
         }
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException e) {
+        } catch (SQLException  e) {
             RICONCILIAIZONE_SENZA_VIRGOLA.append(e.getMessage()).append("\n");;
         }
         return RICONCILIAIZONE_SENZA_VIRGOLA.toString();
@@ -1855,8 +1854,7 @@ public class MapRepositoryImpl implements MapRepository {
                 }
             }
         }
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException
-                | RepositoryException | MalformedQueryException | QueryEvaluationException e) {
+        } catch (SQLException | RepositoryException | MalformedQueryException | QueryEvaluationException e) {
             RICONCILIAZIONE_STRADE.append(e.getMessage()).append("\n");
         }
         return RICONCILIAZIONE_STRADE.toString();
@@ -1953,7 +1951,7 @@ public class MapRepositoryImpl implements MapRepository {
                 //out.println("Numero Servizi: " + numeroServizi);
             }
         }
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException e) {
+        } catch ( SQLException  e) {
             RICONCILIAZIONE_TRATTINO.append(e.getMessage()).append("\n");
         }
         return RICONCILIAZIONE_TRATTINO.toString();

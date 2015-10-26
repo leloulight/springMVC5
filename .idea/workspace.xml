@@ -5,6 +5,9 @@
       <artifact name="springMVC5:war exploded" />
     </artifacts-to-build>
   </component>
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_buildMap_support.js" line="142" mnemonic="8" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="eae6a51e-feb1-4ee7-bfa9-607aee19e907" name="Default" comment="" />
     <ignored path="springMVC5.iws" />
@@ -34,21 +37,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MapController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java">
+      <file leaf-file-name="servlet-context.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/file/data.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="7" />
+            <state vertical-scroll-proportion="-9.0">
+              <caret line="79" column="23" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -58,122 +51,46 @@
         <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_buildMap_support.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="526" column="134" selection-start-line="524" selection-start-column="15" selection-end-line="526" selection-end-column="134" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="utility_leaflet_csv.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet_csv.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4874552">
-              <caret line="296" column="41" selection-start-line="296" selection-start-column="40" selection-end-line="296" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leaflet-0.7.3.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/leaflet-0.7.3.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7901" column="6" selection-start-line="7901" selection-start-column="6" selection-end-line="7901" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="549" column="19" selection-start-line="549" selection-start-column="19" selection-end-line="549" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MapRepositoryImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+              <caret line="404" column="23" selection-start-line="404" selection-start-column="15" selection-end-line="410" selection-end-column="30" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="method#createMarkerFromGeoDocument#0;class#MapRepositoryImpl#0" expanded="false" />
-                <element signature="method#getSesameRemoteConnection#0;class#MapRepositoryImpl#0" expanded="false" />
-                <element signature="method#riconciliazione#0;class#MapRepositoryImpl#0" expanded="false" />
-                <element signature="e#12213#12267#0" expanded="false" />
-                <element signature="e#12566#12620#0" expanded="false" />
-                <element signature="e#13424#13481#0" expanded="false" />
-                <element signature="e#14332#14358#0" expanded="false" />
-                <element signature="e#17745#17798#0" expanded="false" />
-                <element signature="e#30434#30477#0" expanded="false" />
-                <element signature="e#39199#39209#0" expanded="false" />
-                <element signature="e#55131#55180#0" expanded="false" />
-                <element signature="e#57131#57185#0" expanded="false" />
-                <element signature="e#58353#58410#0" expanded="false" />
-                <element signature="e#59546#59623#0" expanded="false" />
-                <element signature="e#77630#77649#0" expanded="false" />
-                <element signature="e#77895#77956#0" expanded="false" />
-                <element signature="e#97964#97983#0" expanded="false" />
-                <element signature="e#98238#98299#0" expanded="false" />
-                <marker date="1444999311558" expanded="true" signature="5585:5674" placeholder="SELECT ID,NO..tbl_service_category..." />
-                <marker date="1444999311558" expanded="true" signature="6835:6930" placeholder="SELECT * FRO..tbl_service_subcategory..." />
-                <marker date="1444999311558" expanded="true" signature="20976:21466" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="25609:26026" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="35165:35201" placeholder="select * fro..riconciliazione_strade..." />
-                <marker date="1444999311558" expanded="true" signature="40788:41218" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="45506:45585" placeholder="SELECT URI_A..riconciliazione_bus..." />
-                <marker date="1444999311558" expanded="true" signature="49000:49435" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="53167:53436" placeholder="SELECT DISTI..riconciliazione_servizi_non_trovati..." />
-                <marker date="1444999311558" expanded="true" signature="53389:53435" placeholder="SELECT DISTI..tbl_elenco_comuni..." />
-                <marker date="1444999311558" expanded="true" signature="64443:64933" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="69167:69590" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="72547:72657" placeholder="SELECT * FRO..riconciliazione_ultima_parola_ok..." />
-                <marker date="1444999311558" expanded="true" signature="75796:76236" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="77156:77265" placeholder="UPDATE ricon..." />
-                <marker date="1444999311558" expanded="true" signature="78654:79136" placeholder="SELECT * FRO..riconciliazione_servizi_non_trovati..." />
-                <marker date="1444999311558" expanded="true" signature="78827:78873" placeholder="SELECT DISTI..tbl_elenco_comuni..." />
-                <marker date="1444999311558" expanded="true" signature="78943:79012" placeholder="SELECT DISTI..riconciliazione_servizi_ultima_parola..." />
-                <marker date="1444999311558" expanded="true" signature="79060:79118" placeholder="SELECT DISTI..riconciliazione_coordinate..." />
-                <marker date="1444999311558" expanded="true" signature="83165:83249" placeholder="SELECT URI_A..riconciliazione_geocode..." />
-                <marker date="1444999311558" expanded="true" signature="86397:86821" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="87644:87870" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="92929:93026" placeholder="SELECT * fro..riconciliazione_servizi_non_trovati..." />
-                <marker date="1444999311558" expanded="true" signature="96918:97349" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="99199:99322" placeholder="SELECT * fro..backupriconciliazione_servizi_non_trovati..." />
-                <marker date="1444999311558" expanded="true" signature="103254:103710" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="106740:107123" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="108773:108809" placeholder="select * fro..riconciliazione_strade..." />
-                <marker date="1444999311558" expanded="true" signature="113968:114385" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="116766:116890" placeholder="SELECT * FRO..riconciliazione_servizi_non_trovati..." />
-                <marker date="1444999311558" expanded="true" signature="119834:120274" placeholder="INSERT INTO ..." />
-                <marker date="1444999311558" expanded="true" signature="120323:120382" placeholder="DELETE FROM ..." />
+                <element signature="e#7049#7403#0" expanded="false" />
+                <element signature="e#7593#7884#0" expanded="false" />
+                <element signature="e#7998#8749#0" expanded="false" />
+                <element signature="e#8841#9193#0" expanded="false" />
+                <element signature="e#9286#9913#0" expanded="false" />
+                <element signature="e#10032#10332#0" expanded="false" />
+                <element signature="e#10496#10788#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="leafletMap.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap.jsp">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/test/main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="329" column="0" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
+              <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SesameController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/SesameController.java">
+      <file leaf-file-name="tile.stamen.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/test/tile.stamen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.010067114">
+              <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tile.stamen.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/gtfsViewer/tile.stamen.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <caret line="134" column="4" selection-start-line="134" selection-start-column="4" selection-end-line="134" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -184,10 +101,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Jsp File" />
-        <option value="Class" />
         <option value="JavaScript File" />
+        <option value="Jsp File" />
         <option value="spring-beans.schema" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -199,28 +116,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/config/config.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/utility_support.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet-json.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/stamen-base-maps/tile.stamenv1.3.0.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet-csv.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_mysql_support.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/old_deprecated/mappa.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/old_javascript/leaflet_markers_support.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/old_javascript/openStreetMap_support.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/utility_csv.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet_json.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/log4j.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/resources/logback.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/home.jsp" />
-        <option value="$PROJECT_DIR$/src/main/resources/config.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/dao/SesameRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/SesameRepositoryImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/old_deprecated/riconciliazione/riconciliazione2.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/old_deprecated/riconciliazione/riconciliazione.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet_search.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/old_deprecated/riconciliazione/main.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/old_deprecated/riconciliazione/query.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/old_deprecated/riconciliazione/riconciliazione-alternative.jsp" />
@@ -239,17 +134,39 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-trattino.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/weblogic.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/service/impl/MapServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/HomeController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/main.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/search/leaflet-search.js" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/gtfsViewer/d3.v3.min.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/gtfsViewer/gtfsLeaflet.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/file/utility_file.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/gtfsViewer/gtfsParser.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/gtfsViewer/main.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/gtfsMap.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/gtfsMap.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/gtfsMap.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_buildMap_support.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet_csv.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_buildMap_support.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/main.jsp" />
+        <option value="$PROJECT_DIR$/src/main/resources/spring/repositoryContext/gtfs-context.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/spring/repositoryContext/onebusaway-api-webapp.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/spring/repositoryContext/onebusaway/onebusaway-transit-data-federation.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/spring/repositoryContext/onebusaway/onebusaway-api-webapp.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/spring/repositoryContext/hibernate4-context.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/bean/Configuration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/gtfs/AgenciesController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/gtfs/RoutesController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/gtfs/StopsController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/gtfs/StopTimesController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/gtfs/TripsController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/bean/AppConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/test/main.js" />
       </list>
     </option>
   </component>
@@ -301,6 +218,24 @@
           <option name="myItemId" value="springMVC5" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Dependencies" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="com.github.p4535992:utility:1.4.1" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependencyNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="springMVC5" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
       </PATH>
     </treeState>
   </component>
@@ -313,7 +248,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1364" />
+    <option name="width" value="1376" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -361,7 +296,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
@@ -434,7 +368,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="spring" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -464,49 +398,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="spring" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="riconciliazione2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="riconciliazione2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mappa" />
+              <option name="myItemId" value="appServlet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -532,7 +428,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springMVC5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springMVC5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -561,10 +487,6 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -581,173 +503,12 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="leaflet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="leaflet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plugin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="file" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="springMVC5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mvc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -760,13 +521,13 @@
     <property name="options.lastSelected" value="reference.projectsettings.compiler.excludes" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15542522" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../EAT" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
@@ -777,18 +538,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\WEB-INF\views\riconciliazione2\riconciliazione" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\resources" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\log" />
-      <recent name="C:\Users\Marco\Documents\workspace-sts-3.6.4.RELEASE\springMVC5\src\main\resources" />
-      <recent name="C:\Users\Marco\Documents\workspace-sts-3.6.4.RELEASE\springMVC5\src\main\resources\spring" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\LIB" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\java\com\github\p4535992\mvc\controller\gtfs" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\static" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\WEB-INF\views\riconciliazione2\mappa" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\gtfsViewer" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\jquery" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\WEB-INF\views\riconciliazione2\riconciliazione" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\WEB-INF\views" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\resources\spring\repositoryContext\onebusaway" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp" />
       <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\WEB-INF" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\WEB-INF\views\riconciliazione2" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\static" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\jquery" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.springMVC5">
@@ -1346,50 +1107,58 @@
       <workItem from="1444930183134" duration="3592000" />
       <workItem from="1444977823041" duration="25113000" />
       <workItem from="1445066808646" duration="1801000" />
+      <workItem from="1445519105580" duration="5166000" />
+      <workItem from="1445526352238" duration="4785000" />
+      <workItem from="1445532552221" duration="17728000" />
+      <workItem from="1445581227376" duration="23693000" />
+      <workItem from="1445671639848" duration="6179000" />
+      <workItem from="1445759301649" duration="12206000" />
+      <workItem from="1445844947636" duration="4323000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="449367000" />
+    <option name="totallyTimeSpent" value="523447000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1364" height="744" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1376" height="744" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297546" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31569967" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32898772" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297546" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3139932" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven-2 Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32898772" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.5045593" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.443686" sideWeight="0.49316108" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4453925" sideWeight="0.5068389" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.49544072" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25597268" sideWeight="0.50759876" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17714724" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26150307" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17705168" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26519758" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26226994" sideWeight="0.48907104" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26215807" sideWeight="0.48907104" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45051193" sideWeight="0.4924012" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4453925" sideWeight="0.4969743" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.49544072" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.5045593" order="11" side_tool="true" content_ui="tabs" />
@@ -1411,8 +1180,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.49544072" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25597268" sideWeight="0.50759876" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18009119" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -1467,13 +1236,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>39</line>
+          <line>45</line>
           <properties />
           <option name="timeStamp" value="89" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>34</line>
+          <line>40</line>
           <properties />
           <option name="timeStamp" value="90" />
         </line-breakpoint>
@@ -1496,74 +1265,68 @@
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap.jsp</url>
-          <line>329</line>
-          <properties />
-          <option name="timeStamp" value="122" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>176</line>
+          <line>196</line>
           <properties />
           <option name="timeStamp" value="127" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>177</line>
+          <line>197</line>
           <properties />
           <option name="timeStamp" value="128" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>180</line>
+          <line>200</line>
           <properties />
           <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>186</line>
+          <line>206</line>
           <properties />
           <option name="timeStamp" value="130" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>185</line>
+          <line>205</line>
           <properties />
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>181</line>
+          <line>201</line>
           <properties />
           <option name="timeStamp" value="132" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>184</line>
+          <line>204</line>
           <properties />
           <option name="timeStamp" value="133" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>175</line>
+          <line>195</line>
           <properties />
           <option name="timeStamp" value="134" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>215</line>
+          <line>235</line>
           <properties />
           <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>196</line>
+          <line>216</line>
           <properties />
           <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>197</line>
+          <line>217</line>
           <properties />
           <option name="timeStamp" value="154" />
         </line-breakpoint>
@@ -1587,13 +1350,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>134</line>
-          <properties />
-          <option name="timeStamp" value="162" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>710</line>
+          <line>709</line>
           <properties />
           <option name="timeStamp" value="163" />
         </line-breakpoint>
@@ -1605,49 +1362,49 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>1285</line>
+          <line>1284</line>
           <properties />
           <option name="timeStamp" value="165" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>1248</line>
+          <line>1247</line>
           <properties />
           <option name="timeStamp" value="166" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>1135</line>
+          <line>1134</line>
           <properties />
           <option name="timeStamp" value="167" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>851</line>
+          <line>850</line>
           <properties />
           <option name="timeStamp" value="168" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>1431</line>
+          <line>1430</line>
           <properties />
           <option name="timeStamp" value="169" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>1488</line>
+          <line>1487</line>
           <properties />
           <option name="timeStamp" value="170" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>1594</line>
+          <line>1593</line>
           <properties />
           <option name="timeStamp" value="171" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java</url>
-          <line>1760</line>
+          <line>1759</line>
           <properties />
           <option name="timeStamp" value="172" />
         </line-breakpoint>
@@ -1664,13 +1421,64 @@
           <option name="timeStamp" value="176" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
-          <line>49</line>
+          <url>jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4/extractInfo-1.4-sources.jar!/com/github/p4535992/extractor/estrattori/ExtractInfoWeb.java</url>
+          <line>343</line>
           <properties />
-          <option name="timeStamp" value="177" />
+          <option name="timeStamp" value="180" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/github/p4535992/utility/1.4.1/utility-1.4.1-sources.jar!/com/github/p4535992/util/database/sql/SQLHelper.java</url>
+          <line>303</line>
+          <properties />
+          <option name="timeStamp" value="183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
+          <line>247</line>
+          <properties />
+          <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
+          <line>248</line>
+          <properties />
+          <option name="timeStamp" value="186" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
+          <line>252</line>
+          <properties />
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
+          <line>261</line>
+          <properties />
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
+          <line>294</line>
+          <properties />
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
+          <line>275</line>
+          <properties />
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java</url>
+          <line>279</line>
+          <properties />
+          <option name="timeStamp" value="194" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="178" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="199" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1679,345 +1487,142 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config.properties">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/file/test.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/utility.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.8527398">
-          <caret line="270" column="3" selection-start-line="256" selection-start-column="0" selection-end-line="270" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/utility_support.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="53" selection-start-line="30" selection-start-column="53" selection-end-line="30" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet_search.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="224" column="9" selection-start-line="224" selection-start-column="9" selection-end-line="224" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/github/p4535992/utility/1.4/utility-1.4-sources.jar!/com/github/p4535992/util/repositoryRDF/sesame/Sesame28Kit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3324397">
-          <caret line="2125" column="22" selection-start-line="2125" selection-start-column="22" selection-end-line="2125" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/query.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="8.884615">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-alternative.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.461538">
-          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="46" selection-start-line="9" selection-start-column="46" selection-end-line="9" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-bus.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4615383">
-          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-comuni-sbagliati.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.8076925">
-          <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-geocode.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.921875">
-          <caret line="98" column="59" selection-start-line="98" selection-start-column="59" selection-end-line="98" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-contains.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4615383">
-          <caret line="31" column="34" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-geocode-strada.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.423077">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-isin.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4615383">
-          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-last-word.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4615383">
-          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-senza-virgola.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4615383">
-          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-strade.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4615383">
-          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/service/impl/SesameServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/riconciliazione-trattino.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4615383">
-          <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/weblogic.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.148148">
-          <caret line="5" column="8" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/dao/SesameRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/webflow-spring-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/mongo-spring-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="53" selection-start-line="31" selection-start-column="53" selection-end-line="31" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/SesameRepositoryImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="8" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/root-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.037037">
-          <caret line="51" column="29" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.107143">
-          <caret line="120" column="27" selection-start-line="111" selection-start-column="4" selection-end-line="120" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/service/dao/MapService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/service/impl/MapServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/dao/MapRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/HomeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="32" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/ConverterFormatController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/RegisterController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/SesameController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.6.RELEASE/spring-webmvc-4.1.6.RELEASE-sources.jar!/org/springframework/web/servlet/FrameworkServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.899329">
-          <caret line="1006" column="16" selection-start-line="1006" selection-start-column="16" selection-end-line="1006" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.6.RELEASE/spring-webmvc-4.1.6.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33221477">
-          <caret line="898" column="0" selection-start-line="898" selection-start-column="0" selection-end-line="898" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/home.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.9230769">
-          <caret line="6" column="61" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="101" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.1.6.RELEASE/spring-web-4.1.6.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="140" column="0" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.6.RELEASE/spring-webmvc-4.1.6.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="134" column="5" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/github/p4535992/utility/1.4/utility-1.4-sources.jar!/com/github/p4535992/util/html/JSoupKit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33221477">
-          <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/main.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5625">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/file/data.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="7" />
-          <folding />
+          <caret line="0" column="12" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="549" column="19" selection-start-line="549" selection-start-column="19" selection-end-line="549" selection-end-column="19" />
-          <folding />
+          <caret line="433" column="3" selection-start-line="426" selection-start-column="0" selection-end-line="433" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/stamen-base-maps/tile.stamenv1.3.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/query.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.2692308">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/riconciliazione/query.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="11.769231">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/map.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.875">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/gtfsViewer/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/gtfsViewer/zip.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/test/zip.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/gtfsMap.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="72" selection-start-line="34" selection-start-column="72" selection-end-line="34" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/gtfsMap.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="13.730769">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/images/marker-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33221477">
+          <caret line="418" column="0" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/geocsv/leaflet.geocsv-src.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="67" column="42" selection-start-line="67" selection-start-column="42" selection-end-line="67" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/file/utility_file.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="11" selection-start-line="52" selection-start-column="11" selection-end-line="52" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/leaflet-0.7.3.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7901" column="6" selection-start-line="7901" selection-start-column="6" selection-end-line="7901" selection-end-column="6" />
+          <caret line="3321" column="11" selection-start-line="3321" selection-start-column="4" selection-end-line="3321" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet_csv.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_buildMap_support.js">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/webjars/jquery/2.0.3-1/jquery-2.0.3-1.jar!/META-INF/resources/webjars/jquery/2.0.3/jquery.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="526" column="134" selection-start-line="524" selection-start-column="15" selection-end-line="526" selection-end-column="134" />
-          <folding />
+          <caret line="5028" column="4" selection-start-line="5028" selection-start-column="4" selection-end-line="5028" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/main.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2025,82 +1630,279 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+          <caret line="146" column="19" selection-start-line="146" selection-start-column="19" selection-end-line="146" selection-end-column="19" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="method#createMarkerFromGeoDocument#0;class#MapRepositoryImpl#0" expanded="false" />
+            <element signature="imports" expanded="true" />
             <element signature="method#getSesameRemoteConnection#0;class#MapRepositoryImpl#0" expanded="false" />
             <element signature="method#riconciliazione#0;class#MapRepositoryImpl#0" expanded="false" />
-            <element signature="e#12213#12267#0" expanded="false" />
-            <element signature="e#12566#12620#0" expanded="false" />
-            <element signature="e#13424#13481#0" expanded="false" />
-            <element signature="e#14332#14358#0" expanded="false" />
-            <element signature="e#17745#17798#0" expanded="false" />
-            <element signature="e#30434#30477#0" expanded="false" />
-            <element signature="e#39199#39209#0" expanded="false" />
-            <element signature="e#55131#55180#0" expanded="false" />
-            <element signature="e#57131#57185#0" expanded="false" />
-            <element signature="e#58353#58410#0" expanded="false" />
-            <element signature="e#59546#59623#0" expanded="false" />
-            <element signature="e#77630#77649#0" expanded="false" />
-            <element signature="e#77895#77956#0" expanded="false" />
-            <element signature="e#97964#97983#0" expanded="false" />
-            <element signature="e#98238#98299#0" expanded="false" />
-            <marker date="1444999311558" expanded="true" signature="5585:5674" placeholder="SELECT ID,NO..tbl_service_category..." />
-            <marker date="1444999311558" expanded="true" signature="6835:6930" placeholder="SELECT * FRO..tbl_service_subcategory..." />
-            <marker date="1444999311558" expanded="true" signature="20976:21466" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="25609:26026" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="35165:35201" placeholder="select * fro..riconciliazione_strade..." />
-            <marker date="1444999311558" expanded="true" signature="40788:41218" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="45506:45585" placeholder="SELECT URI_A..riconciliazione_bus..." />
-            <marker date="1444999311558" expanded="true" signature="49000:49435" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="53167:53436" placeholder="SELECT DISTI..riconciliazione_servizi_non_trovati..." />
-            <marker date="1444999311558" expanded="true" signature="53389:53435" placeholder="SELECT DISTI..tbl_elenco_comuni..." />
-            <marker date="1444999311558" expanded="true" signature="64443:64933" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="69167:69590" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="72547:72657" placeholder="SELECT * FRO..riconciliazione_ultima_parola_ok..." />
-            <marker date="1444999311558" expanded="true" signature="75796:76236" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="77156:77265" placeholder="UPDATE ricon..." />
-            <marker date="1444999311558" expanded="true" signature="78654:79136" placeholder="SELECT * FRO..riconciliazione_servizi_non_trovati..." />
-            <marker date="1444999311558" expanded="true" signature="78827:78873" placeholder="SELECT DISTI..tbl_elenco_comuni..." />
-            <marker date="1444999311558" expanded="true" signature="78943:79012" placeholder="SELECT DISTI..riconciliazione_servizi_ultima_parola..." />
-            <marker date="1444999311558" expanded="true" signature="79060:79118" placeholder="SELECT DISTI..riconciliazione_coordinate..." />
-            <marker date="1444999311558" expanded="true" signature="83165:83249" placeholder="SELECT URI_A..riconciliazione_geocode..." />
-            <marker date="1444999311558" expanded="true" signature="86397:86821" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="87644:87870" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="92929:93026" placeholder="SELECT * fro..riconciliazione_servizi_non_trovati..." />
-            <marker date="1444999311558" expanded="true" signature="96918:97349" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="99199:99322" placeholder="SELECT * fro..backupriconciliazione_servizi_non_trovati..." />
-            <marker date="1444999311558" expanded="true" signature="103254:103710" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="106740:107123" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="108773:108809" placeholder="select * fro..riconciliazione_strade..." />
-            <marker date="1444999311558" expanded="true" signature="113968:114385" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="116766:116890" placeholder="SELECT * FRO..riconciliazione_servizi_non_trovati..." />
-            <marker date="1444999311558" expanded="true" signature="119834:120274" placeholder="INSERT INTO ..." />
-            <marker date="1444999311558" expanded="true" signature="120323:120382" placeholder="DELETE FROM ..." />
+            <element signature="e#12138#12192#0" expanded="false" />
+            <element signature="e#12491#12545#0" expanded="false" />
+            <element signature="e#13349#13406#0" expanded="false" />
+            <element signature="e#14257#14283#0" expanded="false" />
+            <element signature="e#17670#17723#0" expanded="false" />
+            <element signature="e#30359#30402#0" expanded="false" />
+            <element signature="e#39124#39134#0" expanded="false" />
+            <element signature="e#54892#54941#0" expanded="false" />
+            <element signature="e#56892#56946#0" expanded="false" />
+            <element signature="e#58114#58171#0" expanded="false" />
+            <element signature="e#59307#59384#0" expanded="false" />
+            <element signature="e#77317#77336#0" expanded="false" />
+            <element signature="e#77582#77643#0" expanded="false" />
+            <element signature="e#97429#97448#0" expanded="false" />
+            <element signature="e#97703#97764#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap.jsp">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/onebusaway/onebusaway-gtfs/1.3.3/onebusaway-gtfs-1.3.3.jar!/org/onebusaway/gtfs/services/GtfsDao.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="329" column="0" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/root-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/search/leaflet-search.js">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/onebusaway/onebusaway-gtfs/1.3.3/onebusaway-gtfs-1.3.3.jar!/org/onebusaway/gtfs/model/AgencyAndId.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12686567">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/utility_leaflet_csv.js">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/onebusaway/onebusaway-gtfs/1.3.3/onebusaway-gtfs-1.3.3.jar!/org/onebusaway/gtfs/model/ServiceCalendarDate.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4874552">
-          <caret line="296" column="41" selection-start-line="296" selection-start-column="40" selection-end-line="296" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/repositoryContext/hibernate4-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5604027">
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="13.97651">
+          <caret line="265" column="0" selection-start-line="265" selection-start-column="0" selection-end-line="265" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/onebusaway/onebusaway-gtfs/1.3.4/onebusaway-gtfs-1.3.4.jar!/org/onebusaway/gtfs/impl/GtfsDaoImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.148148">
+          <caret line="6" column="72" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="22.607143">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/4.2.2.RELEASE/spring-core-4.2.2.RELEASE.jar!/org/springframework/util/ClassUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="8.656827">
+          <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="895" column="15" selection-start-line="895" selection-start-column="15" selection-end-line="895" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/onebusaway/onebusaway-gtfs/1.3.4/onebusaway-gtfs-1.3.4-sources.jar!/org/onebusaway/gtfs/impl/GtfsDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5704698">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/ConverterFormatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/4.2.2.RELEASE/spring-core-4.2.2.RELEASE-sources.jar!/org/springframework/util/ReflectionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1218638">
+          <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+          <folding>
+            <element signature="e#20314#20422#0" expanded="true" />
+            <element signature="e#20421#20422#0" expanded="true" />
+            <element signature="e#28229#28404#0" expanded="true" />
+            <element signature="e#28403#28404#0" expanded="true" />
+            <element signature="e#28532#28644#0" expanded="true" />
+            <element signature="e#28643#28644#0" expanded="true" />
+            <element signature="e#28829#28989#0" expanded="true" />
+            <element signature="e#28988#28989#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/bean/AppConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/webflow-spring-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/tiles3-spring-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/mongo-spring-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/info/loadProperties-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/interceptorContext/interceptor-log4j-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="8.851851">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/repositoryContext/sesame-spring-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="28.962963">
+          <caret line="26" column="50" selection-start-line="26" selection-start-column="50" selection-end-line="26" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/repositoryContext/jdbc-mysql-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="21.592592">
+          <caret line="3" column="64" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/repositoryContext/jdbc-h2-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="13.888889">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/siteContext/thymeleaf-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/integration.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/security-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.542436">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.0">
+          <caret line="79" column="23" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_buildMap_support.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="404" column="23" selection-start-line="404" selection-start-column="15" selection-end-line="410" selection-end-column="30" />
+          <folding>
+            <element signature="e#7049#7403#0" expanded="false" />
+            <element signature="e#7593#7884#0" expanded="false" />
+            <element signature="e#7998#8749#0" expanded="false" />
+            <element signature="e#8841#9193#0" expanded="false" />
+            <element signature="e#9286#9913#0" expanded="false" />
+            <element signature="e#10032#10332#0" expanded="false" />
+            <element signature="e#10496#10788#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/gtfsViewer/tile.stamen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="134" column="4" selection-start-line="134" selection-start-column="4" selection-end-line="134" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/test/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/test/tile.stamen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.010067114">
+          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -2184,11 +1986,11 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Maven: com.github.p4535992:utility:1.4</last-edited>
+          <last-edited>Maven: xerces:xercesImpl:2.10.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.4814815" />
               </list>
             </option>
           </splitter-proportions>

@@ -4,13 +4,19 @@ import com.github.p4535992.mvc.object.model.site.Marker;
 import com.github.p4535992.mvc.object.model.site.MarkerInfo;
 import com.github.p4535992.mvc.service.dao.MapService;
 import com.github.p4535992.util.html.JSoupKit;
+import com.github.p4535992.util.log.SystemLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,6 +174,20 @@ public class MapController {
         return "riconciliazione2/riconciliazione/riconciliazione-trattino";
     }
 
+    @RequestMapping(value="/gtfs",method= RequestMethod.GET)
+      public String gtfs(Model model){
+        return "riconciliazione2/mappa/gtfsMap";
+    }
+
+   /* @RequestMapping(value="/gtfshtml",method= RequestMethod.GET)
+    public String gtfsHmtl(Model model){
+        return "/gtfsMap";
+    }*/
+
+    //---------------------------------------------------------
+    // NEW POST METHOD
+    //---------------------------------------------------------
+
 
     @RequestMapping(value="/map3",method = RequestMethod.POST)
     public String result4(@RequestParam(required=false, value="urlParam")String url,
@@ -218,14 +238,103 @@ public class MapController {
 
 
     //----------------------------------------------
-    //NEW METHOD
+    //NEW METHOD FOR UPLOAD FILE
     //----------------------------------------------
 
+    List<File> listFiles = new ArrayList<>();
+
+    @RequestMapping(value="/fileupload",method=RequestMethod.POST )
+    public @ResponseBody String uploadFile(@RequestParam("uploader") MultipartFile file){
+        try{
+            SystemLog.message("file is " + file.toString());
+        }catch(Exception e){
+            return "error occured "+e.getMessage();
+        }
+        return "redirect:/map";
+    }
+
+    /**
+     * Upload single file using Spring Controller
+     */
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public @ResponseBody String uploadFileHandler(@RequestParam("name") String name,
+                             @RequestParam("file") MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                // Creating the directory to store file
+                String rootPath = System.getProperty("catalina.home");
+                File dir = new File(rootPath + File.separator + "tmpFiles");
+                if (!dir.exists()) dir.mkdirs();
+
+                // Create the file on server
+                File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
+                BufferedOutputStream stream = new BufferedOutputStream( new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+                SystemLog.message("Server File Location=" + serverFile.getAbsolutePath());
+                SystemLog.message("You successfully uploaded file=" + name);
+                listFiles.add(convertMultiPartFileToFile(file));
+                return "redirect:/map";
+            } catch (Exception e) {
+                SystemLog.error("You failed to upload " + name + " => " + e.getMessage());
+                return "redirect:/map";
+            }
+        } else {
+            SystemLog.message("You failed to upload " + name + " because the file was empty.");
+            return "redirect:/map";
+        }
+    }
+
+    /**
+     * Upload multiple file using Spring Controller
+     */
+    @RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST)
+    public @ResponseBody String uploadMultipleFileHandler(@RequestParam("name") String[] names,
+                                     @RequestParam("file") MultipartFile[] files) throws IOException {
+        if (files.length != names.length){
+           SystemLog.warning("Mandatory information missing");
+           return null;
+        }
+        String message = "";
+        for (int i = 0; i < files.length; i++) {
+            MultipartFile file = files[i];
+            listFiles.add(convertMultiPartFileToFile(file));
+            String name = names[i];
+            try {
+                byte[] bytes = file.getBytes();
+                // Creating the directory to store file
+                String rootPath = System.getProperty("catalina.home");
+                File dir = new File(rootPath + File.separator + "tmpFiles");
+                if (!dir.exists())dir.mkdirs();
+
+                // Create the file on server
+                File serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + name);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+                SystemLog.message("Server File Location=" + serverFile.getAbsolutePath());
+                message = message + "You successfully uploaded file=" + name
+                        + "<br />";
+            } catch (Exception e) {
+                SystemLog.error("You failed to upload " + name + " => " + e.getMessage());
+                return "redirect:/map";
+            }
+        }
+        SystemLog.message(message);
+        return "redirect:/map";
+    }
 
 
-
-
-
+    private File convertMultiPartFileToFile(MultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
+    }
 
 
 

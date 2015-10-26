@@ -3,6 +3,7 @@
     var fieldSeparatorCSV = "|";
     var lineSeparatorCSV ='\n';
     var titleFieldCSV ='Name';
+    var categoriaIcon = "Categoria";
     var typeAheadSource = [];
     var points;
     var dataUrl = 'resources/file/data.csv';
@@ -23,7 +24,13 @@
         lineSeparatorCSV = lineSeparator;
     }
 
+    function setNameSeparatorCSV(titleField){
+        alert("SET Name:"+titleField);
+        titleFieldCSV = titleField;
+    }
+
     function setTitleFieldCSV(titleField){
+        alert("SET Title:"+titleField);
         titleFieldCSV = titleField;
     }
 
@@ -44,6 +51,8 @@
             setTitleFieldCSV(titleField);
         }
     };
+
+
 
     var dataCsv;
     function handleFilesCSV(evt){
@@ -98,81 +107,7 @@
         }
     }
 
-    /** function utility for select multiple file
-     *  http://www.html5rocks.com/en/tutorials/file/dndfiles/
-     */
-    function handleFileSelect(evt) {
-        if (!browserSupportFileUpload()) {
-            alert('The File APIs are not fully supported in this browser!');
-        } else {
-            var files = evt.target.files; // FileList object
-            //var file = evt.target.files[0]; // singleFile
-            // files is a FileList of File objects. List some properties.
-            //var output = [];
-            for (var i = 0, f; f = files[i]; i++) {
-                /* output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                 f.size, ' bytes, last modified: ',
-                 f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                 '</li>');*/
-                // Only process csv files.
-                if (!f.type.match('.+(\.csv)$'))  continue;
-                var reader = new FileReader();
-                alert("csv 3");
-                // Read in the image file as a data URL.
-                //reader.readAsDataURL(f); //for image...
-                reader.readAsText(f); // fir file text.
-                alert("csv 4");
-                // Closure to capture the file information.
-                /*reader.onload = (function(theFile) {
-                 return function(e) {
-                 // Render thumbnail.
-                 var span = document.createElement('span');
-                 /!*span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                 '" title="', escape(theFile.name), '"/>'].join('');*!/
-                 document.getElementById('list').insertBefore(span, null);
-                 };
-                 })(f);*/
-                //for CSV...
-                reader.onload = (function (event) {
-                    //var csvData = event.target.result;
-                    var data = $.csv.toArrays(event.target.result);
-                    if (data && data.length > 0) {
-                        alert('Imported -' + data.length + '- rows successfully!');
-                        return data;
-                    } else {
-                        alert('No data to import!');
-                    }
-                });
-                reader.onerror = function (event) {
-                    alert('Unable to read ' + event.target.name);
-                };
 
-            }
-        }//else
-        //document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-    }
-
-    /** function for get the content of a file e.g. readTextFile("file:///C:/your/path/to/file.txt");*/
-    function readTextFile(file) {
-        var rawFile = new XMLHttpRequest();
-        try {
-            rawFile.open("GET", file, false);
-        }catch(e){
-            rawFile.open("GET", "file:///"+file, false);
-        }
-        rawFile.onreadystatechange = function ()
-        {
-            if(rawFile.readyState === 4)
-            {
-                if(rawFile.status === 200 || rawFile.status == 0)
-                {
-                    var allText = rawFile.responseText;
-                    alert(allText);
-                }
-            }
-        };
-        rawFile.send(null);
-    }
 
     //------------------------------------------------------
     //LOAD CSV
@@ -265,6 +200,10 @@
                             titleGlobal = feature.properties[clave];
                             //layer.setTitle(feature.properties[clave]); //with plugin search
                         }
+                       /* if(title === categoriaIcon || attr === categoriaIcon){
+                            var codeIcon = leaflet_buildMap_support.chooseIcon(feature.properties[clave]);
+                            arrayCodeIcon.push(codeIcon);
+                        }*/
                         if (attr.indexOf('http') === 0) {
                             attr = '<a target="_blank" href="' + attr + '">'+ attr + '</a>';
                             popupClick = attr;
@@ -272,28 +211,35 @@
                         if (attr) {
                             popupContent += '<tr><th>'+title+'</th><td>'+ attr +'</td></tr>';
                         }
-                        //layer.on('mouseover', function (e) {e.target.bindPopup(popupContent).openPopup();});
-                        //layer.on('mouseout', function (e) { e.target.closePopup();});
-                        layer.on('click', function (e) { e.target.bindPopup(popupClick).openPopup();});
-                        //layer.on('dblclick',function (e) { map.removeLayer(e.target)});
                     }
                     popupContent += "</table></div>";
+                    //if(!$.isEmptyObject(codeIcon)) layer.setIcon(codeIcon);
                     layer.bindPopup(popupContent,popupOpts);
+                    //layer.on('mouseover', function (e) {e.target.bindPopup(popupContent).openPopup();});
+                    //layer.on('mouseout', function (e) { e.target.closePopup();});
+                    layer.on('click', function (e) { e.target.bindPopup(popupContent).openPopup();});
+                    //layer.on('dblclick',function (e) { map.removeLayer(e.target)});
                 },
                 pointToLayer: function (feature, latlng) {
                     /*return new L.Marker(new L.latLng(latlng), {title: titleGlobal},{
-                            icon: L.icon({
-                                iconUrl: 'resources/js/leaflet/images/marcador-bankia.png',
-                                //iconUrl: 'http://www.megalithic.co.uk/images/mapic/' + feature.properties.Icon + '.gif',//from a field Icon data.
-                                shadowUrl: 'resources/js/leaflet/images/marker-shadow.png',
-                                iconSize: [25, 41],
-                                shadowSize: [41, 41],
-                                shadowAnchor: [13, 20]
-                            })
+                          //..icon
                         } );*/
+                   /* var  codeIcon;
+                    for (var clave in feature.properties) {
+                        var title = points.getPropertyTitle(clave).strip();
+                        var attr = feature.properties[clave];
+                        if(title === categoriaIcon || attr === categoriaIcon){
+                            codeIcon = leaflet_buildMap_support.chooseIcon(feature.properties[clave]);
+                            break;
+                        }
+                    }
+                    if($.isEmptyObject(codeIcon)) codeIcon = chooseIcon("");
+                    alert("CODE ICON:"+codeIcon.options._getIconUrl);
+                    return new L.Marker(latlng,{icon:codeIcon});*/
                     return new L.marker(latlng,{
                         icon: L.icon({
-                            iconUrl: 'resources/js/leaflet/images/marcador-bankia.png',
+                            iconUrl: 'resources/js/leaflet/images/marker-icon.png',
+                            //iconUrl: 'http://www.megalithic.co.uk/images/mapic/' + feature.properties.Icon + '.gif',//from a field Icon data.
                             //iconUrl: 'http://www.megalithic.co.uk/images/mapic/' + feature.properties.Icon + '.gif',//from a field Icon data.
                             shadowUrl: 'resources/js/leaflet/images/marker-shadow.png',
                             iconSize: [25, 41],
@@ -420,50 +366,5 @@
         }catch(e){alert(e.message);}
     };
 
-    map.addLayer(markerClusters);
+    //map.addLayer(markerClusters);
 
-    /*function loadCSV(){
-        var hits = 0;
-        var total = 0;
-        var filterString;
-        var points = L.geoCsv (null, {
-            firstLineTitles: true,
-            fieldSeparator: fieldSeparator,
-            onEachFeature: function (feature, layer) {
-                var popup = '<div class="popup-content"><table class="table table-striped table-bordered table-condensed">';
-                for (var clave in feature.properties) {
-                    var title = points.getPropertyTitle(clave).strip();
-                    var attr = feature.properties[clave];
-                    if (title == labelColumn) {
-                        layer.bindLabel(feature.properties[clave], {className: 'map-label'});
-                    }
-                    if (attr.indexOf('http') === 0) {
-                        attr = '<a target="_blank" href="' + attr + '">'+ attr + '</a>';
-                    }
-                    if (attr) {
-                        popup += '<tr><th>'+title+'</th><td>'+ attr +'</td></tr>';
-                    }
-                }
-                popup += "</table></popup-content>";
-                layer.bindPopup(popup, popupOpts);
-            },
-            filter: function(feature) {
-                total += 1;
-                if (!filterString) {
-                    hits += 1;
-                    return true;
-                }
-                var hit = false;
-                var lowerFilterString = filterString.toLowerCase().strip();
-                $.each(feature.properties, function(k, v) {
-                    var value = v.toLowerCase();
-                    if (value.indexOf(lowerFilterString) !== -1) {
-                        hit = true;
-                        hits += 1;
-                        return false;
-                    }
-                });
-                return hit;
-            }
-        });
-    }*/

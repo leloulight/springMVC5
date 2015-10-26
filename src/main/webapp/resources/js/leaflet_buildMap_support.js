@@ -11,6 +11,7 @@
      opacity: 1.0
      });*/
     var map;
+    var isGTFS;
 
     //DEFINE DIFFERNET MARKER WITH DIFFERNET COLOR
     var markerAccommodation = L.AwesomeMarkers.icon({markerColor: 'red'});
@@ -94,22 +95,33 @@
         $('#pulsante-reset').click(function() {
             removeClusterMarker();
         });
+        /**
+         * If work with different csv you can specify the FieldSeparator,
+         * LineSeparator and the tilte or Name column for the marker.
+         */
         $("#fieldSeparator").bind("change paste keyup", function() {
             setFieldSeparatorCSV($(this).val());
         });
         $("#lineSeparator").bind("change paste keyup", function() {
             setLineSeparatorCSV($(this).val());
         });
+        $("#nameSeparator").on('',function(){
+            setTitleFieldCSV($(this).val());
+        });
+
+       /* $('#gtfs').on('change', function() {
+            alert($('input[name=gtfs]:checked', '#gtfs').val());
+        });*/
 
 
         //oppure $( window ).load(function(){
         //loading map...
         //$('#caricamento').delay(500).fadeOut('slow');
-        // all'apertura della pagina CREO LE TABS JQUERY UI NEL MENU IN ALTO
+        /**all'apertura della pagina CREO LE TABS JQUERY UI NEL MENU IN ALTO */
         $( "#tabs" ).tabs();
 
 
-        //if you have add a new marker from spring put in the map.
+        /** if you have add a new marker from spring put in the map. */
         if((!$.isEmptyObject(arrayMarkerVar)) && arrayMarkerVar.length > 0){
             addMultipleMarker(arrayMarkerVar);
         }
@@ -119,7 +131,21 @@
         });
 
         //set a listener on the uploader button
-        $("#uploader").on('change',handleFilesCSV);
+        $("#uploader").on('change',function(e) {
+            try {
+               /* if ($('#gtfs').is(':checked')) {
+                    alert("GTFS it's checked");
+                    //this.files[0]
+                    initMap();
+                    handleFilesGTFS(e);
+                } else {*/
+                    handleFiles2(e);
+            }catch(e){
+                alert("34");
+                alert(e.message);}
+        });
+
+
         //var uploader = document.getElementById("#uploader");
         //uploader.addEventListener("change", handleFilesCSV, false);
 
@@ -239,6 +265,26 @@
             }
         });
 
+        /*if(!$.isEmptyObject(contentdata)) {
+            alert("invoke AJAX");
+            $.ajax({
+                url: '/fileupload',
+                data: contentdata,
+                // THIS MUST BE DONE FOR FILE UPLOADING
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function (data) {
+                    alert('Success: ' + data);
+                },
+                error: function (xhr, status, error) {
+                    alert('ERROR: ' + error);
+                    var err = eval("(" + xhr.responseText + ")");
+                    //var err = JSON.parse(xhr.responseText)
+                    alert('ERROR: ' + err.Message);
+                }
+            });
+        }*/
 
         alert("Loaded all JQUERY variable");
     });
@@ -328,7 +374,7 @@
      *  Set the map and zoom on the specific location
      */
     function initMap() {
-        if(map==null) {
+        if(map==null || $.isEmptyObject(map)) {
             alert("Init Map...");
             //valori fissi per il settaggio iniziale della mappa....
             // CREAZIONE MAPPA CENTRATA NEL PUNTO
@@ -376,7 +422,10 @@
                 //map.on('click', onMapClick);
                 //Fired when the view of the map stops changing
                 map.on('moveend', onMapMove);
-
+                /*map.on('viewreset', function() {
+                    resetShapes();
+                    //resetStops();
+                });*/
                 //other function form Service Map
                 // ASSOCIA FUNZIONI AGGIUNTIVE ALL'APERTURA DI UN POPUP SU PARTICOLARI TIPI DI DATI
                 map.on('popupopen', function(e) {
@@ -404,12 +453,10 @@
                         mostraParcheggioAJAX(nome);
                     }
                 });
-
-
                 alert("MAP IS SETTED");
                 //$('#caricamento').delay(500).fadeOut('slow');
             } catch (e) {
-                alert('Exception:' + e.message);
+                alert('Exception initMap():' + e.message);
             }
         }
     }
@@ -619,8 +666,29 @@
         },
         loadCSVFromURL: function(url){
             utility_leaflet_csv.loadCSVFromURL(url);
+        },
+        chooseIcon: function(code){
+            chooseIcon(code);
         }
     };
+
+
+    function chooseIcon(category){
+        alert("chooseIcon");
+        var url;
+        if(category == "") {url = 'resources/js/leaflet/images/marker-icon.png';}
+        else if(category == "Bank") {url = "resources/js/leaflet/images/marcador-bankia.png";}
+        else{ url = 'resources/js/leaflet/images/marker-icon.png';}
+
+        return L.icon({
+            iconUrl: url,
+            //iconUrl: 'http://www.megalithic.co.uk/images/mapic/' + feature.properties.Icon + '.gif',//from a field Icon data.
+            shadowUrl: 'resources/js/leaflet/images/marker-shadow.png',
+            iconSize: [25, 41],
+            shadowSize: [41, 41],
+            shadowAnchor: [13, 20]
+        })
+    }
 
 
 
