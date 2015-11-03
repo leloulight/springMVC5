@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/infinispan/infinispan-commons/6.0.0.Final/infinispan-commons-6.0.0.Final.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/infinispan/infinispan-commons/6.0.0.Final/infinispan-commons-6.0.0.Final-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/infinispan/infinispan-commons/6.0.0.Final/infinispan-commons-6.0.0.Final-sources.jar!/" />
     </SOURCES>

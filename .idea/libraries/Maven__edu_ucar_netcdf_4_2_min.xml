@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/edu/ucar/netcdf/4.2-min/netcdf-4.2-min.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/edu/ucar/netcdf/4.2-min/netcdf-4.2-min-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/edu/ucar/netcdf/4.2-min/netcdf-4.2-min-sources.jar!/" />
     </SOURCES>

@@ -105,15 +105,15 @@ L.Control.Search = L.Control.extend({
 		return this._container;
 	},
 	addTo: function (map) {
-
 		if(this.options.container) {
 			this._container = this.onAdd(map);
-			this._wrapper = L.DomUtil.get(this.options.container);
-			this._wrapper.style.position = 'relative';
-			this._wrapper.appendChild(this._container);
+			this._wrapper = L.DomUtil.get(this.options.container); //Exception():this._wrapper is null
+			this._wrapper.style.position = 'relative'; // Exception(): this._wrapper.style is undefined.
+			this._wrapper.appendChild(this._container); //Exception(): this._wrapper.appendChild is not a function
 		}
 		else
 			L.Control.prototype.addTo.call(this, map);
+
 
 		return this;
 	},

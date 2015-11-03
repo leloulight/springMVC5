@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/webjars/jquery-ui/1.10.3/jquery-ui-1.10.3.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/webjars/jquery-ui/1.10.3/jquery-ui-1.10.3-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/webjars/jquery-ui/1.10.3/jquery-ui-1.10.3-sources.jar!/" />
     </SOURCES>

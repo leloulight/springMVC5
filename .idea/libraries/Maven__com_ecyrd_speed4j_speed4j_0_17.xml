@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/ecyrd/speed4j/speed4j/0.17/speed4j-0.17.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/ecyrd/speed4j/speed4j/0.17/speed4j-0.17-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/ecyrd/speed4j/speed4j/0.17/speed4j-0.17-sources.jar!/" />
     </SOURCES>

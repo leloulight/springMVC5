@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/rockymadden/stringmetric/stringmetric-core_2.10/0.27.2/stringmetric-core_2.10-0.27.2.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/rockymadden/stringmetric/stringmetric-core_2.10/0.27.2/stringmetric-core_2.10-0.27.2-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/rockymadden/stringmetric/stringmetric-core_2.10/0.27.2/stringmetric-core_2.10-0.27.2-sources.jar!/" />
     </SOURCES>

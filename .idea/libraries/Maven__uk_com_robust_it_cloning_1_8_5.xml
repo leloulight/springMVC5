@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/uk/com/robust-it/cloning/1.8.5/cloning-1.8.5.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/uk/com/robust-it/cloning/1.8.5/cloning-1.8.5-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/uk/com/robust-it/cloning/1.8.5/cloning-1.8.5-sources.jar!/" />
     </SOURCES>

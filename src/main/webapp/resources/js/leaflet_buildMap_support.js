@@ -1,17 +1,12 @@
-    /**
-    * Created by 4535992 on 11/06/2015.
-    */
-    //support variables
-    /*var basemap = new L.TileLayer(baseUrl, {
-     maxZoom: 17,
-     attribution: 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>,' +
-     ' <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors,' +
-     ' <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>',
-     subdomains: '1234',
-     opacity: 1.0
-     });*/
     var map;
     var isGTFS;
+
+    var bingAPIKey =
+        'OOGpZK9MOAwIPsVuVTlE~D7N3xRehqhr3XJxlK8eMMg~Au-bt_oExU--ISxBKFtEXgSX-_AN6VMZSpM6rfKGY4xtAho6O67ueo2iN23gfbi0';
+    var googleAPIKey =
+        'AIzaSyDlmsdr-wCDaHNbaBM6N9JljQLIjRllCl8';
+    var mapBoxAPIKey =
+        'pk.eyJ1IjoiNDUzNTk5MiIsImEiOiJjaWdocXltNmMwc3Zud2JrbjdycWVrZG8zIn0.22EO_bIUp_3XUpt5dYjTRg';
 
     //DEFINE DIFFERNET MARKER WITH DIFFERNET COLOR
     var markerAccommodation = L.AwesomeMarkers.icon({markerColor: 'red'});
@@ -66,11 +61,18 @@
 
     // VARIABILI PER LA FUNZIONALITA' DI RICERCA SERVIZI
     var GPSControl = new L.Control.Gps({maxZoom: 16,style: null}); // AGGIUNTA DEL PLUGIN PER LA GEOLOCALIZZAZIONE
+  /*  var geoCoderGoogle = L.Control.Geocoder.Google();
+    var geoCoderControl = L.Control.geocoder({geocoder: geoCoderGoogle});*/
+    var geoCoderGoogle,geoCoderControl;
+    var geocoderSearchGoogle;
+
 
 
     //Variabili suppport java SPRING
+    var markerVar;
     var nameVar,urlVar,latVar,lngVar; //basic info
     var regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar; //other info
+    var otherVar;
     var arrayMarkerVar =[]; // array support of makers
 
 
@@ -88,24 +90,29 @@
     //var mySRC = jQuery('script[src$="resources/js_utility/leaflet_buildMap_support.js"]').attr('src').replace('js_utility/leaflet_buildMap_support.js', '');
 
     /*** On ready document  */
-    $( document ).ready(function() {
+    jQuery( document ).ready(function() {
         initMap();
-
         /*** remove all cluster marker with a click on the reset button */
-        $('#pulsante-reset').click(function() {
+        jQuery('#pulsante-reset').click(function() {
             removeClusterMarker();
         });
         /**
          * If work with different csv you can specify the FieldSeparator,
          * LineSeparator and the tilte or Name column for the marker.
          */
-        $("#fieldSeparator").bind("change paste keyup", function() {
+        /*$("#fieldSeparator").bind("keyup", function() {
             setFieldSeparatorCSV($(this).val());
         });
         $("#lineSeparator").bind("change paste keyup", function() {
             setLineSeparatorCSV($(this).val());
+        });*/
+        jQuery("#fieldSeparator").on("keyup", function() {
+            setFieldSeparatorCSV($(this).val());
         });
-        $("#nameSeparator").on('',function(){
+        jQuery("#lineSeparator").on("keyup", function() {
+            setLineSeparatorCSV($(this).val());
+        });
+        jQuery("#nameSeparator").on("keyup",function(){
             setTitleFieldCSV($(this).val());
         });
 
@@ -118,20 +125,21 @@
         //loading map...
         //$('#caricamento').delay(500).fadeOut('slow');
         /**all'apertura della pagina CREO LE TABS JQUERY UI NEL MENU IN ALTO */
-        $( "#tabs" ).tabs();
+        jQuery( "#tabs" ).tabs();
 
 
         /** if you have add a new marker from spring put in the map. */
-        if((!$.isEmptyObject(arrayMarkerVar)) && arrayMarkerVar.length > 0){
+        if((!jQuery.isEmptyObject(arrayMarkerVar)) && arrayMarkerVar.length > 0){
             addMultipleMarker(arrayMarkerVar);
         }
 
-        $('#textsearch').on('keyup', function(e) {
+        //ABILITA LA RICRECA NEI MARKER CON IL PLUGIN LEAFLET-SEARCH
+        jQuery('#textsearch').on('keyup', function(e) {
             controlSearch.searchText( e.target.value );
         });
 
         //set a listener on the uploader button
-        $("#uploader").on('change',function(e) {
+        jQuery("#uploader").on('change',function(e) {
             try {
                /* if ($('#gtfs').is(':checked')) {
                     alert("GTFS it's checked");
@@ -165,7 +173,7 @@
             addCsvMarkers();
         });
 
-        $("#getMarkers").click(function(evt){
+        $("#getMarkers").click(function(){
             getMarkers();
         });
 
@@ -197,9 +205,9 @@
 
         //FUNZIONE PER MOSTRARE/NASCONDERE LE SUB CATEGORY
         $(".toggle-subcategory").click(function () {
-            $tsc = $(this);
+            var $tsc = $(this);
             //getting the next element
-            $content = $tsc.next();
+            var $content = $tsc.next();
             if (!$content.is(":visible")){
                 $('.subcategory-content').hide();
                 $('.toggle-subcategory').html('+');
@@ -254,7 +262,7 @@
         });
 
         // AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA
-        $('#info img').click(function(){
+        $('#info').find('img').click(function(){
             if ($("#info").hasClass("active") == false){
                 $('#info').addClass("active");
                 selezioneAttiva = true;
@@ -264,29 +272,26 @@
                 selezioneAttiva = false;
             }
         });
-
-        /*if(!$.isEmptyObject(contentdata)) {
-            alert("invoke AJAX");
-            $.ajax({
-                url: '/fileupload',
-                data: contentdata,
-                // THIS MUST BE DONE FOR FILE UPLOADING
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                success: function (data) {
-                    alert('Success: ' + data);
-                },
-                error: function (xhr, status, error) {
-                    alert('ERROR: ' + error);
-                    var err = eval("(" + xhr.responseText + ")");
-                    //var err = JSON.parse(xhr.responseText)
-                    alert('ERROR: ' + err.Message);
-                }
-            });
-        }*/
-
         alert("Loaded all JQUERY variable");
+
+        //Search address with google...
+        jQuery("div.leaflet-control-geosearch").appendTo(jQuery("#search-address-with-google"));
+        //<div class="leaflet-control-search leaflet-control search-exp">
+        jQuery("#searchMarkerWithJavascript").appendTo(jQuery("#searchMarkerWithJavascript2"));
+        //<div class="leaflet-control-geocoder leaflet-bar leaflet-control leaflet-control-geocoder-expanded">
+        jQuery(".leaflet-control-geocoder").appendTo(jQuery("#searchMarkerWithJavascript3"));
+        alert("Loaded all JQUERY variable");
+        //implement select of the geocoder.
+        for (var name in geocoders) {
+            btn = L.DomUtil.create('button', 'leaflet-bar', selector);
+            btn.innerHTML = name;
+            (function(n) {
+                L.DomEvent.addListener(btn, 'click', function() {
+                    select(geocoders[n], this);
+                }, btn);
+            })(name);
+            if (!selection) select(geocoders[name], btn);
+        }
     });
 
     /**
@@ -301,20 +306,16 @@
                 alert("Marker cluster is not empty go to check the Marker.");
                 markerClusters.eachLayer(function (layer) {
                     try {
-                        //alert("marker number(n):");
                         var lat = layer.getLatLng().lat;
-                        //alert("marker number(n):" + lat);
                         var lng = layer.getLatLng().lng;
-                        //alert("marker number(n):" + lat + "," + lng);
                         var label = layer.getLabel()._content;
-                        //alert("marker number(n):" + lat + "," + lng + "," + label);
                         /*var location = layer.getLocation();*/
                         var popupContent = layer.getPopup().getContent();
                         //alert("marker number(" + i + "):" + lat + "," + lng + "," + label + "," + popupContent);
                         array.push({name: label, lat: lat, lng: lng, description: popupContent});
                         //i++;
                     }catch(e){
-                        //do nothing
+                        alert("Exception:getMarkers -> "+e.message);
                     }
                 });
             }
@@ -352,22 +353,6 @@
         document.getElementById('loadMarker').appendChild(input);
         //setInputValue(input_id,val);
         //alert("compiled addInput...");
-    }
-
-    /*function setInputValue(input_id, val) {
-        document.getElementById(input_id).value = val;
-        //document.getElementById(input_id).setAttribute('value', val);
-    }*/
-
-    /** Method that checks that the browser supports the HTML5 File API*/
-    function browserSupportFileUpload() {
-        var isCompatible = false;
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            isCompatible = true;
-        }else{
-            alert('The File APIs are not fully supported in this browser.');
-        }
-        return isCompatible;
     }
 
     /***
@@ -412,12 +397,17 @@
                 //Set a bound window for the leaflet map for Toscany region
                 //var bounds = new L.LatLngBounds(new L.LatLng(setBounds[0],setBounds[1]), new L.LatLng(setBounds[2], setBounds[3]));
                 /*map.setMaxBounds(new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4)));*/
+
+
                 //..add many functionality
-                addPluginGPSControl();
-                addPluginCoordinatesControl();
-                addPluginLayersStamenBaseMaps();
-                addPluginLocateControl();
-                addPluginSearch();
+                //addPluginGPSControl();
+                //addPluginCoordinatesControl();
+                //addPluginLayersStamenBaseMaps();
+                //addPluginLocateControl();
+                addPluginSearch(); //not necessary
+                //addPluginGeoSearch();
+                addPluginGeoCoder();
+
                 //..add other functionality
                 //map.on('click', onMapClick);
                 //Fired when the view of the map stops changing
@@ -452,6 +442,8 @@
                         // SE IL SERVIZIO E' UN PARCHEGGIO MOSTRA LO STATO DI OCCUPAZIONE NEL MENU CONTESTUALE
                         mostraParcheggioAJAX(nome);
                     }
+
+
                 });
                 alert("MAP IS SETTED");
                 //$('#caricamento').delay(500).fadeOut('slow');
@@ -461,51 +453,7 @@
         }
     }
 
-    /***
-     * Set plugin for gps on the leaflet
-     * https://github.com/stefanocudini/leaflet-gps
-     */
-    function addPluginGPSControl() {
-        //Simple point
-        //map.addControl( new L.Control.Gps({autoActive:true}) );//inizialize control
-        //Custom marker
-        //map.addControl( new L.Control.Gps({marker: new L.Marker([0,0])}) );//inizialize control
-        //Custom a style (circle,ecc.)
-        //var newStyle = {radius: 25, weight:4, color: '#f0c', fill: true, opacity:0.8};
-        //map.addControl( new L.Control.Gps({style: newStyle }) );//inizialize control
-        if($.isEmptyObject(GPSControl)){
-            GPSControl = new L.Control.Gps({maxZoom: 16,style: null});
-        }
-        map.addControl(GPSControl);
-    }
 
-    /***
-     * Set the coordinates plugin on leaflet, add a window with the value of coordinates
-     * https://github.com/MrMufflon/Leaflet.Coordinates
-     */
-    function addPluginCoordinatesControl() {
-        //add standard controls
-        L.control.coordinates({
-            position:"bottomleft", //optional default "bootomright"
-            decimals:2, //optional default 4
-            decimalSeperator:".", //optional default "."
-            labelTemplateLat:"Latitude: {y}", //optional default "Lat: {y}"
-            labelTemplateLng:"Longitude: {x}", //optional default "Lng: {x}"
-            enableUserInput:true, //optional default true
-            useDMS:false, //optional default false
-            useLatLngOrder: true, //ordering of labels, default false-> lng-lat
-            markerType: L.marker, //optional default L.marker
-            markerProps: {} //optional default {}
-        }).addTo(map);
-
-        L.control.coordinates({
-            useDMS: true,
-            labelTemplateLat: "N {y}",
-            labelTemplateLng: "E {x}",
-            useLatLngOrder: true
-        }).addTo(map);
-
-    }
 
     /*** function for remove all cluster when the map is move */
     function onMapMove() {
@@ -525,14 +473,14 @@
                 $('#numerorisultati').prop('disabled', false);
 
                 ricercaInCorso = true;
-                $('#info-aggiuntive .content').html("Indirizzo Approssimativo: <img src=\"resources/img/ajax-loader.gif\" width=\"16\" />");
+                $('#info-aggiuntive').find('.content').html("Indirizzo Approssimativo: <img src=\"resources/img/ajax-loader.gif\" width=\"16\" />");
                 clickLayer.clearLayers();
                 //clickLayer = new L.LatLng(e.latlng);
                 clickLayer = L.layerGroup([new L.marker(e.latlng)]).addTo(map);
                 var latLngPunto = e.latlng;
                 coordinateSelezione = latLngPunto.lat + ";" + latLngPunto.lng;
-                var latPunto = new String(latLngPunto.lat);
-                var lngPunto = new String(latLngPunto.lng);
+                var latPunto = String(latLngPunto.lat);
+                var lngPunto = String(latLngPunto.lng);
 
                 selezione = 'Coord: ' + latPunto.substring(0,7) + "," + lngPunto.substring(0,7);
                 $('#selezione').html(selezione);
@@ -546,7 +494,7 @@
                         lng: lngPunto
                     },
                     success : function(msg) {
-                        $('#info-aggiuntive .content').html(msg);
+                        $('#info-aggiuntive').find('.content').html(msg);
                         ricercaInCorso = false;
                     }
                 });
@@ -555,31 +503,37 @@
     }
 
     /*** function for add a marker to the leaflet map */
-    var marker;
-    function addSingleMarker(name, url, lat, lng) {
+    function addSingleMarker(name, url, lat, lng,bounds) {
         //alert("... add single marker:" + name + ',' + url + ',' + lat + ',' + lng);
         try {
             if ($.isEmptyObject(markerClusters)) {
                 markerClusters = new L.MarkerClusterGroup();
             }
+            if(bounds!=null && !$.isEmptyObject(bounds)){
+                map.setBounds(bounds);
+            }
             //var marker = L.marker([lat, lng]).bindPopup(popupClick).addTo(map);
             //var cc = L.latLng(43.7778535, 11.2593572);
-            var text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
+            var text;
+            if(url!=null && !$.isEmptyObject(url)) text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
+            else  text = ''+name + '';
+
+            var title,loc;
             try {
                 /*marker = new L.marker([parseFloat(lat), parseFloat(lng)], {draggable:false}, { icon: deathIcon},{title: name} )
                     .bindLabel(text, { noHide: true }).addTo(map);
                 */
-                var title = name,	//value searched
-                    loc = [parseFloat(lat), parseFloat(lng)],		//position found
-                    marker = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(text, { noHide: true });//se property searched
-                    //marker.bindPopup('title: '+ title );
+                title = name;	//value searched
+                loc = [parseFloat(lat), parseFloat(lng)];		//position found
+                markerVar = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(text, { noHide: true });//se property searched
+                //marker.bindPopup('title: '+ title );
             }catch(e){
                 try{
                     /*marker = new L.marker([lat, lng], {draggable:false}, { icon: deathIcon},{title: name})
                         .bindLabel(text, { noHide: true }).addTo(map);*/
-                    var title = name,	//value searched
-                        loc = [lat,lng],		//position found
-                        marker = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(text, { noHide: true });//se property searched
+                    title = name;	//value searched
+                    loc = [lat,lng];	//position found
+                    markerVar = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(text, { noHide: true });//se property searched
                 }catch(e){
                     alert(e.message);
                     alert("Sorry the program can't find Geographical coordinates for this Web address,check if the Web address is valid");
@@ -602,19 +556,20 @@
                             '<tr><th>Fax:</th><td>'+faxVar+'</td></tr>'+
                             '<tr><th>Email:</th><td>'+emailVar +'</td></tr>'+
                             '<tr><th>IVA:</th><td>'+ivaVar+'</td></tr>';
+                            '<tr><th>Other:</th><td>'+otherVar+'</td></tr>';
             popupContent += "</table></div>";
             var popupOver = new L.popup().setContent(popupContent);
             //marker.bindPopup(popupClick);
-            marker.bindPopup(popupOver);
+            markerVar.bindPopup(popupOver);
             //..set some action for the marker
             //evt.target is the marker where set the action
             //marker.on('mouseover', function (e) {e.target.bindPopup(popupOver).openPopup();});
             //marker.on('mouseout', function (e) { e.target.closePopup();});
-            marker.on('click', function (e) { e.target.bindPopup(popupOver).openPopup();});
+            markerVar.on('click', function (e) { e.target.bindPopup(popupOver).openPopup();});
            //marker.on('dblclick',function (e) { map.removeLayer(e.target)});
             /*marker.on('click', onMarkerClick(), this);*/
             //..add marker to the array of cluster marker
-            markerClusters.addLayer(marker);
+            markerClusters.addLayer(markerVar);
             //...set to a Global variable for use with different javascript function
             //map.addLayer(markerClusters);
             markerClusters.addTo(map);
@@ -640,13 +595,11 @@
             layer.closePopup();
             map.removeLayer(layer);
         });
-
         map.closePopup();
         map.removeLayer(markerClusters);//....remove layer
         points.clearLayers();
         alert("...compiled removeClusterMarker");
     }
-
 
 
     /***  Set constructor variable for leaflet_buildMap_support */
@@ -661,7 +614,6 @@
            addSingleMarker(name,url,lat,lng);
         },
         pushMarkerToArrayMarker: function(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar){
-            //pushMarkerToArrayMarker();
             pushMarkerToArrayMarker(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar);
         },
         loadCSVFromURL: function(url){
@@ -669,7 +621,8 @@
         },
         chooseIcon: function(code){
             chooseIcon(code);
-        }
+        },
+        removeClusterMarker:removeClusterMarker
     };
 
 
@@ -690,10 +643,6 @@
         })
     }
 
-
-
-
-
    /*** function to open a URL with javascript without jquery. */
    function openURL(url){
        // similar behavior as an HTTP redirect
@@ -702,7 +651,9 @@
        window.location.href = url;
    }
 
-    /** function to add for every single object marker a Leaflet Marker on the Leaflet Map.  */
+    /**
+     * function to add for every single object marker a Leaflet Marker on the Leaflet Map.
+     */
     function addMultipleMarker(markers){
         alert("add multiple marker "+markers.length+"...");
         try {
@@ -725,96 +676,17 @@
         }
     }
 
-    /** function to add every single company from java object in JSP page to a javascript array */
+    /**
+     * function to add every single company from java object in JSP page to a javascript array
+     */
     function pushMarkerToArrayMarker(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar){
         /*nameVar = document.getElementById('nameForm').value;*/
-        //alert("pushing the element =>Name:" + nameVar + ',URL:' + urlVar + ',LAT:' + latVar + ',LNG:' + lngVar+"...");
+        alert("pushing the element =>Name:" + nameVar + ',URL:' + urlVar + ',LAT:' + latVar + ',LNG:' + lngVar+"...");
         var markerVar = { name:nameVar,url:urlVar,lat:latVar,lng:lngVar,
             region:regionVar,province:provinceVar,city:cityVar,address:addressVar,phone:phoneVar,email:emailVar,
             fax:faxVar, iva:ivaVar};
-        //alert("....pushed a marker tot he array on javascript side:"+ markerVar.toString());
         arrayMarkerVar.push(markerVar);
-    }
-
-    /**
-     * Add the leaflet plugin Stamen Layer.
-     * https://github.com/stamen/maps.stamen.com.
-     */
-    function addPluginLayersStamenBaseMaps() {
-        if (map != null) {
-            //var layers = ["terrain", "watercolor","toner"];
-            //http://c.tiles.mapbox.com/v3/examples.map-szwdot65/{z}/{x}/{y}.png
-            var bases = {
-                "Watercolor": new L.StamenTileLayer("watercolor"),
-                "Terrain": new L.StamenTileLayer("terrain"),
-                "Toner": new L.StamenTileLayer("toner"),
-                "Disit": new L.StamenTileLayer("disit"),
-                "Disit2": new L.stamenTileLayer("disit2")
-            };
-            L.control.layers(bases).addTo(map);
-        }
-    }
-
-    /**
-     *  Add the Leaflet plugin  locateControl.
-     *  https://github.com/domoritz/leaflet-locatecontrol.
-     */
-    function addPluginLocateControl() {
-        if (map != null) {
-            /*L.Control.MyLocate = L.Control.Locate.extend({
-                drawMarker: function () {
-                    // override to customize the marker
-                }
-            });*/
-            // add location control to global name space for testing only
-            // on a production site, omit the "lc = "!
-            //var lc = new L.Control.MyLocate();
-            // create control and add to map
-            var lc = new L.control.locate({
-                position: 'topleft',  // set the location of the control
-                layer: new L.LayerGroup(),  // use your own layer for the location marker
-                //layer: markerClusters,  // use your own layer for the location marker
-                drawCircle: true,  // controls whether a circle is drawn that shows the uncertainty about the location
-                follow: false,  // follow the user's location
-                setView: true, // automatically sets the map view to the user's location, enabled if `follow` is true
-                keepCurrentZoomLevel: false, // keep the current map zoom level when displaying the user's location. (if `false`, use maxZoom)
-                stopFollowingOnDrag: false, // stop following when the map is dragged if `follow` is true (deprecated, see below)
-                remainActive: false, // if true locate control remains active on click even if the user's location is in view.
-                markerClass: L.circleMarker, // L.circleMarker or L.marker
-                circleStyle: {},  // change the style of the circle around the user's location
-                markerStyle: {},
-                followCircleStyle: {},  // set difference for the style of the circle around the user's location while following
-                followMarkerStyle: {},
-                icon: 'fa fa-map-marker',  // class for icon, fa-location-arrow or fa-map-marker
-                iconLoading: 'fa fa-spinner fa-spin',  // class for loading icon
-                circlePadding: [0, 0], // padding around accuracy circle, value is passed to setBounds
-                metric: true,  // use metric or imperial units
-                onLocationError: function (err) {
-                    alert(err.message)
-                },  // define an error callback function
-                onLocationOutsideMapBounds: function (context) { // called when outside map boundaries
-                    alert(context.options.strings.outsideMapBoundsMsg);
-                },
-                showPopup: true, // display a popup when the user click on the inner marker
-                strings: {
-                    title: "Show me where I am",  // title of the locate control
-                    metersUnit: "meters", // string for metric units
-                    feetUnit: "feet", // string for imperial units
-                    popup: "You are within {distance} {unit} from this point",  // text to appear if user clicks on circle
-                    outsideMapBoundsMsg: "You seem located outside the boundaries of the map" // default message for onLocationOutsideMapBounds
-                },
-                locateOptions: {}  // define location options e.g enableHighAccuracy: true or maxZoom: 10
-            });
-            //var lc = L.control.locate({follow: true,strings: {title: "Show me where I am"}});
-            lc.addTo(map);
-            // request location update and set location (e.g. onLoad page)
-            //lc.start();
-            map.on('startfollowing', function() {
-                map.on('dragstart', lc._stopFollowing, lc);
-            }).on('stopfollowing', function() {
-                map.off('dragstart', lc._stopFollowing, lc);
-            });
-        }
+        alert("....pushed a marker tot he array on javascript side:"+ markerVar.toString());
     }
 
     /**
@@ -822,16 +694,144 @@
      * https://github.com/p4535992/leaflet-search.
      */
     function addPluginSearch(){
-        alert("compile addPluginSearch...");
-        if (!$.isEmptyObject(markerClusters)) {
-            controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topleft'});
-            map.addControl( controlSearch );
-            //map.addControl( new L.Control.Search({layer: markerClusters}) );
-            //searchLayer is a L.LayerGroup contains searched markers
-            //Short way:
-            //L.map('map', { searchControl: {layer: searchLayer} });
+        try{
+            geocoderSearchGoogle = new google.maps.Geocoder();
+        }catch(e){
+            alert("Warning:addPluginSearch->"+e.message)
+            geocoderSearchGoogle = null;
         }
-        alert("...compiled addPluginSearch");
+        alert("compile addPluginSearch...");
+        try {
+            if (!jQuery.isEmptyObject(markerClusters)) {
+                /* controlSearch = new L.Control.Search({layer: markerClusters, initial: false,collapsed: false});*/
+                if (jQuery.isEmptyObject(geocoderSearchGoogle)) {
+                    controlSearch = new L.Control.Search({
+                        container: "searchMarkerWithJavascript", layer: markerClusters, initial: false, collapsed: false
+                    });
+                } else {
+                    controlSearch = new L.Control.Search({
+                        container: "searchMarkerWithJavascript",
+                        layer: markerClusters,
+                        initial: false,
+                        collapsed: false,
+                        sourceData: googleGeocoding,
+                        formatData: formatJSON,
+                        markerLocation: true,
+                        autoType: false,
+                        autoCollapse: true,
+                        minLength: 2,
+                        zoom: 10
+                    });
+                }
+                map.addControl(controlSearch);
+            }
+            alert("...compiled addPluginSearch");
+        }catch(e){
+            alert("Exception:addPluginSearch->"+e.message);
+        }
+    }
+
+    function googleGeocoding(text, callResponse){
+        geocoderSearchGoogle.geocode({address: text}, callResponse);
+    }
+
+    function formatJSON(rawjson) {
+        var json = {}, key, loc, disp = [];
+        for(var i in rawjson){
+            key = rawjson[i].formatted_address;
+            loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );
+            json[ key ]= loc;	//key,value format
+        }
+        return json;
+    }
+
+
+
+    /**
+     * Add the Leaflet leaflet-control-geocoder.
+     * https://github.com/perliedman/leaflet-control-geocoder
+     * https://github.com/patrickarlt/leaflet-control-geocoder
+     */
+    function addPluginGeoCoder() {
+        alert("Compile addPluginGeoCoder...");
+        try {
+            if (jQuery.isEmptyObject(geoCoderControl)) {
+                alert("1");
+                selector = L.DomUtil.get('geocode-selector');
+                alert("2")
+                geoCoderControl = new L.Control.Geocoder({ geocoder: null });
+                alert("3")
+                geoCoderControl.addTo(map);
+                alert("4")
+            } else {
+                map.addControl(geoCoderControl);
+            }
+            alert("...compiled addPluginGeoCoder");
+        }catch(e){
+            alert("Exception:addPluginGeoCoder->"+e.message);
+        }
+    }
+
+    var btn,selection,marker,selector;
+    var geocoders = {
+        'Nominatim': L.Control.Geocoder.nominatim(),
+        'Bing': L.Control.Geocoder.bing(bingAPIKey),
+        'Mapbox': L.Control.Geocoder.mapbox(mapBoxAPIKey),
+        'Google': L.Control.Geocoder.google(googleAPIKey),
+        'Photon': L.Control.Geocoder.photon()
+    };
+
+    function select(geocoder, el) {
+        if (selection) L.DomUtil.removeClass(selection, 'selected');
+        geoCoderControl.options.geocoder = geocoder;
+        L.DomUtil.addClass(el, 'selected');
+        selection = el;
+    }
+
+    function invokePluginGeoCoderGoogle(address){
+        //convert latlng to Address
+        //geocodergoogle.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {});
+        try {
+            alert("Compile invokePluginGeoCoder with address:" + address + "...");
+            alert("geocoderControl->" +  geoCoderControl);
+            alert("geocoderGoogle->" + geoCoderGoogle);
+            var g = geoCoderControl.options.geocoder.markGeocode = function (result) {
+                alert("88:" + result.toSource());
+                //var marker = new L.Marker(result.center).bindPopup(result.html || result.name);
+                addressVar = address;
+                otherVar = result.html;
+                alert("add marker:" + result.name + "," + result.center.lat + "," + result.center.lng + "," + otherVar);
+                pushMarkerToArrayMarker(result.name, null, result.center.lat, result.center.lng,
+                    null,null,null,null,null,null,null,null);
+                /*var bbox = result.bbox;
+                 L.polygon([
+                 bbox.getSouthEast(),
+                 bbox.getNorthEast(),
+                 bbox.getNorthWest(),
+                 bbox.getSouthWest()
+                 ]).addTo(map);*/
+               /* geoCoderControl.options.geocoder.geocode(address, function(results) {
+                    var latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
+                    marker = new L.Marker (latLng);
+                    map.addlayer(marker);
+                });*/
+            };
+
+           /* Then you can use the following code to 'geocode' your address into latitude / longitude. This function will
+            return the latitude / longitude of the address. You can save the latitude / longitude in an variable so you
+            can use it later for your marker. Then you only have to add the marker to the map.*/
+           /*
+            var yourQuery = '(Addres of person)';
+            geocoder.geocode(yourQuery, function(results) {
+                //latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
+                //marker = new L.Marker (latLng);
+                //map.addlayer(marker);
+                pushMarkerToArrayMarker(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar)
+             });
+            */
+            alert("g marker:" + g.name + "," + g.center.lat + "," + g.center.lng + "," + otherVar);
+        }catch(e){alert("Exception:invokePluginGeoCoder->"+ e.message)}
+
     }
 
     /** Move marker to confirm that label moves when marker moves (first click)
@@ -848,6 +848,64 @@
             if(clicks > 1) clicks = 0;
         }
     }*/
+
+   function getInputFormAndRunGeoSearch() {
+       //var nameVar = document.getElementById('leaflet-control-geosearch-qry').value;
+       var addressVar = jQuery("#leaflet-control-geosearch-qry").val();
+       alert("63:" + addressVar);
+       //addPluginGeoSearch(nameVar); //Work
+       //invokePluginGeoCoder(addressVar);
+   }
+
+    /**
+     * http://derickrethans.nl/leaflet-and-nominatim.html.
+     */
+    function chooseAddr(lat1, lng1, lat2, lng2, osm_type) {
+        var loc1 = new L.LatLng(lat1, lng1);
+        var loc2 = new L.LatLng(lat2, lng2);
+        var bounds = new L.LatLngBounds(loc1, loc2);
+
+        if (feature) {
+            map.removeLayer(feature);
+        }
+        if (osm_type == "node") {
+            feature = L.circle( loc1, 25, {color: 'green', fill: false}).addTo(map);
+            map.fitBounds(bounds);
+            map.setZoom(18);
+        } else {
+            var loc3 = new L.LatLng(lat1, lng2);
+            var loc4 = new L.LatLng(lat2, lng1);
+
+            feature = L.polyline( [loc1, loc4, loc2, loc3, loc1], {color: 'red'}).addTo(map);
+            map.fitBounds(bounds);
+        }
+    }
+
+    /**
+     * http://derickrethans.nl/leaflet-and-nominatim.html
+     */
+    function addr_search_nominatin() {
+        var inp = document.getElementById("addr");
+        $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp.value, function(data) {
+            var items = [];
+            $.each(data, function(key, val) {
+                bb = val.boundingbox;
+                items.push("<li><a href='#' onclick='chooseAddr(" + bb[0] + ", " + bb[2] + ", " + bb[1] + ", " + bb[3]  +
+                    ", \"" + val.osm_type + "\");return false;'>" + val.display_name + '</a></li>');
+            });
+
+            $('#results').empty();
+            if (items.length != 0) {
+                $('<p>', { html: "Search results:" }).appendTo('#results');
+                $('<ul/>', {
+                    'class': 'my-new-list',
+                    html: items.join('')
+                }).appendTo('#results');
+            } else {
+                $('<p>', { html: "No results found" }).appendTo('#results');
+            }
+        });
+    }
 
     //-------------------------------------------------
     //OLD METHODS Service-Map

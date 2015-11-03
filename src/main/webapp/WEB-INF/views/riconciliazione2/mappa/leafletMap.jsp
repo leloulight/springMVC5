@@ -15,12 +15,12 @@
 <head>
     <!-- SUPPPORT CSS LIBRARY -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jquery/jquery-ui1.10.04.css" />
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-
+    <%--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/bootstrap/css/bootstrap.css"/>
     <!-- PLUGIN LEAFLET CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/awesome-markers/leaflet.awesome-markers.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/coordinates/Leaflet.Coordinates-0.1.4.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/coordinates/Leaflet.Coordinates-0.1.4.ie.css"/>
+    <!--[if lte IE 8]><link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/coordinates/Leaflet.Coordinates-0.1.4.ie.css"/><![endif]-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/gps/leaflet-gps.css"/>
     <%--<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />--%>
     <%--<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />--%>
@@ -32,8 +32,11 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.scss"/>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/leaflet.label.css"/>
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.css"/>--%>
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.css"/>
     <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.mobile.css"/>--%>
+
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/css/l.geosearch.css" />--%>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/leaflet-0.7.3.css" />
@@ -48,12 +51,14 @@
     <!-- OTHER CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
     <!-- SUPPORT JQUERY,Boostrap LIBRARY -->
-    <%--<script href='http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+    <%--
+    <script href='http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery.csv-0.71.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>--%>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    --%>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery2.1.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery-1.10.1.min.js"></script>
@@ -64,10 +69,15 @@
 
     <%-- Script Javascript leaflet plugin --%>
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/awesome-markers/leaflet.awesome-markers.min.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/gps/leaflet-gps.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/coordinates/Leaflet.Coordinates-0.1.4.min.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/markercluster/leaflet.markercluster.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/stamen-base-maps/tile.stamenv1.3.0.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.js"></script>
 
 
@@ -82,15 +92,19 @@
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geocsv/leaflet.geocsv-src.js"></script>
 
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/stamen-base-maps/tile.stamenv1.3.0.js"></script>
+
+    <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/js/l.control.geosearch.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/js/l.geosearch.provider.google.js"></script>--%>
+
+   <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/Control.Geocoder.js"></script>
 
     <!-- GTFS SUPPORT-->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/d3.v3.min.js"></script>
+    <%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/d3.v3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/gtfsParser.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/inflate.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/main.js"></script>
-<%--    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/tile.stamen.js"></script>--%>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/zip.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/tile.stamen.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/zip.js"></script>--%>
 
     <!-- JAVASCRIPT WORK WITH FORM -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/leaflet_buildMap_support.js"></script>
@@ -100,24 +114,27 @@
   <title></title>
 </head>
 <body>
-    <div id="map"></div>
+    <div id="searchMarkerWithJavascript" ></div>
+    <div id="map" class="leaflet-container leaflet-fade-anim" tabindex="0"></div>
     <script>
         leaflet_buildMap_support.initMap();
     </script>
     <%--<div id="caricamento">Caricamento...</div>--%>
 
-    <%-- Script support GTFS --%>
-   <%-- <script src="${pageContext.request.contextPath}/resources/js_utility/gtfsViewer/zip.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js_utility/gtfsViewer/d3.v3.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js_utility/gtfsViewer/gtfsParser.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js_utility/gtfsViewer/gtfsLeaflet.js"></script>--%>
+    <div id="geocode-selector">
+        <button class="leaflet-bar selected">Nominatim</button>
+        <button class="leaflet-bar">Bing</button>
+        <button class="leaflet-bar">Mapbox</button>
+        <button class="leaflet-bar">Photon</button>
+    </div>
+
 
 <!-- PULSANTI IN ALTO A SINISTRA (HELP E SELEZIONE PUNTO MAPPA) -->
 <%--<div class="menu" id="help">
     <a href="http://www.disit.org/servicemap" title="Aiuto Service Map" target="_blank"><img src="${pageContext.request.contextPath}/resources/img/help.png" alt="help SiiMobility ServiceMap" width="26" /></a>
 </div>--%>
 <div class="menu" id="info">
-    <img src="${pageContext.request.contextPath}/resources/img/info.png" alt="Seleziona un punto della mappa" width="26" />
+    <img src="${pageContext.request.contextPath}/resources/img/info.png" alt="Seleziona un punto della mappa" width="32" />
 </div>
 
 
@@ -139,7 +156,7 @@
                 <div class="use-case-1">
                     Seleziona una linea:
                     <br/>
-                    <select id="elencolinee" name="elencolinee" onchange="mostraElencoFermate(this);">
+                    <select id="elencolinee" name="elencolinee" onchange="mostraElencoFermate(this);" title="elencolinee">
                         <option value=""> - Seleziona una Linea - </option>
                         <option value="all">TUTTE LE LINEE</option>
                         <option value="LINE4">Linea 4</option>
@@ -151,9 +168,8 @@
                     <br />
                     Seleziona una fermata:
                     <br/>
-                    <select id="elencofermate" name="elencofermate" onchange="mostraFermate(this);">
+                    <select id="elencofermate" name="elencofermate" onchange="mostraFermate(this);" title="elencofermate">
                         <option value=""> - Seleziona una Fermata - </option>
-
                     </select>
                 </div>
             </div>
@@ -161,7 +177,7 @@
                 <div class="use-case-2">
                     Seleziona una provincia:
                     <br/>
-                    <select id="elencoprovince" name="elencoprovince" onchange="mostraElencoComuni(this);">
+                    <select id="elencoprovince" name="elencoprovince" onchange="mostraElencoComuni(this);" title="elencoprovince">
                         <option value=""> - Seleziona una Provincia - </option>
                         <option value="all">TUTTE LE PROVINCE</option>
                         <option value="AREZZO">AREZZO</option>
@@ -176,7 +192,7 @@
                         <option value="SIENA">SIENA</option>
                     </select>
                     <br />Seleziona un comune:<br/>
-                    <select id="elencocomuni" name="elencocomuni" onchange="mostraComune(this);">
+                    <select id="elencocomuni" name="elencocomuni" onchange="mostraComune(this);" title="elencocomuni">
                         <option value=""> - Seleziona un Comune - </option>
                     </select>
                     <br />
@@ -184,16 +200,9 @@
             </div>
             <div id="tabs-3">
                 <div class="use-case-3">
-                    <%--UPLOAD a CSV File.
-                    <br />Set Field Separator CSV file (default "|"):<input id="fieldSeparator" type="text" name="fieldSeparatorCSVParam" value="" maxlength="1" size="1"/>
-                    <br />Set Line Separator CSV file (default "\n"):<input id="lineSeparator" type="text" name="lineSeparatorCSVParam" value="" maxlength="1" size="1"/>
-                    <br />Choose CSV file:<input type="file" id="uploader" name="files[]" multiple accept="text/csv">--%>
-                    <%--<div id="buttonLocalize2">
-                        <button id="localizeName2" class="buttonLocalizeName2">Cercando Località</button><br />
-                    </div>--%>
                     <c:if test="${(not empty arrayMarker)}" >
                         <input id="arrayMarkerForm" name="arrayMarkerParam" type="hidden" value="<c:out value="${arrayMarker}" />"/>
-                        LENGTH OF MARKERS: ${arrayMarker.size()}
+                        LENGTH OF MARKERS: ${arrayMarker.size}
                         <c:forEach items="${arrayMarker}" var="idMarker">
                             <p id="marker">
                                 <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${idMarker.name}" />"/>
@@ -223,7 +232,7 @@
                     TrackMyURL:
                     <c:url var="url" value="/map3" />
                     <form:form action="${url}" method="post" >
-                        <input type="text" name="urlParam" value="" />
+                        <input type="text" name="urlParam" value=""  title="urlParam"/>
                         <input type="submit" name="urlFormParam" value="urlForm" />
                     </form:form>
                     <c:if test="${(not empty marker)}" >
@@ -246,34 +255,99 @@
             </div>
             <div id="tabs-4">
                 <div class="use-case-4">
-                    <label>Search Marker:</label>
-                    <div id="filter-container">
-                        <form class="form-search" class="noSelect" onSubmit="addCsvMarkers(); return false;">
-                            <a href="#" id="clear" class="leaflet-popup-close-button">&#215;</a>
-                            <div class="input-append">
-                                <input type="text" id="filter-string" class="input-medium search-query search-box" autocomplete="off">
-                                <button type="submit" class="btn search-box"><i class="icon-search"></i></button>
-                                <!-- <span class="add-on">
-                                </span> -->
-                            </div>
-                        </form>
-                        <div id="search-results" class="leaflet-control-attribution leaflet-control pull-right"></div>
-                    </div>
-                    <%--<label>Search Marker 2:</label>
-                    <div id="formsearch" style="margin: 0 2em 1em 2em;float:left">
-                        <label>Search <input id="textsearch" type="text" value="" /></label>
-                    </div>--%>
-                    <br />
+                    <table class="w3-table-all" style="width:100%">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <label>Search Marker:</label>
+                                <form class="form-search" onSubmit="addCsvMarkers(); return false;">
+                                    <input type="text" id="filter-string" class="input-medium search-query search-box" autocomplete="off" title="filter-string">
+                                    <button type="submit" class="btn search-box"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <%--<div id="filter-container">
+                            <form class="form-search" class="noSelect" onSubmit="addCsvMarkers(); return false;">
+                                <a href="#" id="clear" class="leaflet-popup-close-button">&#215;</a>
+                                <div class="input-append">
+                                    <input type="text" id="filter-string" class="input-medium search-query search-box" autocomplete="off">
+                                    <button type="submit" class="btn search-box"><i class="icon-search"></i></button>
+                                    <!-- <span class="add-on">
+                                    </span> -->
+                                </div>
+                            </form>
+                        </div>--%>
+                        <tr>
+                            <td>
+                                <label>Search Address wit Leaflet GeoSearch:</label>
+                                <div id="search-address-with-google"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form id="formSearchAddresWithForm">
+                                    <label for="leaflet-control-geosearch-qry">Search Marker 1 with Address with Form:</label>
+                                   <%-- <div id="search-address-with-google2"></div>--%>
+                                    <input id="leaflet-control-geosearch-qry">
+                                    <button type="submit" onclick="getInputFormAndRunGeoSearch()"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Search Marker 2 with Leaflet Search plugin + container:</label>
+                                <div id="searchMarkerWithJavascript2" ></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Search Marker 2 with Leaflet GeoCoder plugin + container:</label>
+                                <div id="searchMarkerWithJavascript3" ></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Search Marker 3 with Leaflet Search plugin + method:</label>
+                                <div id="formsearch">
+                                    <label for="textsearch"></label><input id="textsearch" type="text" value="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Search Marker 4 with Leaflet geoCoder Plugin Nominatin:</label>
+                                <div id="search">
+                                    <label for="addr"></label><input type="text" name="addr" value="" id="addr" size="10" />
+                                    <button type="button" onclick="addr_search_nominatin();">Search</button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div id="tabs-5">
                <div class="use-case-5">
+                   <%--UPLOAD a CSV File.
+                    <br />Set Field Separator CSV file (default "|"):<input id="fieldSeparator" type="text" name="fieldSeparatorCSVParam" value="" maxlength="1" size="1"/>
+                    <br />Set Line Separator CSV file (default "\n"):<input id="lineSeparator" type="text" name="lineSeparatorCSVParam" value="" maxlength="1" size="1"/>
+                    <br />Choose CSV file:<input type="file" id="uploader" name="files[]" multiple accept="text/csv">--%>
+                   <%--<div id="buttonLocalize2">
+                       <button id="localizeName2" class="buttonLocalizeName2">Cercando Località</button><br />
+                   </div>--%>
                     <label>UPLOAD a File.</label>
-                    Set Field Separator file (default "|"):<input id="fieldSeparator" type="text" name="fieldSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
-                    Set Line Separator file (default "\n"):<input id="lineSeparator" type="text" name="lineSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
-                    Set Name ID Separator file (default "name"):<input id="nameSeparator" type="text" name="nameSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
+                    <label for="fieldSeparator">Set Field Separator file (default "|"):</label><input id="fieldSeparator" type="text" name="fieldSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
+                    <label for="lineSeparator">Set Line Separator file (default "\n"):</label><input id="lineSeparator" type="text" name="lineSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
+                    <label for="nameSeparator">Set Name ID Separator file (default "name"):</label><input id="nameSeparator" type="text" name="nameSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
 
                     Choose CSV file:<input type="file" id="uploader" name="files[]" multiple accept="text/csv">
+                   <c:url var="url2" value="/map4" />
+                   <form:form action="${url2}" method="post" onSubmit="getMarkers();">
+                       <div id="loadMarker">
+                               <%--<input type="button" value="Get Markers" id="getMarkers"  />--%>
+                           <input type="submit" name="GetMarkersParam" value="getMarkers" />
+                       </div>
+                   </form:form>
                    <%-- Uploading File With Ajax: Not Work --%>
                  <%--  <form id="uploadForm" action="/fileupload?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data" name="fileinfo">
                        Choose file:<input type="file" id="uploader" name="uploader"  >
@@ -283,9 +357,10 @@
                    <%-- Uploading File Without Ajax: WORK --%>
                    <label>UPLOAD a File 2.</label>
                    <c:url var="url3" value="/uploadFile" />
+                   <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfAuthenticationStrategy.SaveOnAccessCsrfToken"/>
                    <form:form method="post" action="${url3}?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
-                       File to upload: <input type="file" name="file"><br />
-                       Name: <input type="text" name="name"><br />
+                       File to upload:<input type="file" name="file" title="x"><br />
+                       Name:<input type="text" name="name" title="x"><br />
                        <input type="submit" value="Upload"> Press here to upload the file!
                       <%-- <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>--%>
                    </form:form>
@@ -308,19 +383,19 @@ Selezione Attuale:
 <h3>Cerca Attività</h3>
 Tipo Servizio:
 <br />
-<input type="checkbox" name="macro-select-all" id="macro-select-all" value="Select All" /> <span>De/Seleziona tutto</span>
+<input type="checkbox" name="macro-select-all" id="macro-select-all" value="Select All"  title="macro-select-all"/> <span>De/Seleziona tutto</span>
 <div id="categorie">
 <!-- CODE CONNECTION MYSQL-->
 ${HTML}
 <!-- END OF THE CONNECTION -->
 <br />
-<input type="checkbox" name="near-bus-stops" value="NearBusStops" class="macrocategory" />
+<input type="checkbox" name="near-bus-stops" value="NearBusStops" class="macrocategory"  title="near-bus-stops"/>
 <span class="near-bus-stops macrocategory-label">Fermate Autobus</span>
 </div>
 <hr />
 Raggio di Ricerca:
 <br />
-<select id="raggioricerca" name="raggioricerca">
+<select id="raggioricerca" name="raggioricerca" title="raggioricerca">
 <option value="100">Entro 100 metri</option>
 <option value="200">Entro 200 metri</option>
 <option value="300">Entro 300 metri</option>
@@ -329,7 +404,7 @@ Raggio di Ricerca:
 <br />
 Numero massimo di risultati:
 <br />
-<select id="numerorisultati" name="numerorisultati">
+<select id="numerorisultati" name="numerorisultati" title="numerorisultati">
 <option value="100">100</option>
 <option value="200">200</option>
 <option value="500">500</option>
@@ -356,7 +431,7 @@ Numero massimo di risultati:
 <!-- DIV SOVRASTANTE DI CARICAMENTO -->
 <div id="loading">
 <div id="messaggio-loading">
-<img src="${pageContext.request.contextPath}/resources/img/ajax-loader.gif" width="32" />
+<img src="${pageContext.request.contextPath}/resources/img/ajax-loader.gif" width="54" />
 <h3>Caricamento in corso</h3>
 Il caricamento può richiedere del tempo
 </div>

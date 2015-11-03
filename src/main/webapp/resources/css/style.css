@@ -407,8 +407,9 @@ margin-bottom: 5px;
 	opacity: 0.7;
 }
 
-
+/**************************************************************************/
 /** add from 4535992 */
+/*Support L.Stamen-base-maps */
 div.leaflet-control-layers{
 	left: -240px;
 	position: relative;
@@ -440,7 +441,8 @@ div.leaflet-control-layers{
 	z-index: 2;
 }
 
-#caricamento {
+/* Suppor style loading of the map */
+/*#caricamento {
 	position:fixed;
 	top:0;
 	left:0;
@@ -451,9 +453,10 @@ div.leaflet-control-layers{
 	font-size:2em;
 	padding:20% 40%;
 	z-index:10;
-}
+}*/
 
-.buttonLocalizeName {
+/* Support old style for upload a csv */
+/*.buttonLocalizeName {
 	border: 1px solid #96d1f8;
 	background: #65a9d7;
 	background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
@@ -471,7 +474,7 @@ div.leaflet-control-layers{
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	color: white;
 	font-size: 17px;
-	/*font-family: Helvetica, Arial, Sans-Serif;*/
+	/!*font-family: Helvetica, Arial, Sans-Serif;*!/
 	text-decoration: none;
 	vertical-align: middle;
 }
@@ -483,8 +486,9 @@ div.leaflet-control-layers{
 .buttonLocalizeName:active {
 	border-top-color: #1b435e;
 	background: #1b435e;
-}
+}*/
 
+/* Support manual search with inpu for csv file */
 /*#filter-container {
 	position: absolute;
 	right: 12px;
@@ -496,7 +500,8 @@ div.leaflet-control-layers{
 	font: 9px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif !important;
 }
 
-form {
+/* Support the plguin Leaflet Search */
+/*form {
 	margin: 0 0 0;
 }
 
@@ -530,41 +535,22 @@ input.search-query {
 	padding-bottom: 3px !important;
 }
 
-/*<div class="leaflet-control-search leaflet-control search-exp">
-	<label class="search-input" for="searchtext9" style="display: none;"></label>
-	<input type="text" class="search-input" size="9" autocomplete="off" placeholder="Search..." style="display: block;" id="searchtext9">
-	<ul class="search-tooltip" style="display: block;">
-		<li class="search-tip">Seattle</li>
-		<li class="search-tip">Portland</li>
-		<li class="search-tip">Anchorage</li>
-	</ul>
-	<a class="search-cancel" href="#" title="Cancel" style="display: block;"><span>⊗
-	</span></a><a class="search-button" href="#" title="Search..."></a>
-	<div class="search-alert" style="display: none;"></div>
-</div>*/
-
-.leaflet-control-search .search-input {
-	position: relative;
-	background: #fff none repeat scroll 0 0;
-	border: 1px solid #666;
-	border-radius: 2px;
-	display: block;
-	float: left;
-	font-size: 1.25em;
-	height: 24px;
-	margin: 3px;
-	padding: 0 30px 0 0.125em;
+.search-tooltip {
+	width: 200px;
 }
-.leaflet-control-search .search-input {
-	position: relative;
-	background: #fff none repeat scroll 0 0;
-	border: 1px solid #666;
-	border-radius: 2px;
-	display: block;
+.leaflet-control-search .search-cancel {
+	position: static;
 	float: left;
-	height: 18px;
-	margin: 3px 0 3px 3px;
-	padding: 0 18px 0 2px;
-}
+	margin-left: -22px;
+}*/
 
+/*Support L.Control.Geocoder */
+#geocode-selector {
+	bottom: 10px;
+	left: 10px;
+	position: absolute;
+}
+#geocode-selector .selected {
+	background-color: #0078a8;
+}
 

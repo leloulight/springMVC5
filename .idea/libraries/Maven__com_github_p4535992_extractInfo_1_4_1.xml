@@ -3,18 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-sources.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/com/github/p4535992/ExtractInfo/1.4.1/extractInfo-1.4.1-sources.jar!/" />

@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/hp/hpl/jena/tdb/0.8.10/tdb-0.8.10.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/hp/hpl/jena/tdb/0.8.10/tdb-0.8.10-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/hp/hpl/jena/tdb/0.8.10/tdb-0.8.10-sources.jar!/" />
     </SOURCES>
