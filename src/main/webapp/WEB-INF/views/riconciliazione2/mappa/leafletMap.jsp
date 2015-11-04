@@ -20,36 +20,40 @@
     <!-- PLUGIN LEAFLET CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/awesome-markers/leaflet.awesome-markers.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/coordinates/Leaflet.Coordinates-0.1.4.css"/>
-    <!--[if lte IE 8]><link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/coordinates/Leaflet.Coordinates-0.1.4.ie.css"/><![endif]-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/gps/leaflet-gps.css"/>
     <%--<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />--%>
     <%--<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/markercluster/MarkerCluster.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/markercluster/MarkerCluster.Default.css" />
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.ie.scss" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.mapbox.scss" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.scss"/>
-
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/leaflet.label.css"/>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.css"/>
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.mobile.css"/>--%>
-
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/css/l.geosearch.css" />--%>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/leaflet-0.7.3.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" /><![endif]-->
 
-    <!-- CONFIG FILE WITH VARISABLES ALREADY SETTED (not used)-->
-    <%--<script src="${pageContext.request.contextPath}/resources/js/config/config.js"></script>--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.css"/>
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/Control.Geocoder.css"/>
+    <%-- OPTIONAL --%>
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.ie.scss" />--%>
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.mapbox.scss" />--%>
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.scss"/>--%>
+
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.mobile.css"/>--%>
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/css/l.geosearch.css" />--%>
+
+
+
     <!-- Leaflet JS -->
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/leaflet-0.7.3.js"></script>
     <!--[if lte IE 8]><link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.ie.css" /><![endif]-->
 
     <!-- OTHER CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
+
     <!-- SUPPORT JQUERY,Boostrap LIBRARY -->
     <%--
     <script href='http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
@@ -76,10 +80,11 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/markercluster/leaflet.markercluster.js"></script>
 
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/stamen-base-maps/tile.stamenv1.3.0.js"></script>
-
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.js"></script>
-
+    <%-- OPTIONAL --%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/stamen-base-maps/tile.stamenv1.3.0.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/js/l.control.geosearch.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/js/l.geosearch.provider.google.js"></script>--%>
 
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/Label.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/BaseMarkerMethods.js"></script>
@@ -92,11 +97,18 @@
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geocsv/leaflet.geocsv-src.js"></script>
 
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.js"></script>
-
-    <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/js/l.control.geosearch.js"></script>--%>
-    <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/js/l.geosearch.provider.google.js"></script>--%>
-
-   <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/Control.Geocoder.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/Control.Geocoder.js"></script>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/control.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/index.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/util.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/geocoders/bing.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/geocoders/google.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/geocoders/mapbox.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/geocoders/mapquest.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/geocoders/mapzen.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/geocoders/nominatim.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/geocoders/photon.js"></script>--%>
+   <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/src/geocoders/what3words.js"></script>--%>
 
     <!-- GTFS SUPPORT-->
     <%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gtfsViewer/d3.v3.min.js"></script>
@@ -121,12 +133,7 @@
     </script>
     <%--<div id="caricamento">Caricamento...</div>--%>
 
-    <div id="geocode-selector">
-        <button class="leaflet-bar selected">Nominatim</button>
-        <button class="leaflet-bar">Bing</button>
-        <button class="leaflet-bar">Mapbox</button>
-        <button class="leaflet-bar">Photon</button>
-    </div>
+    <div id="geocode-selector"></div>
 
 
 <!-- PULSANTI IN ALTO A SINISTRA (HELP E SELEZIONE PUNTO MAPPA) -->
@@ -301,13 +308,13 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Search Marker 2 with Leaflet GeoCoder plugin + container:</label>
+                                <label>Search Marker 3 with Leaflet GeoCoder plugin + container:</label>
                                 <div id="searchMarkerWithJavascript3" ></div>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Search Marker 3 with Leaflet Search plugin + method:</label>
+                                <label>Search Marker 4 with Leaflet Search plugin + method:</label>
                                 <div id="formsearch">
                                     <label for="textsearch"></label><input id="textsearch" type="text" value="">
                                 </div>
@@ -315,7 +322,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Search Marker 4 with Leaflet geoCoder Plugin Nominatin:</label>
+                                <label>Search Marker 5 with Leaflet geoCoder Plugin Nominatin:</label>
                                 <div id="search">
                                     <label for="addr"></label><input type="text" name="addr" value="" id="addr" size="10" />
                                     <button type="button" onclick="addr_search_nominatin();">Search</button>
@@ -357,7 +364,7 @@
                    <%-- Uploading File Without Ajax: WORK --%>
                    <label>UPLOAD a File 2.</label>
                    <c:url var="url3" value="/uploadFile" />
-                   <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfAuthenticationStrategy.SaveOnAccessCsrfToken"/>
+                   <%--<jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfAuthenticationStrategy.SaveOnAccessCsrfToken"/>--%>
                    <form:form method="post" action="${url3}?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
                        File to upload:<input type="file" name="file" title="x"><br />
                        Name:<input type="text" name="name" title="x"><br />

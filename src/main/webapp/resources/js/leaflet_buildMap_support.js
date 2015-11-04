@@ -1,3 +1,16 @@
+    /***  Set constructor variable for leaflet_buildMap_support */
+    var leaflet_buildMap_support = {
+        // Get a list of marker with coordinates and a url href and put the marker on the map
+        initMap: function () { if(map==null){ initMap(); } },
+        addSingleMarker: function (name, url, lat, lng) {addSingleMarker(name,url,lat,lng);},
+        pushMarkerToArrayMarker: function(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar){
+            pushMarkerToArrayMarker(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar);
+        },
+        loadCSVFromURL: function(url){utility_leaflet_csv.loadCSVFromURL(url);},
+        chooseIcon: function(code){ chooseIcon(code);},
+        removeClusterMarker:removeClusterMarker
+    };
+
     var map;
     var isGTFS;
 
@@ -63,27 +76,27 @@
     var GPSControl = new L.Control.Gps({maxZoom: 16,style: null}); // AGGIUNTA DEL PLUGIN PER LA GEOLOCALIZZAZIONE
   /*  var geoCoderGoogle = L.Control.Geocoder.Google();
     var geoCoderControl = L.Control.geocoder({geocoder: geoCoderGoogle});*/
-    var geoCoderGoogle,geoCoderControl;
-    var geocoderSearchGoogle;
-
-
+    var geoCoderGoogle,geoCoderControl,geocoderSearchGoogle;
+    var btn,selection,marker;
+    var selector = 'geocode-selector';
+    var geocoders = {
+        'Nominatim': L.Control.Geocoder.nominatim(),
+        'Bing': L.Control.Geocoder.bing(bingAPIKey),
+        'Mapbox': L.Control.Geocoder.mapbox(mapBoxAPIKey),
+        'Google': L.Control.Geocoder.google(googleAPIKey),
+        'Photon': L.Control.Geocoder.photon()
+    };
 
     //Variabili suppport java SPRING
-    var markerVar;
-    var nameVar,urlVar,latVar,lngVar; //basic info
-    var regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar; //other info
-    var otherVar;
+    var markerVar,nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar
+        ,phoneVar,emailVar,faxVar,ivaVar,otherVar;
     var arrayMarkerVar =[]; // array support of makers
-
 
     /*** Set a personal icon marker */
     var deathIcon = L.icon({
         iconUrl: '../leaflet/images/marker-shadow.png',
         //iconRetinaUrl: myURL + 'img/me.png',
-        iconSize: [36, 36],
-        iconAnchor: [18, 18],
-        popupAnchor: [0, -18],
-        labelAnchor: [14, 0] // as I want the label to appear 2px past the icon (18 + 2 - 6)
+        iconSize: [36, 36], iconAnchor: [18, 18],popupAnchor: [0, -18],labelAnchor: [14, 0]
     });
 
     /*** Set the src of the javascript file*/
@@ -91,207 +104,203 @@
 
     /*** On ready document  */
     jQuery( document ).ready(function() {
-        initMap();
-        /*** remove all cluster marker with a click on the reset button */
-        jQuery('#pulsante-reset').click(function() {
-            removeClusterMarker();
-        });
-        /**
-         * If work with different csv you can specify the FieldSeparator,
-         * LineSeparator and the tilte or Name column for the marker.
-         */
-        /*$("#fieldSeparator").bind("keyup", function() {
-            setFieldSeparatorCSV($(this).val());
-        });
-        $("#lineSeparator").bind("change paste keyup", function() {
-            setLineSeparatorCSV($(this).val());
-        });*/
-        jQuery("#fieldSeparator").on("keyup", function() {
-            setFieldSeparatorCSV($(this).val());
-        });
-        jQuery("#lineSeparator").on("keyup", function() {
-            setLineSeparatorCSV($(this).val());
-        });
-        jQuery("#nameSeparator").on("keyup",function(){
-            setTitleFieldCSV($(this).val());
-        });
+        try {
+            initMap();
+            // remove all cluster marker with a click on the reset button */
+            jQuery('#pulsante-reset').click(function () {
+                removeClusterMarker();
+            });
 
-       /* $('#gtfs').on('change', function() {
-            alert($('input[name=gtfs]:checked', '#gtfs').val());
-        });*/
+            /*$("#fieldSeparator").bind("keyup", function() {
+             setFieldSeparatorCSV($(this).val());
+             });
+             $("#lineSeparator").bind("change paste keyup", function() {
+             setLineSeparatorCSV($(this).val());
+             });*/
+            jQuery("#fieldSeparator").on("keyup", function () {
+                setFieldSeparatorCSV($(this).val());
+            });
+            jQuery("#lineSeparator").on("keyup", function () {
+                setLineSeparatorCSV($(this).val());
+            });
+            jQuery("#nameSeparator").on("keyup", function () {
+                setTitleFieldCSV($(this).val());
+            });
 
+            /* $('#gtfs').on('change', function() {
+             alert($('input[name=gtfs]:checked', '#gtfs').val());
+             });*/
 
-        //oppure $( window ).load(function(){
-        //loading map...
-        //$('#caricamento').delay(500).fadeOut('slow');
-        /**all'apertura della pagina CREO LE TABS JQUERY UI NEL MENU IN ALTO */
-        jQuery( "#tabs" ).tabs();
+            //oppure $( window ).load(function(){
+            //loading map...
+            //$('#caricamento').delay(500).fadeOut('slow');
+            /**all'apertura della pagina CREO LE TABS JQUERY UI NEL MENU IN ALTO */
+            jQuery("#tabs").tabs();
 
+            /** if you have add a new marker from spring put in the map. */
+            if ((!jQuery.isEmptyObject(arrayMarkerVar)) && arrayMarkerVar.length > 0) {
+                addMultipleMarker(arrayMarkerVar);
+            }
 
-        /** if you have add a new marker from spring put in the map. */
-        if((!jQuery.isEmptyObject(arrayMarkerVar)) && arrayMarkerVar.length > 0){
-            addMultipleMarker(arrayMarkerVar);
-        }
+            //ABILITA LA RICRECA NEI MARKER CON IL PLUGIN LEAFLET-SEARCH
+            jQuery('#textsearch').on('keyup', function (e) {
+                controlSearch.searchText(e.target.value);
+            });
 
-        //ABILITA LA RICRECA NEI MARKER CON IL PLUGIN LEAFLET-SEARCH
-        jQuery('#textsearch').on('keyup', function(e) {
-            controlSearch.searchText( e.target.value );
-        });
-
-        //set a listener on the uploader button
-        jQuery("#uploader").on('change',function(e) {
-            try {
-               /* if ($('#gtfs').is(':checked')) {
-                    alert("GTFS it's checked");
-                    //this.files[0]
-                    initMap();
-                    handleFilesGTFS(e);
-                } else {*/
+            //set a listener on the uploader button
+            jQuery("#uploader").on('change', function (e) {
+                try {
                     handleFiles2(e);
-            }catch(e){
-                alert("34");
-                alert(e.message);}
-        });
-
-
-        //var uploader = document.getElementById("#uploader");
-        //uploader.addEventListener("change", handleFilesCSV, false);
-
-        //Localize all Location near you
-        $('#localizeName2').click(function() {
-            map.locate();
-            $('#localizeName2').text('Localization...');
-            map.on('locationfound', function(e) {
-                map.setView(e.latlng, 15);
-                $('#localizeName2').text('Finding...');
+                } catch (e) {
+                    alert(e.message);
+                }
             });
-        });
 
-        $("#clear").click(function(evt){
-            evt.preventDefault();
-            $("#filter-string").val("").focus();
-            addCsvMarkers();
-        });
+            //var uploader = document.getElementById("#uploader");
+            //uploader.addEventListener("change", handleFilesCSV, false);
 
-        $("#getMarkers").click(function(){
-            getMarkers();
-        });
-
-        $('#filter-string').typeahead({source: typeAheadSource});
-
-        /*** CLICCANDO SUL PULSANTE GPS VENGONO SALVATE LE COORDINATE ATTUALI PER LA RICERCA DI SERVIZI */
-        $('.gps-button').click(function () {
-            if (GPSControl._isActive == true) {
-                selezione = 'Posizione Attuale';
-                $('#selezione').html(selezione);
-                coordinateSelezione = "Posizione Attuale";
-                $('#raggioricerca').prop('disabled', false);
-                $('#numerorisultati').prop('disabled', false);
-            }
-        });
-
-        /*** AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO
-         * A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA */
-        $('#info').find('img').click(function () {
-            if ($( this ).hasClass("active") == false) {
-                $( this ).addClass("active");
-                selezioneAttiva = true;
-            }
-            else {
-                $( this ).removeClass("active");
-                selezioneAttiva = false;
-            }
-        });
-
-        //FUNZIONE PER MOSTRARE/NASCONDERE LE SUB CATEGORY
-        $(".toggle-subcategory").click(function () {
-            var $tsc = $(this);
-            //getting the next element
-            var $content = $tsc.next();
-            if (!$content.is(":visible")){
-                $('.subcategory-content').hide();
-                $('.toggle-subcategory').html('+');
-            }
-            //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-            $content.slideToggle(200, function () {
-                //execute this after slideToggle is done
-                //change text of header based on visibility of content div
-                $tsc.text(function () {
-                    //change text based on condition
-                    return $content.is(":visible") ? "-" : "+";
+            //Localize all Location near you
+            $('#localizeName2').click(function () {
+                map.locate();
+                $('#localizeName2').text('Localization...');
+                map.on('locationfound', function (e) {
+                    map.setView(e.latlng, 15);
+                    $('#localizeName2').text('Finding...');
                 });
             });
-        });
 
-        //CHECKBOX SELECT/DESELECT ALL
-        $('#macro-select-all').change(function (){
-            if($('#macro-select-all').prop('checked')){
-                $('.macrocategory').prop('checked', 'checked');
-                $('.macrocategory').trigger( "change" );
-            }
-            else{
-                $('.macrocategory').prop('checked', false);
-                $('.macrocategory').trigger( "change" );
-            }
+            $("#clear").click(function (evt) {
+                evt.preventDefault();
+                $("#filter-string").val("").focus();
+                addCsvMarkers();
+            });
 
-        });
+            $("#getMarkers").click(function () {
+                getMarkers();
+            });
 
-        //FUNZIONE PER MOSTRARE/NASCONDERE I MENU
-        $(".header").click(function () {
-            $header = $(this);
-            //getting the next element
-            $content = $header.next();
-            //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-            $content.slideToggle(200, function () {
-                //execute this after slideToggle is done
-                //change text of header based on visibility of content div
-                $header.text(function () {
-                    //change text based on condition
-                    return $content.is(":visible") ? "- Nascondi Menu" : "+ Mostra Menu";
+            $('#filter-string').typeahead({source: typeAheadSource});
+
+            /*** CLICCANDO SUL PULSANTE GPS VENGONO SALVATE LE COORDINATE ATTUALI PER LA RICERCA DI SERVIZI */
+            $('.gps-button').click(function () {
+                if (GPSControl._isActive == true) {
+                    selezione = 'Posizione Attuale';
+                    $('#selezione').html(selezione);
+                    coordinateSelezione = "Posizione Attuale";
+                    $('#raggioricerca').prop('disabled', false);
+                    $('#numerorisultati').prop('disabled', false);
+                }
+            });
+
+            /*** AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO
+             * A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA */
+            $('#info').find('img').click(function () {
+                if ($(this).hasClass("active") == false) {
+                    $(this).addClass("active");
+                    selezioneAttiva = true;
+                }
+                else {
+                    $(this).removeClass("active");
+                    selezioneAttiva = false;
+                }
+            });
+
+            //FUNZIONE PER MOSTRARE/NASCONDERE LE SUB CATEGORY
+            $(".toggle-subcategory").click(function () {
+                var $tsc = $(this);
+                //getting the next element
+                var $content = $tsc.next();
+                if (!$content.is(":visible")) {
+                    $('.subcategory-content').hide();
+                    $('.toggle-subcategory').html('+');
+                }
+                //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+                $content.slideToggle(200, function () {
+                    //execute this after slideToggle is done
+                    //change text of header based on visibility of content div
+                    $tsc.text(function () {
+                        //change text based on condition
+                        return $content.is(":visible") ? "-" : "+";
+                    });
                 });
             });
-        });
 
-        // SELEZIONA/DESELEZIONA TUTTE LE CATEGORIE - SOTTOCATEGORIE
-        $('.macrocategory').change(function (){
-            $cat = $(this).next().attr('class');
-            $cat = $cat.replace(" macrocategory-label","");
-            //console.log($cat);
-            if($(this).prop('checked')){$('.sub_' + $cat).prop('checked', 'checked');}
-            else{$('.sub_' + $cat).prop('checked', false);}
-        });
+            //CHECKBOX SELECT/DESELECT ALL
+            $('#macro-select-all').change(function () {
+                if ($('#macro-select-all').prop('checked')) {
+                    $('.macrocategory').prop('checked', 'checked');
+                    $('.macrocategory').trigger("change");
+                }
+                else {
+                    $('.macrocategory').prop('checked', false);
+                    $('.macrocategory').trigger("change");
+                }
 
-        // AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA
-        $('#info').find('img').click(function(){
-            if ($("#info").hasClass("active") == false){
-                $('#info').addClass("active");
-                selezioneAttiva = true;
-            }
-            else{
-                $('#info').removeClass("active");
-                selezioneAttiva = false;
-            }
-        });
-        alert("Loaded all JQUERY variable");
+            });
 
-        //Search address with google...
-        jQuery("div.leaflet-control-geosearch").appendTo(jQuery("#search-address-with-google"));
-        //<div class="leaflet-control-search leaflet-control search-exp">
-        jQuery("#searchMarkerWithJavascript").appendTo(jQuery("#searchMarkerWithJavascript2"));
-        //<div class="leaflet-control-geocoder leaflet-bar leaflet-control leaflet-control-geocoder-expanded">
-        jQuery(".leaflet-control-geocoder").appendTo(jQuery("#searchMarkerWithJavascript3"));
-        alert("Loaded all JQUERY variable");
-        //implement select of the geocoder.
-        for (var name in geocoders) {
-            btn = L.DomUtil.create('button', 'leaflet-bar', selector);
-            btn.innerHTML = name;
-            (function(n) {
-                L.DomEvent.addListener(btn, 'click', function() {
-                    select(geocoders[n], this);
-                }, btn);
-            })(name);
-            if (!selection) select(geocoders[name], btn);
-        }
+            //FUNZIONE PER MOSTRARE/NASCONDERE I MENU
+            $(".header").click(function () {
+                $header = $(this);
+                //getting the next element
+                $content = $header.next();
+                //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+                $content.slideToggle(200, function () {
+                    //execute this after slideToggle is done
+                    //change text of header based on visibility of content div
+                    $header.text(function () {
+                        //change text based on condition
+                        return $content.is(":visible") ? "- Nascondi Menu" : "+ Mostra Menu";
+                    });
+                });
+            });
+
+            // SELEZIONA/DESELEZIONA TUTTE LE CATEGORIE - SOTTOCATEGORIE
+            $('.macrocategory').change(function () {
+                $cat = $(this).next().attr('class');
+                $cat = $cat.replace(" macrocategory-label", "");
+                //console.log($cat);
+                if ($(this).prop('checked')) {
+                    $('.sub_' + $cat).prop('checked', 'checked');
+                }
+                else {
+                    $('.sub_' + $cat).prop('checked', false);
+                }
+            });
+
+            // AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA
+            $('#info').find('img').click(function () {
+                if (!$('#info').hasClass("active")) {
+                    $('#info').addClass("active");
+                    selezioneAttiva = true;
+                }
+                else {
+                    $('#info').removeClass("active");
+                    selezioneAttiva = false;
+                }
+            });
+            alert("Loaded all JQUERY variable");
+
+            //Search address with google...
+            jQuery("div.leaflet-control-geosearch").appendTo(jQuery("#search-address-with-google"));
+            //<div class="leaflet-control-search leaflet-control search-exp">
+            jQuery("#searchMarkerWithJavascript").appendTo(jQuery("#searchMarkerWithJavascript2"));
+            //<div class="leaflet-control-geocoder leaflet-bar leaflet-control leaflet-control-geocoder-expanded">
+            jQuery(".leaflet-control-geocoder").appendTo(jQuery("#searchMarkerWithJavascript3"));
+
+            alert("Loaded all JQUERY variable");
+            //implement select of the geocoder.
+            for (var name in geocoders) {
+                btn = L.DomUtil.create('button', 'leaflet-bar', selector);
+                btn.innerHTML = name;
+                (function (n) {
+                    L.DomEvent.addListener(btn, 'click', function () {
+                        select(geocoders[n], this);
+                    }, btn);
+                })(name);
+                if (!selection) select(geocoders[name], btn);
+                $('#geocode-selector').append(btn);
+            }// end of the for...
+        }catch(e){alert(e.message);}
     });
 
     /**
@@ -300,7 +309,7 @@
      * */
     function getMarkers(){
         var array = [];
-        alert("compile getMarkers");
+        //alert("compile getMarkers");
         try{
             if(!$.isEmptyObject(markerClusters)) {
                 alert("Marker cluster is not empty go to check the Marker.");
@@ -338,12 +347,10 @@
         input.setAttribute('value', document.getElementById('uploader').value);
         input.setAttribute('name',"supportUploaderParam");
         document.getElementById('loadMarker').appendChild(input);
-
-        alert("...compiled 2 getMarkers");
+        //alert("...compiled 2 getMarkers");
     }
 
     function addInput(input_id,val,index) {
-        //alert("compile addInput..."+input_id+","+val);
         var input = document.createElement('input');
         input.setAttribute('id', input_id);
         input.setAttribute('type', 'hidden');
@@ -352,27 +359,25 @@
         //document.body.appendChild(input);
         document.getElementById('loadMarker').appendChild(input);
         //setInputValue(input_id,val);
-        //alert("compiled addInput...");
     }
 
     /***
      *  Set the map and zoom on the specific location
      */
     function initMap() {
-        if(map==null || $.isEmptyObject(map)) {
+        if(jQuery.isEmptyObject(map)) {
             alert("Init Map...");
             //valori fissi per il settaggio iniziale della mappa....
             // CREAZIONE MAPPA CENTRATA NEL PUNTO
             try {
-                if ($.isEmptyObject(markerClusters)) {
+                if (jQuery.isEmptyObject(markerClusters)) {
                     markerClusters = new L.MarkerClusterGroup();
                 }
                 //Make all popup remain open.
                 L.Map = L.Map.extend({
                     openPopup: function(popup) {
-                        //        this.closePopup();  // just comment this
+                        //this.closePopup();  // just comment this
                         this._popup = popup;
-
                         return this.addLayer(popup).fire('popupopen', {
                             popup: this._popup
                         });
@@ -398,7 +403,6 @@
                 //var bounds = new L.LatLngBounds(new L.LatLng(setBounds[0],setBounds[1]), new L.LatLng(setBounds[2], setBounds[3]));
                 /*map.setMaxBounds(new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4)));*/
 
-
                 //..add many functionality
                 //addPluginGPSControl();
                 //addPluginCoordinatesControl();
@@ -412,26 +416,19 @@
                 //map.on('click', onMapClick);
                 //Fired when the view of the map stops changing
                 map.on('moveend', onMapMove);
-                /*map.on('viewreset', function() {
-                    resetShapes();
-                    //resetStops();
-                });*/
+                /*map.on('viewreset', function() { resetShapes(); //resetStops();});*/
                 //other function form Service Map
                 // ASSOCIA FUNZIONI AGGIUNTIVE ALL'APERTURA DI UN POPUP SU PARTICOLARI TIPI DI DATI
                 map.on('popupopen', function(e) {
-
                     $('#raggioricerca').prop('disabled', false);
                     $('#numerorisultati').prop('disabled', false);
-
                     var markerPopup = e.popup._source;
                     var tipoServizio = markerPopup.feature.properties.tipo;
                     var nome = markerPopup.feature.properties.nome;
-
                     selezione = 'Servizio: ' + markerPopup.feature.properties.nome;
                     coordinateSelezione = markerPopup.feature.geometry.coordinates[1] + ";" + markerPopup.feature.geometry.coordinates[0];
                     $('#selezione').html(selezione);
                     if (tipoServizio == 'fermata'){
-
                         // SE IL SERVIZIO E' UNA FERMATA MOSTRA GLI AVM NEL MENU CONTESTUALE
                         selezione = 'Fermata Bus: ' + markerPopup.feature.properties.nome;
                         coordinateSelezione = markerPopup.feature.geometry.coordinates[1] + ";" + markerPopup.feature.geometry.coordinates[0];
@@ -506,16 +503,16 @@
     function addSingleMarker(name, url, lat, lng,bounds) {
         //alert("... add single marker:" + name + ',' + url + ',' + lat + ',' + lng);
         try {
-            if ($.isEmptyObject(markerClusters)) {
+            if (jQuery.isEmptyObject(markerClusters)) {
                 markerClusters = new L.MarkerClusterGroup();
             }
-            if(bounds!=null && !$.isEmptyObject(bounds)){
+            if(!jQuery.isEmptyObject(bounds)){
                 map.setBounds(bounds);
             }
             //var marker = L.marker([lat, lng]).bindPopup(popupClick).addTo(map);
             //var cc = L.latLng(43.7778535, 11.2593572);
             var text;
-            if(url!=null && !$.isEmptyObject(url)) text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
+            if(!$.isEmptyObject(url)) text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
             else  text = ''+name + '';
 
             var title,loc;
@@ -557,7 +554,7 @@
                             '<tr><th>Email:</th><td>'+emailVar +'</td></tr>'+
                             '<tr><th>IVA:</th><td>'+ivaVar+'</td></tr>';
                             '<tr><th>Other:</th><td>'+otherVar+'</td></tr>';
-            popupContent += "</table></div>";
+            popupContent += '</table></div>';
             var popupOver = new L.popup().setContent(popupContent);
             //marker.bindPopup(popupClick);
             markerVar.bindPopup(popupOver);
@@ -601,31 +598,6 @@
         alert("...compiled removeClusterMarker");
     }
 
-
-    /***  Set constructor variable for leaflet_buildMap_support */
-    var leaflet_buildMap_support = {
-        // Get a list of marker with coordinates and a url href and put the marker on the map
-        initMap: function () {
-            if(map==null){
-                initMap();
-            }
-        },
-        addSingleMarker: function (name, url, lat, lng) {
-           addSingleMarker(name,url,lat,lng);
-        },
-        pushMarkerToArrayMarker: function(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar){
-            pushMarkerToArrayMarker(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar);
-        },
-        loadCSVFromURL: function(url){
-            utility_leaflet_csv.loadCSVFromURL(url);
-        },
-        chooseIcon: function(code){
-            chooseIcon(code);
-        },
-        removeClusterMarker:removeClusterMarker
-    };
-
-
     function chooseIcon(category){
         alert("chooseIcon");
         var url;
@@ -642,14 +614,6 @@
             shadowAnchor: [13, 20]
         })
     }
-
-   /*** function to open a URL with javascript without jquery. */
-   function openURL(url){
-       // similar behavior as an HTTP redirect
-       window.location.replace(url);
-        // similar behavior as clicking on a link
-       window.location.href = url;
-   }
 
     /**
      * function to add for every single object marker a Leaflet Marker on the Leaflet Map.
@@ -711,16 +675,9 @@
                 } else {
                     controlSearch = new L.Control.Search({
                         container: "searchMarkerWithJavascript",
-                        layer: markerClusters,
-                        initial: false,
-                        collapsed: false,
-                        sourceData: googleGeocoding,
-                        formatData: formatJSON,
-                        markerLocation: true,
-                        autoType: false,
-                        autoCollapse: true,
-                        minLength: 2,
-                        zoom: 10
+                        layer: markerClusters,initial: false,collapsed: false,
+                        sourceData: googleGeocoding,formatData: formatJSON,
+                        markerLocation: true,autoType: false,autoCollapse: true, minLength: 2,zoom: 10
                     });
                 }
                 map.addControl(controlSearch);
@@ -745,8 +702,6 @@
         return json;
     }
 
-
-
     /**
      * Add the Leaflet leaflet-control-geocoder.
      * https://github.com/perliedman/leaflet-control-geocoder
@@ -756,13 +711,9 @@
         alert("Compile addPluginGeoCoder...");
         try {
             if (jQuery.isEmptyObject(geoCoderControl)) {
-                alert("1");
                 selector = L.DomUtil.get('geocode-selector');
-                alert("2")
                 geoCoderControl = new L.Control.Geocoder({ geocoder: null });
-                alert("3")
                 geoCoderControl.addTo(map);
-                alert("4")
             } else {
                 map.addControl(geoCoderControl);
             }
@@ -771,15 +722,6 @@
             alert("Exception:addPluginGeoCoder->"+e.message);
         }
     }
-
-    var btn,selection,marker,selector;
-    var geocoders = {
-        'Nominatim': L.Control.Geocoder.nominatim(),
-        'Bing': L.Control.Geocoder.bing(bingAPIKey),
-        'Mapbox': L.Control.Geocoder.mapbox(mapBoxAPIKey),
-        'Google': L.Control.Geocoder.google(googleAPIKey),
-        'Photon': L.Control.Geocoder.photon()
-    };
 
     function select(geocoder, el) {
         if (selection) L.DomUtil.removeClass(selection, 'selected');
@@ -920,7 +862,7 @@
 
     // CANCELLAZIONE DEL CONTENUTO DEL BOX INFO AGGIUNTIVE
     function svuotaInfoAggiuntive(){
-        $('#info-aggiuntive .content').html('');
+        $('#info-aggiuntive').find('.content').html('');
     }
 
     function cancellaSelezione(){

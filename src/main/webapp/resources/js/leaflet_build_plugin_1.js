@@ -6,10 +6,17 @@ var leaflet_build_plugin_1 = {
     addPluginGPSControl:addPluginGPSControl,
     addPluginLocateControl:addPluginLocateControl,
     addPluginLayersStamenBaseMaps:addPluginLayersStamenBaseMaps,
-    addPluginGeoSearch: function(address){
-        addPluginGeoSearch(address);
-    }
+    addPluginGeoSearch: function(address){addPluginGeoSearch(address);},
+    openURL:function(url){openURL(url)}
 };
+
+    /** function to open a URL with javascript without jquery. */
+    function openURL(url){
+        // similar behavior as an HTTP redirect
+        window.location.replace(url);
+        // similar behavior as clicking on a link
+        window.location.href = url;
+    }
 
     /***
      * Set plugin for gps on the leaflet

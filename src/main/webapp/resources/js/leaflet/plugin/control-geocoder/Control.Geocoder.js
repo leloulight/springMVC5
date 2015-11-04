@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
-	Nominatim = require('./geocoders/nominatim');
+	Nominatim = require('./geocoders/nominatim').class;
 
 module.exports = {
 	class: L.Control.extend({
@@ -232,7 +232,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./geocoders/nominatim":6}],2:[function(require,module,exports){
+},{"./geocoders/nominatim":7}],2:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	Util = require('../util');
@@ -289,7 +289,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../util":10}],3:[function(require,module,exports){
+},{"../util":11}],3:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	Util = require('../util');
@@ -382,7 +382,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../util":10}],4:[function(require,module,exports){
+},{"../util":11}],4:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	Util = require('../util');
@@ -474,7 +474,7 @@ module.exports = {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../util":10}],5:[function(require,module,exports){
+},{"../util":11}],5:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	Util = require('../util');
@@ -563,7 +563,85 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../util":10}],6:[function(require,module,exports){
+},{"../util":11}],6:[function(require,module,exports){
+(function (global){
+var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
+	Util = require('../util');
+
+module.exports = {
+	class: L.Class.extend({
+		options: {
+			serviceUrl: '//search.mapzen.com/v1',
+			geocodingQueryParams: {},
+			reverseQueryParams: {}
+		},
+
+		initialize: function(apiKey, options) {
+			L.Util.setOptions(this, options);
+			this._apiKey = apiKey;
+			this._lastSuggest = 0;
+		},
+
+		geocode: function(query, cb, context) {
+			var _this = this;
+			Util.getJSON(this.options.serviceUrl + "/search", L.extend({
+				'api_key': this._apiKey,
+				'text': query
+			}, this.options.geocodingQueryParams), function(data) {
+				cb.call(context, _this._parseResults(data, "bbox"));
+			});
+		},
+
+		suggest: function(query, cb, context) {
+			var _this = this;
+			Util.getJSON(this.options.serviceUrl + "/autocomplete", L.extend({
+				'api_key': this._apiKey,
+				'text': query
+			}, this.options.geocodingQueryParams), function(data) {
+				if (data.geocoding.timestamp > this._lastSuggest) {
+					this._lastSuggest = data.geocoding.timestamp;
+					cb.call(context, _this._parseResults(data, "bbox"));
+				}
+			});
+		},
+
+		reverse: function(location, scale, cb, context) {
+			var _this = this;
+			Util.getJSON(this.options.serviceUrl + "/reverse", L.extend({
+				'api_key': this._apiKey,
+				'point.lat': location.lat,
+				'point.lon': location.lng
+			}, this.options.reverseQueryParams), function(data) {
+				cb.call(context, _this._parseResults(data, "bounds"));
+			});
+		},
+
+		_parseResults: function(data, bboxname) {
+			var results = [];
+			L.geoJson(data, {
+				pointToLayer: function (feature, latlng) {
+					return L.circleMarker(latlng);
+				},
+				onEachFeature: function(feature, layer) {
+					var result = {};
+					result['name'] = layer.feature.properties.label;
+					result[bboxname] = layer.getBounds();
+					result['center'] = result[bboxname].getCenter();
+					result['properties'] = layer.feature.properties;
+					results.push(result);
+				}
+			});
+			return results;
+		}
+	}),
+
+	factory: function(apiKey, options) {
+		return new L.Control.Geocoder.Mapzen(apiKey, options);
+	}
+};
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../util":11}],7:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	Util = require('../util');
@@ -600,7 +678,7 @@ module.exports = {
 		},
 
 		geocode: function(query, cb, context) {
-			Util.jsonp(this.options.serviceUrl + 'search/', L.extend({
+			Util.jsonp(this.options.serviceUrl + 'search', L.extend({
 				q: query,
 				limit: 5,
 				format: 'json',
@@ -627,7 +705,7 @@ module.exports = {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.jsonp(this.options.serviceUrl + 'reverse/', L.extend({
+			Util.jsonp(this.options.serviceUrl + 'reverse', L.extend({
 				lat: location.lat,
 				lon: location.lng,
 				zoom: Math.round(Math.log(scale / 256) / Math.log(2)),
@@ -661,7 +739,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../util":10}],7:[function(require,module,exports){
+},{"../util":11}],8:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	Util = require('../util');
@@ -764,7 +842,7 @@ module.exports = {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../util":10}],8:[function(require,module,exports){
+},{"../util":11}],9:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	Util = require('../util');
@@ -832,7 +910,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../util":10}],9:[function(require,module,exports){
+},{"../util":11}],10:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	Control = require('./control'),
@@ -842,7 +920,8 @@ var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefi
 	Mapbox = require('./geocoders/mapbox'),
 	What3Words = require('./geocoders/what3words'),
 	Google = require('./geocoders/google'),
-	Photon = require('./geocoders/photon');
+	Photon = require('./geocoders/photon'),
+	Mapzen = require('./geocoders/mapzen');
 
 module.exports = L.Util.extend(Control.class, {
 	Nominatim: Nominatim.class,
@@ -858,7 +937,9 @@ module.exports = L.Util.extend(Control.class, {
 	Google: Google.class,
 	google: Google.factory,
 	Photon: Photon.class,
-	photon: Photon.factory
+	photon: Photon.factory,
+	Mapzen: Mapzen.class,
+	mapzen: Mapzen.factory
 });
 
 L.Util.extend(L.Control, {
@@ -867,7 +948,7 @@ L.Util.extend(L.Control, {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./control":1,"./geocoders/bing":2,"./geocoders/google":3,"./geocoders/mapbox":4,"./geocoders/mapquest":5,"./geocoders/nominatim":6,"./geocoders/photon":7,"./geocoders/what3words":8}],10:[function(require,module,exports){
+},{"./control":1,"./geocoders/bing":2,"./geocoders/google":3,"./geocoders/mapbox":4,"./geocoders/mapquest":5,"./geocoders/mapzen":6,"./geocoders/nominatim":7,"./geocoders/photon":8,"./geocoders/what3words":9}],11:[function(require,module,exports){
 (function (global){
 var L = (typeof window !== "undefined" ? window['L'] : typeof global !== "undefined" ? global['L'] : null),
 	lastCallbackId = 0,
@@ -953,4 +1034,4 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[9]);
+},{}]},{},[10]);
