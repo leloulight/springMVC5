@@ -7,7 +7,8 @@ module.exports = {
 	class: L.Control.extend({
 		options: {
 			showResultIcons: false,
-			collapsed: true,
+			/*Added form 4535992 */
+			collapsed: false,
 			expand: 'click',
 			position: 'topright',
 			placeholder: 'Search...',
@@ -26,12 +27,13 @@ module.exports = {
 		onAdd: function (map) {
 			var className = 'leaflet-control-geocoder',
 			    container = L.DomUtil.create('div', className + ' leaflet-bar'),
-			    icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
+				/* Modififed from 4535992 */
+			    //icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
 			    form = this._form = L.DomUtil.create('form', className + '-form', container),
 			    input;
-
-			icon.innerHTML = '&nbsp;';
-			icon.href = 'javascript:void(0);';
+			/* Modififed from 4535992 */
+			/*icon.innerHTML = '&nbsp;';
+			icon.href = 'javascript:void(0);';*/
 			this._map = map;
 			this._container = container;
 			input = this._input = L.DomUtil.create('input');
@@ -56,21 +58,24 @@ module.exports = {
 
 			if (this.options.collapsed) {
 				if (this.options.expand === 'click') {
-					L.DomEvent.addListener(icon, 'click', function(e) {
+					/* Modififed from 4535992 */
+					/*L.DomEvent.addListener(icon, 'click', function(e) {
 						// TODO: touch
 						if (e.button === 0 && e.detail !== 2) {
 							this._toggle();
 						}
-					}, this);
+					}, this);*/
 				} else {
-					L.DomEvent.addListener(icon, 'mouseover', this._expand, this);
-					L.DomEvent.addListener(icon, 'mouseout', this._collapse, this);
+					/* Modififed from 4535992 */
+					/*L.DomEvent.addListener(icon, 'mouseover', this._expand, this);
+					L.DomEvent.addListener(icon, 'mouseout', this._collapse, this);*/
 					this._map.on('movestart', this._collapse, this);
 				}
 			} else {
-				L.DomEvent.addListener(icon, 'click', function(e) {
+				/* Modififed from 4535992 */
+				/*L.DomEvent.addListener(icon, 'click', function(e) {
 					this._geocode(e);
-				}, this);
+				}, this);*/
 				this._expand();
 			}
 

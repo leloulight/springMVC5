@@ -281,11 +281,17 @@
             alert("Loaded all JQUERY variable");
 
             //Search address with google...
-            jQuery("div.leaflet-control-geosearch").appendTo(jQuery("#search-address-with-google"));
+            //jQuery("div.leaflet-control-geosearch").appendTo(jQuery("#search-address-with-google"));
             //<div class="leaflet-control-search leaflet-control search-exp">
             jQuery("#searchMarkerWithJavascript").appendTo(jQuery("#searchMarkerWithJavascript2"));
+
+            //Help css for PluginLeafletGeocoder
+            //<a class="leaflet-control-geocoder-icon" href="javascript:void(0);">&nbsp;</a>
+            jQuery("a").remove(jQuery(".leaflet-control-geocoder-icon"));
             //<div class="leaflet-control-geocoder leaflet-bar leaflet-control leaflet-control-geocoder-expanded">
             jQuery(".leaflet-control-geocoder").appendTo(jQuery("#searchMarkerWithJavascript3"));
+
+
 
             alert("Loaded all JQUERY variable");
             //implement select of the geocoder.
@@ -301,6 +307,8 @@
                 $('#geocode-selector').append(btn);
             }// end of the for...
         }catch(e){alert(e.message);}
+
+
     });
 
     /**
@@ -712,7 +720,7 @@
         try {
             if (jQuery.isEmptyObject(geoCoderControl)) {
                 selector = L.DomUtil.get('geocode-selector');
-                geoCoderControl = new L.Control.Geocoder({ geocoder: null });
+                geoCoderControl = new L.Control.Geocoder({ geocoder: null },{collapsed: false});
                 geoCoderControl.addTo(map);
             } else {
                 map.addControl(geoCoderControl);
@@ -744,7 +752,7 @@
                 otherVar = result.html;
                 alert("add marker:" + result.name + "," + result.center.lat + "," + result.center.lng + "," + otherVar);
                 pushMarkerToArrayMarker(result.name, null, result.center.lat, result.center.lng,
-                    null,null,null,null,null,null,null,null);
+                    null,null,null,addressVar,null,null,null,null);
                 /*var bbox = result.bbox;
                  L.polygon([
                  bbox.getSouthEast(),
@@ -752,6 +760,16 @@
                  bbox.getNorthWest(),
                  bbox.getSouthWest()
                  ]).addTo(map);*/
+            var g2= geoCoderControl.options.geocoder.geocode(address, function(results) {
+                    var latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
+                    marker = new L.Marker (latLng);
+                    map.addlayer(marker);
+                    addressVar = address;
+                    otherVar = result.html;
+                    alert("add marker:" + result.name + "," + result.center.lat + "," + result.center.lng + "," + otherVar);
+                    pushMarkerToArrayMarker(result.name, null, result.center.lat, result.center.lng,
+                        null,null,null,addressVar,null,null,null,null);
+                    });
                /* geoCoderControl.options.geocoder.geocode(address, function(results) {
                     var latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
                     marker = new L.Marker (latLng);
@@ -791,63 +809,7 @@
         }
     }*/
 
-   function getInputFormAndRunGeoSearch() {
-       //var nameVar = document.getElementById('leaflet-control-geosearch-qry').value;
-       var addressVar = jQuery("#leaflet-control-geosearch-qry").val();
-       alert("63:" + addressVar);
-       //addPluginGeoSearch(nameVar); //Work
-       //invokePluginGeoCoder(addressVar);
-   }
 
-    /**
-     * http://derickrethans.nl/leaflet-and-nominatim.html.
-     */
-    function chooseAddr(lat1, lng1, lat2, lng2, osm_type) {
-        var loc1 = new L.LatLng(lat1, lng1);
-        var loc2 = new L.LatLng(lat2, lng2);
-        var bounds = new L.LatLngBounds(loc1, loc2);
-
-        if (feature) {
-            map.removeLayer(feature);
-        }
-        if (osm_type == "node") {
-            feature = L.circle( loc1, 25, {color: 'green', fill: false}).addTo(map);
-            map.fitBounds(bounds);
-            map.setZoom(18);
-        } else {
-            var loc3 = new L.LatLng(lat1, lng2);
-            var loc4 = new L.LatLng(lat2, lng1);
-
-            feature = L.polyline( [loc1, loc4, loc2, loc3, loc1], {color: 'red'}).addTo(map);
-            map.fitBounds(bounds);
-        }
-    }
-
-    /**
-     * http://derickrethans.nl/leaflet-and-nominatim.html
-     */
-    function addr_search_nominatin() {
-        var inp = document.getElementById("addr");
-        $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp.value, function(data) {
-            var items = [];
-            $.each(data, function(key, val) {
-                bb = val.boundingbox;
-                items.push("<li><a href='#' onclick='chooseAddr(" + bb[0] + ", " + bb[2] + ", " + bb[1] + ", " + bb[3]  +
-                    ", \"" + val.osm_type + "\");return false;'>" + val.display_name + '</a></li>');
-            });
-
-            $('#results').empty();
-            if (items.length != 0) {
-                $('<p>', { html: "Search results:" }).appendTo('#results');
-                $('<ul/>', {
-                    'class': 'my-new-list',
-                    html: items.join('')
-                }).appendTo('#results');
-            } else {
-                $('<p>', { html: "No results found" }).appendTo('#results');
-            }
-        });
-    }
 
     //-------------------------------------------------
     //OLD METHODS Service-Map

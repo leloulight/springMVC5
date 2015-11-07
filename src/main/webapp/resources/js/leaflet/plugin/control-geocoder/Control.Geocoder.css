@@ -1,26 +1,29 @@
-.leaflet-control-geocoder {
+/*.leaflet-control-geocoder {
 	background: white;
-}
+}*/
 
-.leaflet-control-geocoder a, .leaflet-control-geocoder .leaflet-control-geocoder-icon {
+/*.leaflet-control-geocoder a, .leaflet-control-geocoder .leaflet-control-geocoder-icon {
 	border-bottom-left-radius: 4px;
 	border-bottom-right-radius: 4px;
 	border-bottom: none;
 	display: inline-block;
-}
+}*/
 
 .leaflet-control-geocoder .leaflet-control-geocoder-alternatives a {
 	width: inherit;
 	height: inherit;
 	line-height: inherit;
+	padding: initial; /*Added from 4535992*/
+	border: none;  /*Added from 4535992*/
+	margin: initial; /*Added from 4535992*/
 }
 
-.leaflet-control-geocoder a:hover, .leaflet-control-geocoder .leaflet-control-geocoder-icon:hover {
+/*.leaflet-control-geocoder a:hover, .leaflet-control-geocoder .leaflet-control-geocoder-icon:hover {
 	border-bottom: none;
 	display: inline-block;
-}
+}*/
 
-.leaflet-control-geocoder-form {
+/*.leaflet-control-geocoder-form {
 	display: none;
 	vertical-align: middle;
 }
@@ -32,27 +35,31 @@
 	border: 0;
 	background-color: transparent;
 	width: 246px;
-}
-.leaflet-control-geocoder-icon {
+}*/
+/*.leaflet-control-geocoder-icon {
 	background-image: url(images/geocoder.png);
 	background-repeat: no-repeat;
 	background-position: center;
-}
+}*/
 .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon {
 	background-image: url(images/throbber.gif);
 }
 
 .leaflet-control-geocoder-form-no-error {
+	margin: inherit; /*Added from 4535992*/
 	display: none;
 }
 
 .leaflet-control-geocoder-form input:focus {
+	margin: inherit; /*Added from 4535992*/
 	outline: none;
 }
 
 .leaflet-control-geocoder-form button {
+	margin: inherit; /*Added from 4535992*/
 	display: none;
 }
+
 .leaflet-control-geocoder-error {
 	margin-top: 8px;
 	margin-left: 8px;

@@ -5,7 +5,6 @@ package com.github.p4535992.mvc.object.model.site;
  * @author 4535992.
  * @version 2015-07-02.
  */
-@SuppressWarnings("unused")
 public class MarkerInfo {
 
     private String city;

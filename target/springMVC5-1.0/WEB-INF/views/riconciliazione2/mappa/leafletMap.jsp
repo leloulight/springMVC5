@@ -13,10 +13,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <!-- SUPPPORT CSS LIBRARY -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jquery/jquery-ui1.10.04.css" />
-    <%--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/bootstrap/css/bootstrap.css"/>
+
     <!-- PLUGIN LEAFLET CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/awesome-markers/leaflet.awesome-markers.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/coordinates/Leaflet.Coordinates-0.1.4.css"/>
@@ -37,19 +34,15 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.css"/>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/Control.Geocoder.css"/>
-    <%-- OPTIONAL --%>
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.ie.scss" />--%>
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.mapbox.scss" />--%>
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.scss"/>--%>
-
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.mobile.css"/>--%>
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/css/l.geosearch.css" />--%>
-
-
 
     <!-- Leaflet JS -->
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/leaflet-0.7.3.js"></script>
     <!--[if lte IE 8]><link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.ie.css" /><![endif]-->
+
+    <!-- SUPPPORT CSS LIBRARY -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jquery/jquery-ui1.10.04.css" />
+    <%--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/bootstrap/css/bootstrap.css"/>
 
     <!-- OTHER CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
@@ -86,13 +79,7 @@
     <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/js/l.control.geosearch.js"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geoSearch/js/l.geosearch.provider.google.js"></script>--%>
 
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/Label.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/BaseMarkerMethods.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/Marker.Label.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/CircleMarker.Label.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/Path.Label.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/Map.Label.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/FeatureGroup.Label.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/leaflet.label-src.js"></script>
 
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/geocsv/leaflet.geocsv-src.js"></script>
 
@@ -284,22 +271,12 @@
                                 </div>
                             </form>
                         </div>--%>
-                        <tr>
+                        <%--<tr>
                             <td>
                                 <label>Search Address wit Leaflet GeoSearch:</label>
                                 <div id="search-address-with-google"></div>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <form id="formSearchAddresWithForm">
-                                    <label for="leaflet-control-geosearch-qry">Search Marker 1 with Address with Form:</label>
-                                   <%-- <div id="search-address-with-google2"></div>--%>
-                                    <input id="leaflet-control-geosearch-qry">
-                                    <button type="submit" onclick="getInputFormAndRunGeoSearch()"></button>
-                                </form>
-                            </td>
-                        </tr>
+                        </tr>--%>
                         <tr>
                             <td>
                                 <label>Search Marker 2 with Leaflet Search plugin + container:</label>
@@ -346,12 +323,10 @@
                     <label for="fieldSeparator">Set Field Separator file (default "|"):</label><input id="fieldSeparator" type="text" name="fieldSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
                     <label for="lineSeparator">Set Line Separator file (default "\n"):</label><input id="lineSeparator" type="text" name="lineSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
                     <label for="nameSeparator">Set Name ID Separator file (default "name"):</label><input id="nameSeparator" type="text" name="nameSeparatorCSVParam" value="" maxlength="1" size="1"/><br />
-
-                    Choose CSV file:<input type="file" id="uploader" name="files[]" multiple accept="text/csv">
+                    <label for="uploader">Choose CSV file:</label><input type="file" id="uploader" name="files[]" multiple accept="text/csv">
                    <c:url var="url2" value="/map4" />
                    <form:form action="${url2}" method="post" onSubmit="getMarkers();">
                        <div id="loadMarker">
-                               <%--<input type="button" value="Get Markers" id="getMarkers"  />--%>
                            <input type="submit" name="GetMarkersParam" value="getMarkers" />
                        </div>
                    </form:form>

@@ -158,7 +158,8 @@ public class MapRepositoryImpl implements MapRepository {
                 builder.append("<div class='subcategory-content'>\n");
 
                 conMySQL2 = SQLHelper.getMySqlConnection(urlServiceMap, dbServiceMap, userServiceMap, passServiceMap);
-                String query2 = "SELECT * FROM siimobility.tbl_service_subcategory WHERE IDCATEGORY = " + id + " ORDER BY ID ASC";
+                String query2 = "SELECT * FROM siimobility.tbl_service_subcategory WHERE IDCATEGORY = " + id +
+                        " ORDER BY ID ASC";
                 // create the java statement
                 st2 = conMySQL2.createStatement();
                 // execute the query, and get a java resultset

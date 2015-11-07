@@ -32,13 +32,13 @@ html{
 #loading{
 	
 	display:none;
-background-color: rgba(50,50,50,0.6);
-position: absolute;
-width: 100%;
-height:100%;
-z-index: 2000;
-top: 0;
-left: 0;
+	background-color: rgba(50,50,50,0.6);
+	position: absolute;
+	width: 100%;
+	height:100%;
+	z-index: 2000;
+	top: 0;
+	left: 0;
 }
 
 #messaggio-loading{
@@ -48,24 +48,23 @@ left: 0;
 	margin:0 auto;
 	text-align:center;
 	margin-top:200px;
-	 -moz-border-radius: 4px; /* Firefox */  
- -webkit-border-radius: 4px; /* Safari, Chrome */  
- border-radius: 4px; /* CSS3 */  
- box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	-moz-border-radius: 4px; /* Firefox */
+	-webkit-border-radius: 4px; /* Safari, Chrome */
+	border-radius: 4px; /* CSS3 */
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
 }
 
 .menu{
-		background-color:white;
+	background-color:white;
 	z-index:1000;
 	/*padding:10px;*/
 	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-	 -moz-border-radius: 4px; /* Firefox */  
- -webkit-border-radius: 4px; /* Safari, Chrome */  
- border-radius: 4px; /* CSS3 */
+	-moz-border-radius: 4px; /* Firefox */
+ 	-webkit-border-radius: 4px; /* Safari, Chrome */
+ 	border-radius: 4px; /* CSS3 */
 }
 
 .menu .content{
-	
 	padding:10px;
 }
 
@@ -95,8 +94,10 @@ left: 0;
 
 #info-aggiuntive{
 	position:absolute;
-	bottom:5px;
-	left:5px;  
+	/*bottom:5px;*/
+	left:5px;
+	/*Added 4535992*/
+	bottom: 40px;
 }
 
 .previsione-giorno{
@@ -544,6 +545,12 @@ input.search-query {
 	margin-left: -22px;
 }*/
 
+#searchtext9{
+	padding:inherit;
+	border:none;
+	margin: inherit;
+}
+
 /*Support L.Control.Geocoder */
 #geocode-selector {
 	bottom: 10px;
@@ -554,3 +561,6 @@ input.search-query {
 	background-color: #0078a8;
 }
 
+.leaflet-control-geocoder-form{
+	margin:inherit;
+}
