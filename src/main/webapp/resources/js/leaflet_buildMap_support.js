@@ -325,11 +325,15 @@
                     try {
                         var lat = layer.getLatLng().lat;
                         var lng = layer.getLatLng().lng;
-                        var label = layer.getLabel()._content;
-                        /*var location = layer.getLocation();*/
-                        var popupContent = layer.getPopup().getContent();
-                        //alert("marker number(" + i + "):" + lat + "," + lng + "," + label + "," + popupContent);
-                        array.push({name: label, lat: lat, lng: lng, description: popupContent});
+                        var label;
+                        //label = layer.getLabel()._content;
+                        if(lat!=0 && lng !=0) {
+                            label = layer.label._content;
+                            /*var location = layer.getLocation();*/
+                            var popupContent = layer.getPopup().getContent();
+                            //alert("marker number():" + lat + "," + lng + "," + label + "," + popupContent);
+                            array.push({name: label, lat: lat, lng: lng, description: popupContent});
+                        }
                         //i++;
                     }catch(e){
                         alert("Exception:getMarkers -> "+e.message);
@@ -394,7 +398,8 @@
                 //Set map with leave all popup open...
                 var latitude = 43.3555664; //43.3555664 40.46
                 var longitude = 11.0290384; //11.0290384  -3.75
-                map = new L.map('map', {attributionControl:false}).setView([latitude, longitude], 5);
+                //map = new L.map('map', {attributionControl:false}).setView([latitude, longitude], 5);
+                map = new L.map('map').setView([latitude, longitude], 5);
                 //map = new L.map('map', {center: center, zoom: 2, maxZoom: 9, layers: [basemap],attributionControl:false})
                 // .setView([latitude, longitude], 5);
                 //var map = L.map('map').setView([43.3555664, 11.0290384], 8);
@@ -410,7 +415,7 @@
                 //Set a bound window for the leaflet map for Toscany region
                 //var bounds = new L.LatLngBounds(new L.LatLng(setBounds[0],setBounds[1]), new L.LatLng(setBounds[2], setBounds[3]));
                 /*map.setMaxBounds(new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4)));*/
-
+                //map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
                 //..add many functionality
                 //addPluginGPSControl();
                 //addPluginCoordinatesControl();
@@ -530,7 +535,7 @@
                 */
                 title = name;	//value searched
                 loc = [parseFloat(lat), parseFloat(lng)];		//position found
-                markerVar = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(text, { noHide: true });//se property searched
+                markerVar = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(name, { noHide: true });//se property searched
                 //marker.bindPopup('title: '+ title );
             }catch(e){
                 try{
@@ -538,7 +543,7 @@
                         .bindLabel(text, { noHide: true }).addTo(map);*/
                     title = name;	//value searched
                     loc = [lat,lng];	//position found
-                    markerVar = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(text, { noHide: true });//se property searched
+                    markerVar = new L.Marker(new L.latLng(loc), {title: title} ).bindLabel(name, { noHide: true });//se property searched
                 }catch(e){
                     alert(e.message);
                     alert("Sorry the program can't find Geographical coordinates for this Web address,check if the Web address is valid");
@@ -677,6 +682,7 @@
             if (!jQuery.isEmptyObject(markerClusters)) {
                 /* controlSearch = new L.Control.Search({layer: markerClusters, initial: false,collapsed: false});*/
                 if (jQuery.isEmptyObject(geocoderSearchGoogle)) {
+                    alert("21");
                     controlSearch = new L.Control.Search({
                         container: "searchMarkerWithJavascript", layer: markerClusters, initial: false, collapsed: false
                     });
@@ -731,6 +737,27 @@
         }
     }
 
+    function addPluginFileLayer(){
+        // line style
+        var style = {color:'red', fillColor: "#ff7800", opacity: 1.0, fillOpacity: 0.8, weight: 2, clickable: false};
+        L.Control.FileLayerLoad.LABEL = '<i class="fa fa-folder-open"></i>';
+
+        var geoJsonOptions = {
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.description);},
+
+            style: style,
+            pointToLayer: function (data, latlng) {
+                // setup popup, icons...
+                return L.marker(latlng, {icon: myIcon});
+            }
+        };
+
+        L.Control.fileLayerLoad({
+            layerOptions: geoJsonOptions,
+        }).addTo(map);
+    }
+
     function select(geocoder, el) {
         if (selection) L.DomUtil.removeClass(selection, 'selected');
         geoCoderControl.options.geocoder = geocoder;
@@ -738,17 +765,14 @@
         selection = el;
     }
 
-    function invokePluginGeoCoderGoogle(address){
+    function invokePluginGeoCoderGoogle(geoCoderControl){
         //convert latlng to Address
         //geocodergoogle.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {});
         try {
-            alert("Compile invokePluginGeoCoder with address:" + address + "...");
-            alert("geocoderControl->" +  geoCoderControl);
-            alert("geocoderGoogle->" + geoCoderGoogle);
-            var g = geoCoderControl.options.geocoder.markGeocode = function (result) {
+           geoCoderControl.options.geocoder.markGeocode = function (result) {
                 alert("88:" + result.toSource());
                 //var marker = new L.Marker(result.center).bindPopup(result.html || result.name);
-                addressVar = address;
+                addressVar = jQuery("#").val();
                 otherVar = result.html;
                 alert("add marker:" + result.name + "," + result.center.lat + "," + result.center.lng + "," + otherVar);
                 pushMarkerToArrayMarker(result.name, null, result.center.lat, result.center.lng,
@@ -760,7 +784,7 @@
                  bbox.getNorthWest(),
                  bbox.getSouthWest()
                  ]).addTo(map);*/
-            var g2= geoCoderControl.options.geocoder.geocode(address, function(results) {
+             /* geoCoderControl.options.geocoder.geocode(address, function(results) {
                     var latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
                     marker = new L.Marker (latLng);
                     map.addlayer(marker);
@@ -769,7 +793,7 @@
                     alert("add marker:" + result.name + "," + result.center.lat + "," + result.center.lng + "," + otherVar);
                     pushMarkerToArrayMarker(result.name, null, result.center.lat, result.center.lng,
                         null,null,null,addressVar,null,null,null,null);
-                    });
+                    });*/
                /* geoCoderControl.options.geocoder.geocode(address, function(results) {
                     var latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
                     marker = new L.Marker (latLng);

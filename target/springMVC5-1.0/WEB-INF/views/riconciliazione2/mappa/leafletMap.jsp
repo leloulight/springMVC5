@@ -196,7 +196,7 @@
                 <div class="use-case-3">
                     <c:if test="${(not empty arrayMarker)}" >
                         <input id="arrayMarkerForm" name="arrayMarkerParam" type="hidden" value="<c:out value="${arrayMarker}" />"/>
-                        LENGTH OF MARKERS: ${arrayMarker.size}
+                        <p>LENGTH OF MARKERS: ${arrayMarker.size()}</p>
                         <c:forEach items="${arrayMarker}" var="idMarker">
                             <p id="marker">
                                 <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${idMarker.name}" />"/>

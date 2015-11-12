@@ -7,7 +7,8 @@ var leaflet_build_plugin_1 = {
     addPluginLocateControl:addPluginLocateControl,
     addPluginLayersStamenBaseMaps:addPluginLayersStamenBaseMaps,
     addPluginGeoSearch: function(address){addPluginGeoSearch(address);},
-    openURL:function(url){openURL(url)}
+    openURL:function(url){openURL(url)},
+    addPluginOpenCageSearch: addPluginOpenCageSearch
 };
 
     /** function to open a URL with javascript without jquery. */
@@ -176,6 +177,17 @@ var leaflet_build_plugin_1 = {
          L.marker([result.x, result.y]).addTo(map)
          });*/
         alert("...compiled addPluginGeoSearch with Address");
+    }
+
+    /**
+     * http://geocoder.opencagedata.com/code.html#code-leaflet
+     */
+    function addPluginOpenCageSearch(){
+        var options = {
+            key: 'your-api-key-here',
+            limit: 10
+        };
+        var control = L.Control.openCageSearch(options).addTo(map);
     }
 
 

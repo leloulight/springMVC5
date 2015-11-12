@@ -45,7 +45,16 @@ L.Control.Search = L.Control.extend({
 		animateLocation: true,		//animate a circle over location found
 		circleLocation: true,		//draw a circle in location found
 		markerLocation: false,		//draw a marker in location found
-		markerIcon: new L.Icon.Default()//custom icon for maker location
+		markerIcon: new L.Icon.Default(),//custom icon for maker location
+
+		/* Modified from 4535992 */
+		markerCustom : new L.Marker([0, 0])//work
+		//markerCustom : new L.Control.Search.Marker([0,0]) //not work
+	   /*	marker: new L.Control.Search.Marker([0,0], {
+			showCircle: this.options.circleLocation,
+			showMarker: this.options.markerLocation,
+			icon: this.options.markerIcon
+		})*/
 		//TODO add option for persist markerLoc after collapse!
 		//TODO implements uniq option 'sourceData' that recognizes source type: url,array,callback or layer		
 		//TODO implement can do research on multiple sources layers and remote		
@@ -89,12 +98,28 @@ L.Control.Search = L.Control.extend({
 		if(this.options.collapsed===false)
 			this.expand(this.options.collapsed);
 
-		if(this.options.circleLocation || this.options.markerLocation || this.options.markerIcon)
-			this._markerLoc = new L.Control.Search.Marker([0,0], {
+		/* Modified from 4535992 */
+		if(this.options.markerCustom.getLatLng().lat != 0 && this.options.markerCustom.getLatLng().lng != 0){
+			alert("24");
+			this._markerLoc = this.options.markerCustom;
+		}else{
+			alert("25");
+			if(this.options.circleLocation || this.options.markerLocation || this.options.markerIcon)
+				this._markerLoc = new L.Control.Search.Marker([0,0], {
 					showCircle: this.options.circleLocation,
 					showMarker: this.options.markerLocation,
 					icon: this.options.markerIcon
 				});//see below
+		}
+
+		/*if(this.options.circleLocation || this.options.markerLocation || this.options.markerIcon)
+			this._markerLoc = new L.Control.Search.Marker([0,0], {
+				showCircle: this.options.circleLocation,
+				showMarker: this.options.markerLocation,
+				icon: this.options.markerIcon
+			});//see below*/
+
+
 		
 		this.setLayer( this._layer );
 		 map.on({
