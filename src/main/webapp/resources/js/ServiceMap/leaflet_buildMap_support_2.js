@@ -1,3 +1,6 @@
+
+var leafletUtil = {};
+
     /***  Set constructor variable for leaflet_buildMap_support */
     var leaflet_buildMap_support = {
         // Get a list of marker with coordinates and a url href and put the marker on the map
@@ -8,11 +11,9 @@
         },
         loadCSVFromURL: function(url){utility_leaflet_csv.loadCSVFromURL(url);},
         chooseIcon: function(code){ chooseIcon(code);},
-        removeClusterMarker:function(){removeClusterMarker();}
+        removeClusterMarker:removeClusterMarker
     };
 
-    var map;
-    var isGTFS;
     var bingAPIKey =
         'OOGpZK9MOAwIPsVuVTlE~D7N3xRehqhr3XJxlK8eMMg~Au-bt_oExU--ISxBKFtEXgSX-_AN6VMZSpM6rfKGY4xtAho6O67ueo2iN23gfbi0';
     var googleAPIKey =
@@ -20,59 +21,14 @@
     var mapBoxAPIKey =
         'pk.eyJ1IjoiNDUzNTk5MiIsImEiOiJjaWdocXltNmMwc3Zud2JrbjdycWVrZG8zIn0.22EO_bIUp_3XUpt5dYjTRg';
 
-    //DEFINE DIFFERNET MARKER WITH DIFFERNET COLOR
-    var markerAccommodation = L.AwesomeMarkers.icon({markerColor: 'red'});
-    var markerCulturalActivity = L.AwesomeMarkers.icon({markerColor: 'orange'});
-    var markerEducation = L.AwesomeMarkers.icon({markerColor: 'green'});
-    var markerEmergency = L.AwesomeMarkers.icon({markerColor: 'blue'});
-    var markerEntertainment = L.AwesomeMarkers.icon({markerColor: 'purple'});
-    var markerFinancialService = L.AwesomeMarkers.icon({markerColor: 'darkred'});
-    var markerGovernmentOffice = L.AwesomeMarkers.icon({markerColor: 'darkblue'});
-    var markerHealthCare = L.AwesomeMarkers.icon({markerColor: 'darkgreen'});
-    var markerShopping = L.AwesomeMarkers.icon({markerColor: 'darkpurple'});
-    var markerTourismService = L.AwesomeMarkers.icon({markerColor: 'cadetblue'});
-    var markerTransferService = L.AwesomeMarkers.icon({markerColor: 'yellow'});
-    var markerWineAndFood = L.AwesomeMarkers.icon({markerColor: 'black'});
-    var markerBusStops = L.AwesomeMarkers.icon({markerColor: 'pink'});
-
-    // DIFFERENTI LAYERS PER LE DIFFERENTI CATEGORIE
-    var layerAccommodation = L.layerGroup();
-    var layerCulturalActivity = L.layerGroup();
-    var layerEducation = L.layerGroup();
-    var layerEmergency = L.layerGroup();
-    var layerEntertainment = L.layerGroup();
-    var layerFinancialService = L.layerGroup();
-    var layerGovernmentOffice = L.layerGroup();
-    var layerHealthCare = L.layerGroup();
-    var layerShopping = L.layerGroup();
-    var layerTourismService = L.layerGroup();
-    var layerTransferService = L.layerGroup();
-    var layerWineAndFood = L.layerGroup();
-
-    //Service Map
-    // GENERAZIONE DEI LAYER PRINCIPALI
-    var busStopsLayer = new L.LayerGroup();
-    var servicesLayer = new L.LayerGroup();
-    var clickLayer = new L.LayerGroup();
-    var GPSLayer = new L.LayerGroup();
-    var layerMarker = new L.FeatureGroup();
-
-    // VARIABILI PER LA FUNZIONALITA' DI RICERCA INDIRIZZO APPROSSIMATIVO
-    var selezioneAttiva = false;
-    var ricercaInCorso = false;
-
-    // VARIABILI PER LA FUNZIONALITA' DI RICERCA SERVIZI
-    var selezione;
-    var coordinateSelezione;
-    var numeroRisultati;
-
     /** Set the Leaflet.markercluster for Leaflet. https://github.com/Leaflet/Leaflet.markercluster */
     var markerClusters = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50});
     /** Set the Leaflet Plugin Search. https://github.com/p4535992/leaflet-search.*/
     var controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
 
     // VARIABILI PER LA FUNZIONALITA' DI RICERCA SERVIZI
-    var GPSControl = new L.Control.Gps({maxZoom: 16,style: null}); // AGGIUNTA DEL PLUGIN PER LA GEOLOCALIZZAZIONE
+    //var GPSControl = new L.Control.Gps({maxZoom: 16,style: null}); // AGGIUNTA DEL PLUGIN PER LA GEOLOCALIZZAZIONE
+
   /*  var geoCoderGoogle = L.Control.Geocoder.Google();
     var geoCoderControl = L.Control.geocoder({geocoder: geoCoderGoogle});*/
     var geoCoderGoogle,geoCoderControl,geocoderSearchGoogle;
@@ -91,33 +47,18 @@
         ,phoneVar,emailVar,faxVar,ivaVar,otherVar;
     var arrayMarkerVar =[]; // array support of makers
 
+    /*** Set a personal icon marker */
+leafletUtil.deathIcon = L.icon({
+        iconUrl: '../leaflet/images/marker-shadow.png',
+        //iconRetinaUrl: myURL + 'img/me.png',
+        iconSize: [36, 36], iconAnchor: [18, 18],popupAnchor: [0, -18],labelAnchor: [14, 0]
+    });
+
     /*** Set the src of the javascript file*/
     //var mySRC = jQuery('script[src$="resources/js_utility/leaflet_buildMap_support.js"]').attr('src').replace('js_utility/leaflet_buildMap_support.js', '');
 
     /*** On ready document  */
     jQuery( document ).ready(function() {
-        try {
-            initMap();
-            // remove all cluster marker with a click on the reset button */
-            jQuery('#pulsante-reset').click(function () {
-                removeClusterMarker();
-            });
-
-           /* jQuery("#fieldSeparator").on("keyup", function () {
-                setFieldSeparatorCSV($(this).val());
-            });
-            jQuery("#lineSeparator").on("keyup", function () {
-                setLineSeparatorCSV($(this).val());
-            });
-            jQuery("#nameSeparator").on("keyup", function () {
-                setTitleFieldCSV($(this).val());
-            });*/
-
-            //oppure $( window ).load(function(){
-            //loading map...
-            //$('#caricamento').delay(500).fadeOut('slow');
-            /**all'apertura della pagina CREO LE TABS JQUERY UI NEL MENU IN ALTO */
-            jQuery("#tabs").tabs();
 
             /** if you have add a new marker from spring put in the map. */
             if ((!jQuery.isEmptyObject(arrayMarkerVar)) && arrayMarkerVar.length > 0) {
@@ -129,137 +70,11 @@
                 controlSearch.searchText(e.target.value);
             });
 
-            //set a listener on the uploader button
-            jQuery("#uploader").on('change', function (e) {
-                try {
-                    handleFiles2(e);
-                } catch (e) {
-                    alert(e.message);
-                }
-            });
-
-            //var uploader = document.getElementById("#uploader");
-            //uploader.addEventListener("change", handleFilesCSV, false);
-
-            //Localize all Location near you
-            $('#localizeName2').click(function () {
-                map.locate();
-                $('#localizeName2').text('Localization...');
-                map.on('locationfound', function (e) {
-                    map.setView(e.latlng, 15);
-                    $('#localizeName2').text('Finding...');
-                });
-            });
-
-            $("#clear").click(function (evt) {
-                evt.preventDefault();
-                $("#filter-string").val("").focus();
-                addCsvMarkers();
-            });
 
             $("#getMarkers").click(function () {
                 getMarkers();
             });
 
-            $('#filter-string').typeahead({source: typeAheadSource});
-
-            /*** CLICCANDO SUL PULSANTE GPS VENGONO SALVATE LE COORDINATE ATTUALI PER LA RICERCA DI SERVIZI */
-            $('.gps-button').click(function () {
-                if (GPSControl._isActive == true) {
-                    selezione = 'Posizione Attuale';
-                    $('#selezione').html(selezione);
-                    coordinateSelezione = "Posizione Attuale";
-                    $('#raggioricerca').prop('disabled', false);
-                    $('#numerorisultati').prop('disabled', false);
-                }
-            });
-
-            /*** AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO
-             * A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA */
-            $('#info').find('img').click(function () {
-                if ($(this).hasClass("active") == false) {
-                    $(this).addClass("active");
-                    selezioneAttiva = true;
-                }
-                else {
-                    $(this).removeClass("active");
-                    selezioneAttiva = false;
-                }
-            });
-
-            //FUNZIONE PER MOSTRARE/NASCONDERE LE SUB CATEGORY
-            $(".toggle-subcategory").click(function () {
-                var $tsc = $(this);
-                //getting the next element
-                var $content = $tsc.next();
-                if (!$content.is(":visible")) {
-                    $('.subcategory-content').hide();
-                    $('.toggle-subcategory').html('+');
-                }
-                //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-                $content.slideToggle(200, function () {
-                    //execute this after slideToggle is done
-                    //change text of header based on visibility of content div
-                    $tsc.text(function () {
-                        //change text based on condition
-                        return $content.is(":visible") ? "-" : "+";
-                    });
-                });
-            });
-
-            //CHECKBOX SELECT/DESELECT ALL
-            $('#macro-select-all').change(function () {
-                if ($('#macro-select-all').prop('checked')) {
-                    $('.macrocategory').prop('checked', 'checked');
-                    $('.macrocategory').trigger("change");
-                }
-                else {
-                    $('.macrocategory').prop('checked', false);
-                    $('.macrocategory').trigger("change");
-                }
-
-            });
-
-            //FUNZIONE PER MOSTRARE/NASCONDERE I MENU
-            $(".header").click(function () {
-                $header = $(this);
-                //getting the next element
-                $content = $header.next();
-                //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-                $content.slideToggle(200, function () {
-                    //execute this after slideToggle is done
-                    //change text of header based on visibility of content div
-                    $header.text(function () {
-                        //change text based on condition
-                        return $content.is(":visible") ? "- Nascondi Menu" : "+ Mostra Menu";
-                    });
-                });
-            });
-
-            // SELEZIONA/DESELEZIONA TUTTE LE CATEGORIE - SOTTOCATEGORIE
-            $('.macrocategory').change(function () {
-                $cat = $(this).next().attr('class');
-                $cat = $cat.replace(" macrocategory-label", "");
-                //console.log($cat);
-                if ($(this).prop('checked')) {
-                    $('.sub_' + $cat).prop('checked', 'checked');
-                }
-                else {
-                    $('.sub_' + $cat).prop('checked', false);
-                }
-            });
-
-            // AL CLICK SUL PULSANTE DI SELEZIONE PUNTO SU MAPPA IN ALTO A SX ATTIVO O DISATTIVO LA FUNZIONALITA' DI RICERCA
-            $('#info').find('img').click(function () {
-                if (!$('#info').hasClass("active")) {
-                    $('#info').addClass("active");
-                    selezioneAttiva = true;
-                }
-                else {
-                    $('#info').removeClass("active");
-                    selezioneAttiva = false;
-                }
-            });
             alert("Loaded all JQUERY variable");
 
             //Search address with google...
@@ -267,31 +82,35 @@
             //<div class="leaflet-control-search leaflet-control search-exp">
             jQuery("#searchMarkerWithJavascript").appendTo(jQuery("#searchMarkerWithJavascript2"));
 
-            //Help css for PluginLeafletGeocoder
-            //<a class="leaflet-control-geocoder-icon" href="javascript:void(0);">&nbsp;</a>
-            jQuery("a").remove(jQuery(".leaflet-control-geocoder-icon"));
-            //<div class="leaflet-control-geocoder leaflet-bar leaflet-control leaflet-control-geocoder-expanded">
-            jQuery(".leaflet-control-geocoder").appendTo(jQuery("#searchMarkerWithJavascript3"));
+            leafletUtil.addGeoCoderPluginWithContainer('#searchMarkerWithJavascript3');
 
-
-
-            alert("Loaded all JQUERY variable");
-            //implement select of the geocoder.
-            for (var name in geocoders) {
-                btn = L.DomUtil.create('button', 'leaflet-bar', selector);
-                btn.innerHTML = name;
-                (function (n) {
-                    L.DomEvent.addListener(btn, 'click', function () {
-                        select(geocoders[n], this);
-                    }, btn);
-                })(name);
-                if (!selection) select(geocoders[name], btn);
-                $('#geocode-selector').append(btn);
-            }// end of the for...
-        }catch(e){alert(e.message);}
-
+            console.info("Loaded all JQUERY variable");
 
     });
+
+leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
+
+    if(jQuery.isEmptyObject(containerId)) containerId = "#searchMarkerWithJavascript3";
+
+    //Help css for PluginLeafletGeocoder
+    //<a class="leaflet-control-geocoder-icon" href="javascript:void(0);">&nbsp;</a>
+    jQuery("a").remove(jQuery(".leaflet-control-geocoder-icon"));
+    //<div class="leaflet-control-geocoder leaflet-bar leaflet-control leaflet-control-geocoder-expanded">
+    jQuery(".leaflet-control-geocoder").appendTo(jQuery(containerId));
+    //implement select of the geocoder.
+    for (var name in geocoders) {
+        btn = L.DomUtil.create('button', 'leaflet-bar', selector);
+        btn.innerHTML = name;
+        (function (n) {
+            L.DomEvent.addListener(btn, 'click', function () {
+                select(geocoders[n], this);
+            }, btn);
+        })(name);
+        if (!selection) select(geocoders[name], btn);
+        $('#geocode-selector').append(btn);
+    }// end of the for...
+
+};
 
     /**
      * function to get the information on the marker ont he Layer to a Array to pass
@@ -406,7 +225,6 @@
                 addPluginSearch(); //not necessary
                 //addPluginGeoSearch();
                 addPluginGeoCoder();
-                addPluginFileLayer();
 
                 //..add other functionality
                 //map.on('click', onMapClick);
@@ -720,37 +538,24 @@
         }
     }
 
-    /**
-     * Add the Leaflet leaflet-filelayer.
-     * https://github.com/makinacorpus/Leaflet.FileLayer
-     */
     function addPluginFileLayer(){
+        // line style
+        var style = {color:'red', fillColor: "#ff7800", opacity: 1.0, fillOpacity: 0.8, weight: 2, clickable: false};
         L.Control.FileLayerLoad.LABEL = '<i class="fa fa-folder-open"></i>';
+
+        var geoJsonOptions = {
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.description);},
+
+            style: style,
+            pointToLayer: function (data, latlng) {
+                // setup popup, icons...
+                return L.marker(latlng, {icon: myIcon});
+            }
+        };
+
         L.Control.fileLayerLoad({
-            //TRY OUT CSV
-            latitudeColumn: 'lat',
-            longitudeColumn: 'lng',
-            //TRY OUT RDF/XML
-            /*latitudeColumn: 'geo:lat',
-            longitudeColumn: 'geo:long',
-            rdfLink: ['gr:hasPOS'],
-            rdfAboutLink: 'rdf:about',    */
-            popupTable:true,
-            geojsonLayer :markerClusters,
-            layerOptions: {
-                pointToLayer: function (feature, latlng) {
-                    return new L.marker(latlng);
-                },
-                onEachFeature:function(feature, layer){
-                    try {
-                        var popupContent = '';
-                        if (feature.properties && feature.properties.popupContent) {
-                            popupContent += feature.properties.popupContent;
-                        }
-                        layer.bindPopup(popupContent);
-                    }catch(e){alert(e.message);}
-                }
-            },
+            layerOptions: geoJsonOptions,
         }).addTo(map);
     }
 

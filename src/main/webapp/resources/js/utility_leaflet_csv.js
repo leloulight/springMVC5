@@ -221,21 +221,6 @@
                     //layer.on('dblclick',function (e) { map.removeLayer(e.target)});
                 },
                 pointToLayer: function (feature, latlng) {
-                    /*return new L.Marker(new L.latLng(latlng), {title: titleGlobal},{
-                          //..icon
-                        } );*/
-                   /* var  codeIcon;
-                    for (var clave in feature.properties) {
-                        var title = points.getPropertyTitle(clave).strip();
-                        var attr = feature.properties[clave];
-                        if(title === categoriaIcon || attr === categoriaIcon){
-                            codeIcon = leaflet_buildMap_support.chooseIcon(feature.properties[clave]);
-                            break;
-                        }
-                    }
-                    if($.isEmptyObject(codeIcon)) codeIcon = chooseIcon("");
-                    alert("CODE ICON:"+codeIcon.options._getIconUrl);
-                    return new L.Marker(latlng,{icon:codeIcon});*/
                     return new L.marker(latlng,{
                         icon: L.icon({
                             iconUrl: 'resources/js/leaflet/images/marker-icon.png',

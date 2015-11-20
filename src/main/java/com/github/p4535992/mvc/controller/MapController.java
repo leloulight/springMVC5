@@ -90,99 +90,28 @@ public class MapController {
         return "main";
     }
 
-    @RequestMapping(value="/riconciliazione",method= RequestMethod.GET)
-    public String riconciliazione(Model model){
-        String RICONCILIAZIONE = mapService.riconciliazione();
-        model.addAttribute("RICONCILIAZIONE", RICONCILIAZIONE);
-        return "riconciliazione2/riconciliazione/riconciliazione";
-    }
 
-    @RequestMapping(value="/riconciliazione_alternative",method= RequestMethod.GET)
-    public String riconciliazioneAlternative(Model model){
-        String RICONCILIAZIONE_ALTERNATIVE = mapService.riconciliazioneAlternative();
-        model.addAttribute("RICONCILIAZIONE_ALTERNATIVE", RICONCILIAZIONE_ALTERNATIVE);
-        return "riconciliazione2/riconciliazione/riconciliazione-alternative";
-    }
+    //---------------------------------------------------------
+    // NEW GET METHOD
+    //---------------------------------------------------------
+    @RequestMapping(value="/map13",method= RequestMethod.GET)
+    public String loadMap13(Model model){
+        //String html = mapService.getResponseHTMLString();
+        //Site siteForm = new Site();
+        //model.addAttribute("siteForm",siteForm);
+        if(!arrayMarker.isEmpty()) model.addAttribute("arrayMarker",arrayMarker);
+        else model.addAttribute("arrayMarker",null);
 
-    @RequestMapping(value="/riconciliazione_bus",method= RequestMethod.GET)
-    public String riconciliazioneBus(Model model){
-        String RICONCILIAZIONE_BUS = mapService.riconciliazione_bus();
-        model.addAttribute("RICONCILIAZIONE_BUS", RICONCILIAZIONE_BUS);
-        return "riconciliazione2/riconciliazione/riconciliazione-bus";
-    }
+        if(marker!=null)model.addAttribute("marker",marker);
+        else model.addAttribute("marker",null);
 
-    @RequestMapping(value="/riconciliazione_comuni_sbagliati",method= RequestMethod.GET)
-    public String riconciliazioneComuniSbagliati(Model model){
-        String RICONCILIAZIONE_COMUNI_SBAGLIATI = mapService.riconciliazione_comuni_sbagliati();
-        model.addAttribute("RICONCILIAZIONE_COMUNI_SBAGLIATI", RICONCILIAZIONE_COMUNI_SBAGLIATI);
-        return "riconciliazione2/riconciliazione/riconciliazione-comuni-sbagliati";
-    }
+        model.addAttribute("indiceMarker",indiceMarker);
+        model.addAttribute("urlParam",null);
 
-    @RequestMapping(value="/riconciliazione_contains",method= RequestMethod.GET)
-    public String riconciliazioneContains(Model model){
-        String RICONCILIAZIONE_CONTAINS = mapService.riconciliazione_contains();
-        model.addAttribute("RICONCILIAZIONE_CONTAINS", RICONCILIAZIONE_CONTAINS);
-        return "riconciliazione2/riconciliazione/riconciliazione-contains";
+        String html = mapService.getResponseHTMLString();
+        model.addAttribute("HTML",html);
+        return "riconciliazione2/mappa/leafletMap3";
     }
-
-    @RequestMapping(value="/riconciliazione_geocode",method= RequestMethod.GET)
-    public String riconciliazioneGeocode(Model model){
-        String RICONCILIAZIONE_GEOCODE = mapService.riconciliazione_geocode();
-        model.addAttribute("RICONCILIAZIONE_GEOCODE", RICONCILIAZIONE_GEOCODE);
-        return "riconciliazione2/riconciliazione/riconciliazione-geocode";
-    }
-
-    @RequestMapping(value="/riconciliazione_geocode_strada",method= RequestMethod.GET)
-    public String riconciliazioneGeocodeStrada(Model model){
-        String RICONCILIAZIONE_GEOCODE_STRADA = mapService.riconciliazione_geocode_strada();
-        model.addAttribute("RICONCILIAZIONE_GEOCODE_STRADA", RICONCILIAZIONE_GEOCODE_STRADA);
-        return "riconciliazione2/riconciliazione/riconciliazione-geocode-strada";
-    }
-
-    @RequestMapping(value="/riconciliazione_isin",method= RequestMethod.GET)
-    public String riconciliazioneIsin(Model model){
-        String RICONCILIAZIONE_ISIN = mapService.riconciliazione_isin();
-        model.addAttribute("RICONCILIAZIONE_ISIN", RICONCILIAZIONE_ISIN);
-        return "riconciliazione2/riconciliazione/riconciliazione-isin";
-    }
-
-    @RequestMapping(value="/riconciliazione_last_word",method= RequestMethod.GET)
-    public String riconciliazioneLastWord(Model model){
-        String RICONCILIAZIONE_LAST_WORD = mapService.riconciliazione_last_word();
-        model.addAttribute("RICONCILIAZIONE_LAST_WORD", RICONCILIAZIONE_LAST_WORD);
-        return "riconciliazione2/riconciliazione/riconciliazione-last-word";
-    }
-
-    @RequestMapping(value="/riconciliazione_senza_virgola",method= RequestMethod.GET)
-    public String riconciliazioneSenzaVirgola(Model model){
-        String RICONCILIAZIONE_SENZA_VIRGOLA = mapService.riconciliazione_senza_virgola();
-        model.addAttribute("RICONCILIAZIONE_SENZA_VIRGOLA", RICONCILIAZIONE_SENZA_VIRGOLA);
-        return "riconciliazione2/riconciliazione/riconciliazione-senza-virgola";
-    }
-
-    @RequestMapping(value="/riconciliazione_strade",method= RequestMethod.GET)
-    public String riconciliazioneStrade(Model model){
-        String RICONCILIAZIONE_STRADE = mapService.riconciliazione_strade();
-        model.addAttribute("RICONCILIAZIONE_STRADE", RICONCILIAZIONE_STRADE);
-        return "riconciliazione2/riconciliazione/riconciliazione-strade";
-    }
-
-    @RequestMapping(value="/riconciliazione_trattino",method= RequestMethod.GET)
-    public String riconciliazioneTrattino(Model model){
-        String RICONCILIAZIONE_TRATTINO = mapService.riconciliazione_trattino();
-        model.addAttribute("RICONCILIAZIONE_TRATTINO", RICONCILIAZIONE_TRATTINO);
-        return "riconciliazione2/riconciliazione/riconciliazione-trattino";
-    }
-
-    @RequestMapping(value="/gtfs",method= RequestMethod.GET)
-      public String gtfs(Model model){
-        return "riconciliazione2/mappa/gtfsMap";
-    }
-
-   /* @RequestMapping(value="/gtfshtml",method= RequestMethod.GET)
-    public String gtfsHmtl(Model model){
-        return "/gtfsMap";
-    }*/
 
     //---------------------------------------------------------
     // NEW POST METHOD
@@ -204,7 +133,7 @@ public class MapController {
         //model.addAttribute("marker",marker); //no need is get from the HTTTP GET COMMAND
         arrayMarker.add(marker);
         indiceMarker++;
-        return "redirect:/map";
+        return "redirect:/map13";
     }
 
     @RequestMapping(value="/map4",method = RequestMethod.POST)
@@ -233,7 +162,7 @@ public class MapController {
             mk = new Marker(name.get(i),fileUrl,lat.get(i),lng.get(i),mki);
             arrayMarker.add(mk);
         }
-        return "redirect:/map";
+        return "redirect:/map13";
     }
 
 
@@ -255,6 +184,15 @@ public class MapController {
 
     /**
      * Upload single file using Spring Controller
+     * e.g. usage:
+      <c:url var="url3" value="/uploadFile" />
+     <%--<jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfAuthenticationStrategy.SaveOnAccessCsrfToken"/>--%>
+     <form:form method="post" action="${url3}?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+         File to upload:<input type="file" name="file" title="x"><br />
+         Name:<input type="text" name="name" title="x"><br />
+         <input type="submit" value="Upload"> Press here to upload the file!
+         <%-- <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>--%>
+     </form:form>
      */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public @ResponseBody String uploadFileHandler(@RequestParam("name") String name,
@@ -282,7 +220,7 @@ public class MapController {
             }
         } else {
             SystemLog.message("You failed to upload " + name + " because the file was empty.");
-            return "redirect:/map";
+            return "redirect:/map13";
         }
     }
 
@@ -323,7 +261,7 @@ public class MapController {
             }
         }
         SystemLog.message(message);
-        return "redirect:/map";
+        return "redirect:/map13";
     }
 
 

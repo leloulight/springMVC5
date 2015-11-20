@@ -11,6 +11,7 @@
 <body>
 <P>  The time on the server is ${serverTime}. </P>
 <p> Go to the ServiceMap:   <input type="button" value="goMap" id="goMap"  /></p>
+<p> Go to the ServiceMap 2:   <input type="button" value="goMap" id="goMap13"  /></p>
 <P> Go to Logback Logging details page:  <input type="button" value="gologBack" id="gologBack"  /></P>
 <P> Go to to GTFS Map:  <input type="button" value="goGTFSMap" id="goGTFSMap"  /></P>
 <%--<P> Go to to GTFS Map HTML:  <input type="button" value="goGTFSMapH" id="goGTFSMapH"  /></P>--%>
@@ -21,6 +22,13 @@
 			//var map = location.toString().split("/");
 			//alert(map[2]);
 			window.location.replace(location+'map');
+		});
+
+		$('#goMap13').click(function () {
+			//alert(location); //http://localhost:8080/
+			//var map = location.toString().split("/");
+			//alert(map[2]);
+			window.location.replace(location+'map13');
 		});
 
 		$('#goGTFSMap').click(function () {

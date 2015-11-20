@@ -43,6 +43,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jquery/jquery-ui1.10.04.css" />
     <%--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 
     <!-- OTHER CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
@@ -73,6 +75,10 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/markercluster/leaflet.markercluster.js"></script>
 
+    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/filelayer/leaflet.filelayer.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/filelayer/papaparse.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/filelayer/togeojson.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/filelayer/GPX.js"></script>
     <%-- OPTIONAL --%>
     <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/stamen-base-maps/tile.stamenv1.3.0.js"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/leaflet-locatecontrol-gh-pages/L.Control.Locate.js"></script>--%>

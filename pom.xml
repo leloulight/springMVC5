@@ -145,9 +145,9 @@
        <!-- UTILITY -->
        <org.antlr.stringtemplate.version>3.2.1</org.antlr.stringtemplate.version>
        <!-- UTILITY Github -->
-       <com.github.p4535992.utility.version>1.4.1</com.github.p4535992.utility.version>
+       <com.github.p4535992.utility.version>1.4.4</com.github.p4535992.utility.version>
        <!--<com.github.p4535992.gate-basic.version>1.4.1</com.github.p4535992.gate-basic.version>-->
-       <com.github.p4535992.ExtractInfo.version>1.4.1</com.github.p4535992.ExtractInfo.version>
+       <com.github.p4535992.ExtractInfo.version>1.4.4</com.github.p4535992.ExtractInfo.version>
     </properties>
 
     <dependencyManagement>

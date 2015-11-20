@@ -12,6 +12,10 @@
     <file url="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/images/zoom-out.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/control-geocoder/Control.Geocoder.css" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/control-geocoder/images" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/filelayer/GPX.js" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/filelayer/leaflet.filelayer.js" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/filelayer/papaparse.js" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/filelayer/togeojson.js" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
