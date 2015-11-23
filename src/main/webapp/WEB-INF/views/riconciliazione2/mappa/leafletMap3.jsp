@@ -78,8 +78,9 @@
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
 
-    <!-- JS - leafletmap support -->
-    <%--<script src="${pageContext.request.contextPath}/resources/js/ServiceMap/leaflet_buildMap_support_2.js" type="text/javascript"></script>--%>
+  <!-- JS - leafletmap support -->
+  <script src="${pageContext.request.contextPath}/resources/js/ServiceMap/leaflet_buildMap_support_2.js" type="text/javascript"></script>
+
 </head>
 <body class="Chrome" onload="getBusLines();
             changeLanguage('ENG')">
@@ -122,7 +123,7 @@
   <img src="${pageContext.request.contextPath}/resources/img/embed_icon.png" alt="Embed Servie Map" width="28" onclick="embedConfiguration();" />
 </div>
 <div id="menu-alto" class="menu">
-  <div id="lang" value="ENG"><img id="icon_lang"></img></div>
+  <div id="lang" value="ENG"><img id="icon_lang"  src="${pageContext.request.contextPath}/resources/img/icon_ITA.png" onclick="changeLanguage('ITA')"></img></div>
   <div class="header">
     <span name="lbl" caption="Hide_Menu_sx"> - Hide Menu</span>
   </div>
@@ -230,11 +231,15 @@
                   <script type="text/javascript">
                     //leaflet_buildMap_support.initMap();
                     //alert("try to push a marker");
-                    leaflet_buildMap_support.pushMarkerToArrayMarker(
+                    try{
+                    leaflet_buildMap_support_2.pushMarkerToArrayMarker(
                             "${idMarker.name}","${idMarker.url}","${idMarker.latitude}","${idMarker.longitude}",
                             "${idMarker.markerInfo.region}","${idMarker.markerInfo.province}","${idMarker.markerInfo.city}",
                             "${idMarker.markerInfo.address}","${idMarker.markerInfo.phone}","${idMarker.markerInfo.email}",
                             "${idMarker.markerInfo.fax}","${idMarker.markerInfo.iva}");
+                    }catch(e){
+                      alert(e.message);
+                    }
                   </script>
                 </c:forEach>
               </c:if>
@@ -363,7 +368,7 @@
               <input type='checkbox' name='Summer_camp' value='Summer_camp' class='sub_Accommodation subcategory' /> <img src='${pageContext.request.contextPath}/resources/img/mapicons/Accommodation_Summer_camp.png' height='19' width='16' align='top'>
               <span class='Accommodation subcategory-label'>Summer_camp</span>
               <br />
-              <input type='checkbox' name='Summer_residence' value='Summer_residence' class='sub_Accommodation subcategory' /> <img src='${pageContext.request.contextPath}/resources/img/img/mapicons/Accommodation_Summer_residence.png' height='19' width='16' align='top'>
+              <input type='checkbox' name='Summer_residence' value='Summer_residence' class='sub_Accommodation subcategory' /> <img src='${pageContext.request.contextPath}/resources/img/mapicons/Accommodation_Summer_residence.png' height='19' width='16' align='top'>
               <span class='Accommodation subcategory-label'>Summer_residence</span>
               <br />
               <input type='checkbox' name='Vacation_resort' value='Vacation_resort' class='sub_Accommodation subcategory' /> <img src='${pageContext.request.contextPath}/resources/img/mapicons/Accommodation_Vacation_resort.png' height='19' width='16' align='top'>
@@ -2266,9 +2271,9 @@ N. risultati:
 <script src="${pageContext.request.contextPath}/resources/js/ServiceMap/save_embed.js" type="text/javascript"></script>
 <%--<script src="${pageContext.request.contextPath}/resources/js/ServiceMap/support.js" type="text/javascript"></script>--%>
 <script>
-jQuery( document ).ready(function() {
+//jQuery( document ).ready(function() {
   // $("#embed").hide();
-  var ctx = "/SpringMVC5";
+  var ctx = "http://localhost:8181/SpringMVC5";
   //var ctx = "http://servicemap.disit.org/WebAppGrafo";
   var query = new Object();
   var parentQuery = "";
@@ -3244,6 +3249,8 @@ jQuery( document ).ready(function() {
   $(document).ready(function () {
     // funzione di inizializzazione all'avvio della mappa
     init();
+      <!-- Added from 4535992 -->
+    leaflet_buildMap_support_2.initLeaflet;
   });
   function init() {
     // CREO LE TABS JQUERY UI NEL MENU IN ALTO
@@ -4264,7 +4271,8 @@ jQuery( document ).ready(function() {
       clickLayer.clearLayers();
     }
   });
-});
+//});
 </script>
+
 </body><div id="overMap"></div>
 </html>

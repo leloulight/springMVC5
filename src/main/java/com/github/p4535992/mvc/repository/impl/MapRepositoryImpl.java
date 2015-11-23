@@ -190,7 +190,7 @@ public class MapRepositoryImpl implements MapRepository {
             st.close();
             conMySQL.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+           System.err.println("Some problem to connect to the database:"+e.getMessage());
         } finally{
             testCategoryHTML = builder.toString();
         }
