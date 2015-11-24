@@ -4,71 +4,58 @@ var leafletUtil = {};
 /***  Set constructor variable for leaflet_buildMap_support */
 var leaflet_buildMap_support_2 = {
     // Get a list of marker with coordinates and a url href and put the marker on the map
-    initMap: function () { if(map==null){ initMap(); } },
-    addSingleMarker: function (name, url, lat, lng) {addSingleMarker(name,url,lat,lng);},
-    pushMarkerToArrayMarker: function(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar){
+    initMap: function () {
+        leafletUtil.initMap();
+    },
+    addSingleMarker: function (name, url, lat, lng,bound,popupContent) {addSingleMarker(name,url,lat,lng,bounds,popupContent);},
+    pushMarkerToArrayMarker: function(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar){;
+        leafletUtil.initMap(); //check fast if the map is setted
         alert(1);
         pushMarkerToArrayMarker(
             nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar);
         alert(2);
         addMultipleMarker(leafletUtil.arrayGeoDocuments);
     },
-    loadCSVFromURL: function(url){
-
-    },
     chooseIcon: function(code){ chooseIcon(code);},
-    initLeaflet: leafletUtil.initLeaflet,
-    removeClusterMarker:removeClusterMarker
+    removeClusterMarker:leafletUtil.removeClusterMarker
 };
 
-leafletUtil.bingAPIKey =
+var bingAPIKey =
         'OOGpZK9MOAwIPsVuVTlE~D7N3xRehqhr3XJxlK8eMMg~Au-bt_oExU--ISxBKFtEXgSX-_AN6VMZSpM6rfKGY4xtAho6O67ueo2iN23gfbi0';
-leafletUtil.googleAPIKey =
+var googleAPIKey =
         'AIzaSyDlmsdr-wCDaHNbaBM6N9JljQLIjRllCl8';
-leafletUtil.mapBoxAPIKey =
+var mapBoxAPIKey =
         'pk.eyJ1IjoiNDUzNTk5MiIsImEiOiJjaWdocXltNmMwc3Zud2JrbjdycWVrZG8zIn0.22EO_bIUp_3XUpt5dYjTRg';
 
-    /** Set the Leaflet.markercluster for Leaflet. https://github.com/Leaflet/Leaflet.markercluster */
-    markerClusters = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50});
-    /** Set the Leaflet Plugin Search. https://github.com/p4535992/leaflet-search.*/
-    controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
-
-    // VARIABILI PER LA FUNZIONALITA' DI RICERCA SERVIZI
-    //var GPSControl = new L.Control.Gps({maxZoom: 16,style: null}); // AGGIUNTA DEL PLUGIN PER LA GEOLOCALIZZAZIONE
-
-  /*  var geoCoderGoogle = L.Control.Geocoder.Google();
-    var geoCoderControl = L.Control.geocoder({geocoder: geoCoderGoogle});*/
-    var geoCoderGoogle,geoCoderControl,geocoderSearchGoogle;
+/** Set the Leaflet.markercluster for Leaflet. https://github.com/Leaflet/Leaflet.markercluster */
+var markerClusters = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50});
+/** Set the Leaflet Plugin Search. https://github.com/p4535992/leaflet-search.*/
+var controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
+var geoCoderGoogle,geocoderSearchGoogle;
 
 
-leafletUtil.geocoders = {
-        'Nominatim': L.Control.Geocoder.nominatim(),
-        'Bing': L.Control.Geocoder.bing( leafletUtil.bingAPIKey),
-        'Mapbox': L.Control.Geocoder.mapbox( leafletUtil.mapBoxAPIKey),
-        'Google': L.Control.Geocoder.google( leafletUtil.googleAPIKey),
-        'Photon': L.Control.Geocoder.photon()
-    };
 
-    //Variabili suppport java SPRING
+//Variabili suppport java SPRING
 leafletUtil.geoDocument = {name:'',url:'',lat:'',lng:'',region:'',province:'',city:'',
     address:'',phone:'',email:'',fax:'',iva:'',popupContent:'',other:'',marker:{}};
 
 leafletUtil.arrayGeoDocuments =[]; // array support of makers
 
-    /*** Set a personal icon marker */
+/*** Set a personal icon marker */
 leafletUtil.deathIcon = L.icon({
         iconUrl: '../leaflet/images/marker-shadow.png',
         //iconRetinaUrl: myURL + 'img/me.png',
         iconSize: [36, 36], iconAnchor: [18, 18],popupAnchor: [0, -18],labelAnchor: [14, 0]
     });
 
-    /*** Set the src of the javascript file*/
-    //var mySRC = jQuery('script[src$="resources/js_utility/leaflet_buildMap_support.js"]').attr('src').replace('js_utility/leaflet_buildMap_support.js', '');
+/*** Set the src of the javascript file*/
+//var mySRC = jQuery('script[src$="resources/js_utility/leaflet_buildMap_support.js"]').attr('src').replace('js_utility/leaflet_buildMap_support.js', '');
 
 
-leafletUtil.initLeaflet = function() {
+
+//leafletUtil.initLeaflet = function() {
     /*** On ready document  */
-    //jQuery( document ).ready(function() {
+    jQuery( document ).ready(function() {
 
     /** if you have add a new marker from spring put in the map. */
     if ((!jQuery.isEmptyObject(leafletUtil.arrayGeoDocuments)) && leafletUtil.arrayGeoDocuments.length > 0) {
@@ -81,7 +68,7 @@ leafletUtil.initLeaflet = function() {
     });
 
 
-    $("#getMarkers").click(function () {
+    jQuery("#getMarkers").click(function () {
         getMarkers();
     });
 
@@ -89,40 +76,170 @@ leafletUtil.initLeaflet = function() {
     //jQuery("div.leaflet-control-geosearch").appendTo(jQuery("#search-address-with-google"));
     //<div class="leaflet-control-search leaflet-control search-exp">
     jQuery("#searchMarkerWithJavascript").appendTo(jQuery("#searchMarkerWithJavascript2"));
-
     leafletUtil.addGeoCoderPluginWithContainer('#searchMarkerWithJavascript3');
+
 
     console.info("Loaded all JQUERY variable");
     alert("Loaded all JQUERY variable");
 
-    //});
-};
+    });
+//};
 
-var btn,selection;
-var selector = 'geocode-selector';
+var btn;
+leafletUtil.geoCoderControl ={selection:{},geoCoderControl:{},selector:{},
+geocoders:{
+    'Nominatim': L.Control.Geocoder.nominatim(),
+    'Bing': L.Control.Geocoder.bing( bingAPIKey),
+    'Mapbox': L.Control.Geocoder.mapbox( mapBoxAPIKey),
+    'Google': L.Control.Geocoder.google( googleAPIKey),
+    'Photon': L.Control.Geocoder.photon()
+},containerSelectorId:''};
+
+/** Loaded on the ready DOM of the document */
 leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
+    if (jQuery.isEmptyObject(containerId)) leafletUtil.geoCoderControl.containerSelectorId = "#searchMarkerWithJavascript3";
+    else leafletUtil.geoCoderControl.containerSelectorId = containerId;
+    try {
+        addPluginGeoCoder(); //set the selector
+        //Help css for PluginLeafletGeocoder
+        //<a class="leaflet-control-geocoder-icon" href="javascript:void(0);">&nbsp;</a>
+        jQuery("a").remove(jQuery(".leaflet-control-geocoder-icon"));
+        //<div class="leaflet-control-geocoder leaflet-bar leaflet-control leaflet-control-geocoder-expanded">
+        jQuery(".leaflet-control-geocoder").appendTo(jQuery(containerId));
+        //implement select of the geocoder.
+        for (var name in leafletUtil.geoCoderControl.geocoders) {
+            btn = L.DomUtil.create('button', 'leaflet-bar', leafletUtil.geoCoderControl.selector);
+            btn.innerHTML = name;
+            //L.DomUtil.addClass(btn,name);
+            (function (n) {
+                L.DomEvent.addListener(btn, 'click', function () {
+                    //select(leafletUtil.geoCoderControl.geocoders[n], this); //geocoder,el
+                    if (leafletUtil.geoCoderControl.selection){
+                        try {
+                            L.DomUtil.removeClass(leafletUtil.geoCoderControl.selection, 'selected');
+                        }catch(e){console.warn("Warning::addGeoCoderPluginWithContainer ->" +e.message);}
+                    }
 
-    if(jQuery.isEmptyObject(containerId)) containerId = "#searchMarkerWithJavascript3";
-
-    //Help css for PluginLeafletGeocoder
-    //<a class="leaflet-control-geocoder-icon" href="javascript:void(0);">&nbsp;</a>
-    jQuery("a").remove(jQuery(".leaflet-control-geocoder-icon"));
-    //<div class="leaflet-control-geocoder leaflet-bar leaflet-control leaflet-control-geocoder-expanded">
-    jQuery(".leaflet-control-geocoder").appendTo(jQuery(containerId));
-    //implement select of the geocoder.
-    for (var name in leafletUtil.geocoders) {
-        btn = L.DomUtil.create('button', 'leaflet-bar', selector);
-        btn.innerHTML = name;
-        (function (n) {
-            L.DomEvent.addListener(btn, 'click', function () {
-                select(leafletUtil.geocoders[n], this);
-            }, btn);
-        })(name);
-        if (!selection) select(leafletUtil.geocoders[name], btn);
-        $('#geocode-selector').append(btn);
-    }// end of the for...
-
+                    leafletUtil.geoCoderControl.geoCoderControl.options.geocoder = leafletUtil.geoCoderControl.geocoders[n];
+                    L.DomUtil.addClass(this, 'selected');
+                    leafletUtil.geoCoderControl.selection = this;
+                    //convert latlng to Address
+                    //geocodergoogle.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {});
+                    //Address to coordinates
+                    //geoCoderControl.options.geocoder.geocode(address, function(results) {
+                    leafletUtil.geoCoderControl.geoCoderControl.markGeocode = function(result) {
+                        console.info("add Geocoder marker from event click with geocoder ["+n+"]:"
+                            + result.name + "," + result.center.lat + "," + result.center.lng);
+                        var bounds = L.Bounds(
+                            L.point( result.bbox.getSouthEast(),result.bbox.getNorthEast() ),
+                            L.point( result.bbox.getNorthWest(),result.bbox.getSouthWest())
+                        );
+                        //var popupContent='<div class="popup-content"><table class="table table-striped table-bordered table-condensed">';
+                        //var json = JSON.stringify(eval("(" + result + ")"));
+                        /*var data = JSON.parse(JSON.stringify(result,undefined,2));
+                        for (var key in data) {
+                            alert(key+","+data[key]);
+                            try {
+                                //if(title.constructor == Array || (title !== null && typeof title === 'object'))continue;
+                                if(typeof data[key] == 'String') {
+                                    var href = '';
+                                    if (data[key].toString().indexOf('http') === 0) {
+                                        href = '<a target="_blank" href="' + data[key] + '">'
+                                            + data[key] + '</a>';
+                                    }
+                                    if (href.length > 0)popupContent += '<tr><th>' + key + '</th><td>' + href + '</td></tr>';
+                                    else popupContent += '<tr><th>' + key + '</th><td>' + data[key] + '</td></tr>';
+                                }
+                            } catch (e) {
+                                console.warn("Exception::addGeoCoderPluginWithContainer() ->"+e.message);
+                            }
+                        }//for
+                        popupContent += "</table></div>";*/
+                        var popupContent = leafletUtil.preparePopupTable(result);
+                        //var popupContent = ConvertJsonToTable(result,null,"tableIdClass",null);
+                        alert("Table:"+popupContent);
+                        addSingleMarker(result.name,'',result.center.lat,result.center.lng,bounds,popupContent);
+                    };
+                    //end of select
+                }, btn);
+            })(name);
+            if (!leafletUtil.geoCoderControl.selection){
+                //select(leafletUtil.geoCoderControl.geocoders[name], btn);
+                if (leafletUtil.geoCoderControl.selection){
+                    L.DomUtil.removeClass(leafletUtil.geoCoderControl.selection, 'selected');
+                }
+                leafletUtil.geoCoderControl.geoCoderControl.options.geocoder = leafletUtil.geoCoderControl.geocoders[name];
+                L.DomUtil.addClass(btn, 'selected');
+                leafletUtil.geoCoderControl.selection = btn;
+            }
+            jQuery('#geocode-selector').append(btn);
+        }// end of the for...
+    }catch(e){
+        console.error("Exception::addGeoCoderPluginWithContainer ->"+ e.message);
+    }
 };
+
+leafletUtil.preparePopupTable = function(json){
+    var popupContent2 = '<div class="popup-content">\n<table class="table table-striped table-bordered table-condensed">\n';
+    try {
+        //var json = JSON.stringify(eval("(" + result + ")"));
+        var data = JSON.parse(JSON.stringify(json, undefined, 2));
+        console.warn("RESULT:" + JSON.stringify(data, undefined, 2));
+        var popupContent = leafletUtil.preparePopupColumn(data, '','');
+        popupContent2 += popupContent;
+    }catch(e){
+        console.error("Exception::preparePopupTable() ->"+ e.message);
+    }
+    popupContent2 += "</table>\n</div>\n";
+    alert(popupContent2);
+    return popupContent2;
+};
+
+leafletUtil.preparePopupColumn = function(data,popupContent,nameKey){
+   /* for (var i = 0; i < Object.keys(this.options.rootTag).length; i++) {
+        json = json[this.options.rootTag[Object.keys(this.options.rootTag)[i]]];
+    }*/
+    for(var i = 0; i < Object.keys(data).length; i++){
+        var json = data[Object.keys(data)[i]];
+        alert("KEY:"+Object.keys(data)[i]+",VALUE:"+JSON.stringify(json,undefined,2));
+        if(typeof json != 'object' && !Array.isArray(json)){
+            popupContent += leafletUtil.preparePopupRow(Object.keys(data)[i], json);
+        }else {
+            for (var key in json) {
+                if (json.hasOwnProperty(key)) {
+                    console.warn("Key:" + key + "," + json[key]); //bbbox [object]
+                    try {
+                        if (json[key] !== null) {
+                            if (typeof json[key] == 'object') {
+                                nameKey = nameKey + "+" + key;
+                                popupContent = leafletUtil.preparePopupColumn(json[key], popupContent, nameKey);
+                            } else if (Array.isArray(json[key])) {
+                                nameKey = nameKey + "+" + key;
+                                popupContent = leafletUtil.preparePopupColumn(json[key], popupContent, nameKey);
+                            } else {
+                                //nameKey = nameKey + "+" + key;
+                                popupContent += leafletUtil.preparePopupRow(nameKey, json[key]);
+                            }
+                        }
+                    } catch (e) {
+                        console.warn("Exception::preparePopupColumn() ->" + e.message);
+                    }
+                }//hasOwnProperty
+            }//for
+        }//else
+    }//for
+    return popupContent;
+};
+
+leafletUtil.preparePopupRow = function(key,value){
+    if (value.toString().indexOf('http') === 0) {
+        value = '<a target="_blank" href="' + value + '">'+ value + '</a>';
+    }
+    console.warn('<tr><th>' + key + '</th><td>' + value + '</td></tr>')
+    return '<tr>\n<th>' + key + '</th>\n<td>' + value + '</td>\n</tr>\n';
+};
+
+
 
     /**
      * function to get the information on the marker ont he Layer to a Array to pass
@@ -130,7 +247,7 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
      * */
     function getMarkers(){
         var array = [];
-        console.log("compile getMarkers");
+        console.info("compile getMarkers");
         try{
             if(!$.isEmptyObject(markerClusters)) {
                 console.warn("Marker cluster is not empty go to check the Marker.");
@@ -154,7 +271,7 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
                 });
             }
         }catch(e){console.error("Exception:getMarkers -> "+e.message);}
-        console.log("...compiled getMarkers");
+        console.info("...compiled 1 getMarkers");
         //var array = getMarkers();
         for (var i = 0; i < array.length; i++) {
             try {
@@ -172,7 +289,7 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
         input.setAttribute('value', document.getElementById('uploader').value);
         input.setAttribute('name',"supportUploaderParam");
         document.getElementById('loadMarker').appendChild(input);
-        console.log("...compiled 2 getMarkers");
+        console.info("...compiled 2 getMarkers");
     }
 
     function addInput(input_id,val,index) {
@@ -189,7 +306,7 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
     /***
      *  Set the map and zoom on the specific location
      */
-    function initMap() {
+leafletUtil.initMap = function(){
         if(jQuery.isEmptyObject(map)) {
             console.log("Init Map...");
             try {
@@ -206,32 +323,91 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
                         });
                     }
                 });
-                //map = new L.map('map', {attributionControl:false}).setView([latitude, longitude], 5);
-                map = new L.map('map').setView([43.3555664,  11.0290384], 5);
-                //map = new L.map('map', {center: center, zoom: 2, maxZoom: 9, layers: [basemap],attributionControl:false})
-                // .setView([latitude, longitude], 5);
-                //var map = L.map('map').setView([43.3555664, 11.0290384], 8);
-
-                //Build your map
+               /* map = new L.map('map').setView([43.3555664,  11.0290384], 5);
                 L.tileLayer('http://c.tiles.mapbox.com/v3/examples.map-szwdot65/{z}/{x}/{y}.png', { // NON MALE
                     attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2012 CloudMade',
                     key: 'BC9A493B41014CAABB98F0471D759707',
                     subdomains: ['otile1', 'otile2', 'otile3', 'otile4'],
                     //minZoom: 8,
                     maxZoom: 18
-                }).addTo(map);
+                }).addTo(map);*/
+
+                // CREAZIONE MAPPA CENTRATA NEL PUNTO
+                //commentato marco
+                //var map = L.map('map').setView([43.3555664, 11.0290384], 8);
+
+                // SCELTA DEL TILE LAYER ED IMPOSTAZIONE DEI PARAMETRI DI DEFAULT
+                /*commentato marco
+                 L.tileLayer('http://c.tiles.mapbox.com/v3/examples.map-szwdot65/{z}/{x}/{y}.png', { // NON MALE
+                 //L.tileLayer('http://{s}.tile.cloudmade.com/{key}/22677/256/{z}/{x}/{y}.png', {
+                 //L.tileLayer('http://a.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+                 //L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                 //L.tileLayer('http://tilesworld1.waze.com/tiles/{z}/{x}/{y}.png', {
+                 //		L.tileLayer('http://maps.yimg.com/hx/tl?v=4.4&x={x}&y={y}&z={z}', {
+                 //L.tileLayer('http://a.tiles.mapbox.com/v3/examples.map-bestlap85.h67h4hc2/{z}/{x}/{y}.png', { MAPBOX MA NON FUNZIA
+                 //L.tileLayer('http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/998/256/{z}/{x}/{y}.png', {
+                 //	L.tileLayer('http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/121900/256/{z}/{x}/{y}.png', {
+                 attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2012 CloudMade',
+                 key: 'BC9A493B41014CAABB98F0471D759707',
+                 minZoom: 8
+                 }).addTo(map);
+
+                 *fine commento marco
+                 */
+
+                //codice per gestione layers
+                //var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'});
+                //http://otile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg
+                //http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png
+                //http://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png
+                //http://a.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png
+                //http://a.tile.stamen.com/toner/{z}/{x}/{y}.png
+                //http://a.tile.thunderforest.com/landscape/{z}/{x}/{y}.png
+                //var osm = L.tileLayer('http://a.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'});
+
+                var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                    mbUrl = 'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicGJlbGxpbmkiLCJhIjoiNTQxZDNmNDY0NGZjYTk3YjlkNTAzNWQwNzc0NzQwYTcifQ.CNfaDbrJLPq14I30N1EqHg';
+                var streets = L.tileLayer(mbUrl, {id: 'mapbox.streets', attribution: mbAttr}),
+                    satellite = L.tileLayer(mbUrl, {id: 'mapbox.streets-satellite', attribution: mbAttr}),
+                    grayscale = L.tileLayer(mbUrl, {id: 'pbellini.f33fdbb7', attribution: mbAttr});
+                var map = L.map('map', {
+                    center: [43.3555664, 11.0290384],
+                    zoom: 8,
+                    layers: [satellite]
+                });
+                var baseMaps = {
+                    "Streets": streets,
+                    "Satellite": satellite,
+                    "Grayscale": grayscale
+                };
+                var toggleMap = L.control.layers(baseMaps, null, {position: 'bottomright', width: '50px', height: '50px'});
+                toggleMap.addTo(map);
+                if (getUrlParameter("map") == "streets") {
+                    map.removeLayer(satellite);
+                    map.addLayer(streets);
+                }
+                else if (getUrlParameter("map") == "grayscale") {
+                    map.removeLayer(satellite);
+                    map.addLayer(grayscale);
+                }
+
+                // DEFINIZIONE DEI CONFINI MASSIMI DELLA MAPPA
                 //Set a bound window for the leaflet map for Toscany region
+                var bounds = new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4));
                 //var bounds = new L.LatLngBounds(new L.LatLng(setBounds[0],setBounds[1]), new L.LatLng(setBounds[2], setBounds[3]));
-                /*map.setMaxBounds(new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4)));*/
+                map.setMaxBounds(bounds);
+
                 //map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
                 //..add many functionality
                 //addPluginGPSControl();
                 //addPluginCoordinatesControl();
                 //addPluginLayersStamenBaseMaps();
                 //addPluginLocateControl();
-                addPluginSearch(); //not necessary
+                //addPluginSearch(); //not necessary
                 //addPluginGeoSearch();
-                addPluginGeoCoder();
+                //addPluginGeoCoder();
 
                 //..add other functionality
                 //map.on('click', onMapClick);
@@ -317,29 +493,29 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
             map.setView([lat, lng], 8);
             //return {name: name, url: url, latitudine: lat, longitudine: lng};
         }catch(e) {
-            alert("Exception::addSingleMarker() -> "+e.message);
-            alert("Sorry the program can't create the Marker");
+            alert("Exception::addSingleMarker() -> "+e.message +" ,Sorry the program can't create the Marker");
         }
+        console.info("...Compiled addSingleMarker()");
     }
 
     /*** function for remove all cluster marker on the leaflet map */
-    function removeClusterMarker(){
-        console.log("compile removeClusterMarker...");
-        if(leafletUtil.arrayGeoDocuments.length > 0) {
-            for (var i = 0; i < leafletUtil.arrayGeoDocuments.length; i++) {
-                map.removeLayer(leafletUtil.arrayGeoDocuments[i]);//...remove every single marker
-            }
-            leafletUtil.arrayGeoDocuments.length = 0; //...reset array
+leafletUtil.removeClusterMarker = function(){
+    console.log("compile removeClusterMarker...");
+    if(leafletUtil.arrayGeoDocuments.length > 0) {
+        for (var i = 0; i < leafletUtil.arrayGeoDocuments.length; i++) {
+            map.removeLayer(leafletUtil.arrayGeoDocuments[i]);//...remove every single marker
         }
-        markerClusters.eachLayer(function (layer) {
-            layer.closePopup();
-            map.removeLayer(layer);
-        });
-        map.closePopup();
-        map.removeLayer(markerClusters);//....remove layer
-        points.clearLayers();
-        console.log("...compiled removeClusterMarker");
+        leafletUtil.arrayGeoDocuments.length = 0; //...reset array
     }
+    markerClusters.eachLayer(function (layer) {
+        layer.closePopup();
+        map.removeLayer(layer);
+    });
+    map.closePopup();
+    map.removeLayer(markerClusters);//....remove layer
+    points.clearLayers();
+    console.log("...compiled removeClusterMarker");
+};
 
     function chooseIcon(category){
         console.log("chooseIcon");
@@ -366,7 +542,7 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
         try {
             //var titles = Object.keys(markers[0]).split(",");
             for (var marker,j = 0; marker = markers[j++];){
-                console.log("... add single marker (" + j + "):"
+                console.log("... add multiple marker (" + j + "):"
                     + markers[j].name + ',' + markers[j].url + ',' + markers[j].lat + ',' + markers[j].lng);
                 addSingleMarker(markers[j].name, markers[j].url, markers[j].lat, markers[j].lng,'',markers[j].popupContent);
             }
@@ -382,33 +558,32 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
     function pushMarkerToArrayMarker(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar){
         /*nameVar = document.getElementById('nameForm').value;*/
         console.info("pushing the element =>Name:" + nameVar + ',URL:' + urlVar + ',LAT:' + latVar + ',LNG:' + lngVar+"...");
-        var geoDoc = leafletUtil.geoDocument;
-        geoDoc.name = nameVar;
-        geoDoc.url = urlVar;
-        geoDoc.lat = latVar;
-        geoDoc.lng = lngVar;
-        geoDoc.region = regionVar;
-        geoDoc.province=provinceVar;
-        geoDoc.city=cityVar;
-        geoDoc.address=addressVar;
-        geoDoc.phone=phoneVar;
-        geoDoc.email=emailVar;
-        geoDoc.fax=faxVar;
-        geoDoc.iva=ivaVar;
 
-        leafletUtil.arrayGeoDocuments.push(geoDoc);
+        leafletUtil.geoDocument.name = nameVar;
+        leafletUtil.geoDocument.url = urlVar;
+        leafletUtil.geoDocument.lat = latVar;
+        leafletUtil.geoDocument.lng = lngVar;
+        leafletUtil.geoDocument.region = regionVar;
+        leafletUtil.geoDocument.province=provinceVar;
+        leafletUtil.geoDocument.city=cityVar;
+        leafletUtil.geoDocument.address=addressVar;
+        leafletUtil.geoDocument.phone=phoneVar;
+        leafletUtil.geoDocument.email=emailVar;
+        leafletUtil.geoDocument.fax=faxVar;
+        leafletUtil.geoDocument.iva=ivaVar;
+
+        leafletUtil.arrayGeoDocuments.push(leafletUtil.geoDocument);
         for (var j = 0 ; j < leafletUtil.arrayGeoDocuments.length; j++){
-            alert(leafletUtil.arrayGeoDocuments[j].toString());
             console.info("(" + j + ") titles:"+Object.keys(leafletUtil.geoDocument).toString()+",Length:"+leafletUtil.arrayGeoDocuments.length);
             var titles = Object.keys(leafletUtil.geoDocument).toString().split(",");
-            alert(8+leafletUtil.arrayGeoDocuments[j].toString());
             console.info("... prepare marker (" + j + "):"
                 + leafletUtil.arrayGeoDocuments[j].name + ',' + leafletUtil.arrayGeoDocuments[j].url +
                 ',' + leafletUtil.arrayGeoDocuments[j].lat + ',' + leafletUtil.arrayGeoDocuments[j].lng);
             var  content = '<div class="popup-content"><table class="table table-striped table-bordered table-condensed">';
             for (var title, i = 0; title = titles[i++];) {
                 try {
-                    if(title == 'popupContent') continue;
+                    //if(title.constructor == Array || (title !== null && typeof title === 'object'))continue;
+                    if(typeof title !== 'String' || title == 'popupContent') continue;
                     var href = '';
                     if (leafletUtil.arrayGeoDocuments[j][title].toString().indexOf('http') === 0) {
                         href = '<a target="_blank" href="' + leafletUtil.arrayGeoDocuments[j][title] + '">'
@@ -422,12 +597,11 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
             }//for
             content += "</table></div>";
             leafletUtil.arrayGeoDocuments[j].popupContent = content;
-            alert(4);
             addSingleMarker( leafletUtil.arrayGeoDocuments[j].name,  leafletUtil.arrayGeoDocuments[j].url,
                 leafletUtil.arrayGeoDocuments[j].lat,  leafletUtil.arrayGeoDocuments[j].lng,'',
                 leafletUtil.arrayGeoDocuments[j].popupContent);
         }
-        console.info("....pushed a marker tot he array on javascript side:"+ leafletUtil.geoDocument.toString());
+        console.info("....pushed a marker to the array on javascript side:"+ leafletUtil.geoDocument.toString());
     }
 
     /**
@@ -466,38 +640,33 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
         }
     }
 
-    function googleGeocoding(text, callResponse){
-        geocoderSearchGoogle.geocode({address: text}, callResponse);
-    }
-
-    function formatJSON(rawjson) {
-        var json = {}, key, loc, disp = [];
-        for(var i in rawjson){
-            key = rawjson[i].formatted_address;
-            loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );
-            json[ key ]= loc;	//key,value format
-        }
-        return json;
-    }
-
     /**
      * Add the Leaflet leaflet-control-geocoder.
      * https://github.com/perliedman/leaflet-control-geocoder
      * https://github.com/patrickarlt/leaflet-control-geocoder
      */
     function addPluginGeoCoder() {
-        alert("Compile addPluginGeoCoder...");
+        console.info("Compile addPluginGeoCoder...");
         try {
-            if (jQuery.isEmptyObject(geoCoderControl)) {
-                selector = L.DomUtil.get('geocode-selector');
-                geoCoderControl = new L.Control.Geocoder({ geocoder: null },{collapsed: false});
-                geoCoderControl.addTo(map);
+            if (jQuery.isEmptyObject(leafletUtil.geoCoderControl.geoCoderControl)) {
+                leafletUtil.geoCoderControl.selector = L.DomUtil.get('geocode-selector');
+                leafletUtil.geoCoderControl.geoCoderControl = new L.Control.Geocoder({ geocoder: null },{collapsed: false});
+                leafletUtil.geoCoderControl.geoCoderControl.addTo(map);
             } else {
-                map.addControl(geoCoderControl);
+                map.addControl(leafletUtil.geoCoderControl.geoCoderControl);
             }
-            alert("...compiled addPluginGeoCoder");
+            /*leafletUtil.geoCoderControl.geoCoderControl.markGeocode = function(result) {
+                alert("add Geocoder marker:" + result.name + "," + result.center.lat + "," + result.center.lng +
+                    "," + result.bbox.toString()+","+result.html);
+                var bounds = L.Bounds(
+                    L.point( result.bbox.getSouthEast(),result.bbox.getNorthEast() ),
+                    L.point( result.bbox.getNorthWest(),result.bbox.getSouthWest())
+                );
+                addSingleMarker(result.name,result.name,result.center.lat,result.center.lng,bounds,'');
+            };*/
+            console.info("...compiled addPluginGeoCoder");
         }catch(e){
-            alert("Exception:addPluginGeoCoder->"+e.message);
+            console.error("Exception:addPluginGeoCoder->"+e.message);
         }
     }
 
@@ -517,69 +686,7 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
             }
         };
 
-        L.Control.fileLayerLoad({
-            layerOptions: geoJsonOptions,
-        }).addTo(map);
-    }
-
-    function select(geocoder, el) {
-        if (selection) L.DomUtil.removeClass(selection, 'selected');
-        geoCoderControl.options.geocoder = geocoder;
-        L.DomUtil.addClass(el, 'selected');
-        selection = el;
-    }
-
-    function invokePluginGeoCoderGoogle(geoCoderControl){
-        //convert latlng to Address
-        //geocodergoogle.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {});
-        try {
-           geoCoderControl.options.geocoder.markGeocode = function (result) {
-                alert("88:" + result.toSource());
-                //var marker = new L.Marker(result.center).bindPopup(result.html || result.name);
-                addressVar = jQuery("#").val();
-                otherVar = result.html;
-                alert("add marker:" + result.name + "," + result.center.lat + "," + result.center.lng + "," + otherVar);
-                pushMarkerToArrayMarker(result.name, null, result.center.lat, result.center.lng,
-                    null,null,null,addressVar,null,null,null,null);
-                /*var bbox = result.bbox;
-                 L.polygon([
-                 bbox.getSouthEast(),
-                 bbox.getNorthEast(),
-                 bbox.getNorthWest(),
-                 bbox.getSouthWest()
-                 ]).addTo(map);*/
-             /* geoCoderControl.options.geocoder.geocode(address, function(results) {
-                    var latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
-                    marker = new L.Marker (latLng);
-                    map.addlayer(marker);
-                    addressVar = address;
-                    otherVar = result.html;
-                    alert("add marker:" + result.name + "," + result.center.lat + "," + result.center.lng + "," + otherVar);
-                    pushMarkerToArrayMarker(result.name, null, result.center.lat, result.center.lng,
-                        null,null,null,addressVar,null,null,null,null);
-                    });*/
-               /* geoCoderControl.options.geocoder.geocode(address, function(results) {
-                    var latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
-                    marker = new L.Marker (latLng);
-                    map.addlayer(marker);
-                });*/
-            };
-
-           /* Then you can use the following code to 'geocode' your address into latitude / longitude. This function will
-            return the latitude / longitude of the address. You can save the latitude / longitude in an variable so you
-            can use it later for your marker. Then you only have to add the marker to the map.*/
-           /*
-            var yourQuery = '(Addres of person)';
-            geocoder.geocode(yourQuery, function(results) {
-                //latLng= new L.LatLng(results[0].center.lat, results[0].center.lng);
-                //marker = new L.Marker (latLng);
-                //map.addlayer(marker);
-                pushMarkerToArrayMarker(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar)
-             });
-            */
-            alert("g marker:" + g.name + "," + g.center.lat + "," + g.center.lng + "," + otherVar);
-        }catch(e){alert("Exception:invokePluginGeoCoder->"+ e.message)}
-
+        L.Control.fileLayerLoad({layerOptions: geoJsonOptions, }).addTo(map);
     }
 
     /** Move marker to confirm that label moves when marker moves (first click)
@@ -598,73 +705,272 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
     }*/
 
 
+/**
+ * JavaScript format string function
+ *
+ */
+String.prototype.format = function()
+{
+    var args = arguments;
 
-    //-------------------------------------------------
-    //OLD METHODS Service-Map
-    //-------------------------------------------------
-    // RESET DI TUTTI I LAYERS SULLA MAPPA
-    function svuotaLayers(){
-        //clickLayer.clearLayers();
-        busStopsLayer.clearLayers();
-        servicesLayer.clearLayers();
-        GPSLayer.clearLayers();
-    }
-
-    // CANCELLAZIONE DEL CONTENUTO DEL BOX INFO AGGIUNTIVE
-    function svuotaInfoAggiuntive(){
-        $('#info-aggiuntive').find('.content').html('');
-    }
-
-    function cancellaSelezione(){
-        $('#selezione').html('Nessun punto selezionato');
-        selezione = null;
-        coordinateSelezione = null;
-    }
+    return this.replace(/{(\d+)}/g, function(match, number)
+    {
+        return typeof args[number] != 'undefined' ? args[number] :
+        '{' + number + '}';
+    });
+};
 
 
-    // FUNZIONE DI RESET GENERALE
-    function resetTotale(){
-        clickLayer.clearLayers();
-        svuotaInfoAggiuntive();
-        svuotaLayers();
-        cancellaSelezione();
-        $('#macro-select-all').prop('checked', false);
-        $('.macrocategory').prop('checked', false);
-        $('.macrocategory').trigger( "change" );
-        $('#raggioricerca')[0].options.selectedIndex = 0;
-        $('#raggioricerca').prop('disabled', false);
-        $('#numerorisultati')[0].options.selectedIndex = 0;
-        $('#numerorisultati').prop('disabled', false);
-        $('#elencolinee')[0].options.selectedIndex = 0;
-        $('#elencoprovince')[0].options.selectedIndex = 0;
-        $('#elencofermate').html('<option value=""> - Seleziona una Fermata - </option>');
-        $('#elencocomuni').html('<option value=""> - Seleziona un Comune - </option>');
-        $('#info').removeClass("active");
-        selezioneAttiva = false;
-    }
+/**
+ * Convert a Javascript Oject array or String array to an HTML table
+ * JSON parsing has to be made before function call
+ * It allows use of other JSON parsing methods like jQuery.parseJSON
+ * http(s)://, ftp://, file:// and javascript:; links are automatically computed
+ *
+ * JSON data samples that should be parsed and then can be converted to an HTML table
+ *     var objectArray = '[{"Total":"34","Version":"1.0.4","Office":"New York"},{"Total":"67","Version":"1.1.0","Office":"Paris"}]';
+ *     var stringArray = '["New York","Berlin","Paris","Marrakech","Moscow"]';
+ *     var nestedTable = '[{ key1: "val1", key2: "val2", key3: { tableId: "tblIdNested1", tableClassName: "clsNested", linkText: "Download", data: [{ subkey1: "subval1", subkey2: "subval2", subkey3: "subval3" }] } }]';
+ *
+ * Code sample to create a HTML table Javascript String
+ *     var jsonHtmlTable = ConvertJsonToTable(eval(dataString), 'jsonTable', null, 'Download');
+ *
+ * Code sample explaned
+ *  - eval is used to parse a JSON dataString
+ *  - table HTML id attribute will be 'jsonTable'
+ *  - table HTML class attribute will not be added
+ *  - 'Download' text will be displayed instead of the link itself
+ *
+ * @author Afshin Mehrabani <afshin dot meh at gmail dot com>
+ *
+ * @class ConvertJsonToTable
+ *
+ * @method ConvertJsonToTable
+ *
+ * @param parsedJson object Parsed JSON data
+ * @param tableId string Optional table id
+ * @param tableClassName string Optional table css class name
+ * @param linkText string Optional text replacement for link pattern
+ *
+ * @return string Converted JSON to HTML table
+ */
+function ConvertJsonToTable(parsedJson, tableId, tableClassName, linkText)
+{
+    //Patterns for links and NULL value
+    var italic = '<i>{0}</i>';
+    var link = linkText ? '<a href="{0}">' + linkText + '</a>' :
+        '<a href="{0}">{0}</a>';
 
+    //Pattern for table
+    var idMarkup = tableId ? ' id="' + tableId + '"' :
+        '';
 
-    // MOSTRA ELENCO FERMATE DI UNA LINEA
-    function mostraElencoFermate(selectOption) {
-        if (selectOption.options.selectedIndex != 0){
-            $('#elencoprovince')[0].options.selectedIndex = 0;
-            $('#elencocomuni').html('<option value=""> - Seleziona un Comune - </option>');
-            $('#loading').show();
-            $.ajax({
-                url : "${pageContext.request.contextPath}/ajax/bus-stops-list.jsp",
-                type : "GET",
-                async: true,
-                //dataType: 'json',
-                data : {
-                    nomeLinea: selectOption.options[selectOption.options.selectedIndex].value
-                },
-                success : function(msg) {
-                    $('#elencofermate').html(msg);
-                    $('#loading').hide();
+    var classMarkup = tableClassName ? ' class="' + tableClassName + '"' :
+        '';
+
+    var tbl = '<table border="1" cellpadding="1" cellspacing="1"' + idMarkup + classMarkup + '>{0}{1}</table>';
+
+    //Patterns for table content
+    var th = '<thead>{0}</thead>';
+    var tb = '<tbody>{0}</tbody>';
+    var tr = '<tr>{0}</tr>';
+    var thRow = '<th>{0}</th>';
+    var tdRow = '<td>{0}</td>';
+    var thCon = '';
+    var tbCon = '';
+    var trCon = '';
+
+    if (parsedJson)
+    {
+        var isStringArray = typeof(parsedJson[0]) == 'string';
+        var headers;
+
+        // Create table headers from JSON data
+        // If JSON data is a simple string array we create a single table header
+        if(isStringArray)
+            thCon += thRow.format('value');
+        else
+        {
+            // If JSON data is an object array, headers are automatically computed
+            if(typeof(parsedJson[0]) == 'object')
+            {
+                headers = array_keys(parsedJson[0]);
+
+                for (i = 0; i < headers.length; i++)
+                    thCon += thRow.format(headers[i]);
+            }
+        }
+        th = th.format(tr.format(thCon));
+
+        // Create table rows from Json data
+        if(isStringArray)
+        {
+            for (i = 0; i < parsedJson.length; i++)
+            {
+                tbCon += tdRow.format(parsedJson[i]);
+                trCon += tr.format(tbCon);
+                tbCon = '';
+            }
+        }
+        else
+        {
+            if(headers)
+            {
+                var urlRegExp = new RegExp(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig);
+                var javascriptRegExp = new RegExp(/(^javascript:[\s\S]*;$)/ig);
+
+                for (i = 0; i < parsedJson.length; i++)
+                {
+                    for (j = 0; j < headers.length; j++)
+                    {
+                        var value = parsedJson[i][headers[j]];
+                        var isUrl = urlRegExp.test(value) || javascriptRegExp.test(value);
+
+                        if(isUrl)   // If value is URL we auto-create a link
+                            tbCon += tdRow.format(link.format(value));
+                        else
+                        {
+                            if(value){
+                                if(typeof(value) == 'object'){
+                                    //for supporting nested tables
+                                    tbCon += tdRow.format(ConvertJsonToTable(eval(value.data), value.tableId, value.tableClassName, value.linkText));
+                                } else {
+                                    tbCon += tdRow.format(value);
+                                }
+
+                            } else {    // If value == null we format it like PhpMyAdmin NULL values
+                                tbCon += tdRow.format(italic.format(value).toUpperCase());
+                            }
+                        }
+                    }
+                    trCon += tr.format(tbCon);
+                    tbCon = '';
                 }
-            });
+            }
+        }
+        tb = tb.format(trCon);
+        tbl = tbl.format(th, tb);
+
+        return tbl;
+    }
+    return null;
+}
+
+
+/**
+ * Return just the keys from the input array, optionally only for the specified search_value
+ * version: 1109.2015
+ *  discuss at: http://phpjs.org/functions/array_keys
+ *  +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+ *  +      input by: Brett Zamir (http://brett-zamir.me)
+ *  +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+ *  +   improved by: jd
+ *  +   improved by: Brett Zamir (http://brett-zamir.me)
+ *  +   input by: P
+ *  +   bugfixed by: Brett Zamir (http://brett-zamir.me)
+ *  *     example 1: array_keys( {firstname: 'Kevin', surname: 'van Zonneveld'} );
+ *  *     returns 1: {0: 'firstname', 1: 'surname'}
+ */
+function array_keys(input, search_value, argStrict)
+{
+    var search = typeof search_value !== 'undefined', tmp_arr = [], strict = !!argStrict, include = true, key = '';
+
+    if (input && typeof input === 'object' && input.change_key_case) { // Duck-type check for our own array()-created PHPJS_Array
+        return input.keys(search_value, argStrict);
+    }
+
+    for (key in input)
+    {
+        if (input.hasOwnProperty(key))
+        {
+            include = true;
+            if (search)
+            {
+                if (strict && input[key] !== search_value)
+                    include = false;
+                else if (input[key] != search_value)
+                    include = false;
+            }
+            if (include)
+                tmp_arr[tmp_arr.length] = key;
         }
     }
+    return tmp_arr;
+}
+
+
+function CreateTableView(objArray, theme, enableHeader) {
+    // set optional theme parameter
+    if (theme === undefined) {
+        theme = 'mediumTable'; //default theme
+    }
+
+    if (enableHeader === undefined) {
+        enableHeader = true; //default enable headers
+    }
+
+    // If the returned data is an object do nothing, else try to parse
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+
+    var str = '<table class="' + theme + '">';
+
+    // table head
+    if (enableHeader) {
+        str += '<thead><tr>';
+        for (var index in array[0]) {
+            str += '<th scope="col">' + index + '</th>';
+        }
+        str += '</tr></thead>';
+    }
+
+    // table body
+    str += '<tbody>';
+    for (var i = 0; i < array.length; i++) {
+        str += (i % 2 == 0) ? '<tr class="alt">' : '<tr>';
+        for (var index in array[i]) {
+            str += '<td>' + array[i][index] + '</td>';
+        }
+        str += '</tr>';
+    }
+    str += '</tbody>'
+    str += '</table>';
+    return str;
+}
+
+function CreateDetailView(objArray, theme, enableHeader) {
+    // set optional theme parameter
+    if (theme === undefined) {
+        theme = 'mediumTable';  //default theme
+    }
+
+    if (enableHeader === undefined) {
+        enableHeader = true; //default enable headers
+    }
+
+    var array = JSON.parse(objArray);
+
+    var str = '<table class="' + theme + '">';
+    str += '<tbody>';
+
+
+    for (var i = 0; i < array.length; i++) {
+        var row = 0;
+        for (var index in array[i]) {
+            str += (row % 2 == 0) ? '<tr class="alt">' : '<tr>';
+
+            if (enableHeader) {
+                str += '<th scope="row">' + index + '</th>';
+            }
+
+            str += '<td>' + array[i][index] + '</td>';
+            str += '</tr>';
+            row++;
+        }
+    }
+    str += '</tbody>'
+    str += '</table>';
+    return str;
+}
 
 
 

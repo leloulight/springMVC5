@@ -50,8 +50,11 @@
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
 
     <!-- Leaflet -->
-    <script src="${pageContext.request.contextPath}/resources/js/leaflet/leaflet-0.7.3.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/leaflet-0.7.3.css"/>
+    <script src="${pageContext.request.contextPath}/resources/js/leaflet/leaflet-src.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/leaflet.css"/>
+
+    <%--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>--%>
 
     <!-- JS -->
     <script src="${pageContext.request.contextPath}/resources/js/mustache/mustache.js" type="text/javascript"></script>
@@ -78,9 +81,9 @@
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
 
-  <!-- JS - leafletmap support -->
-  <script src="${pageContext.request.contextPath}/resources/js/ServiceMap/leaflet_buildMap_support_2.js" type="text/javascript"></script>
-
+   <!-- JS - leafletmap support -->
+   <script src="${pageContext.request.contextPath}/resources/js/ServiceMap/leaflet_buildMap_support_2.js" type="text/javascript"></script>
+   <!-- Modified from 4535992 -->
 </head>
 <body class="Chrome" onload="getBusLines();
             changeLanguage('ENG')">
@@ -116,6 +119,8 @@
     <a href="http://www.disit.org/servicemap" title="Aiuto Service Map" target="_blank"><img src="${pageContext.request.contextPath}/resources/img/help.png" alt="help SiiMobility ServiceMap" width="28" /></a>
   </div>
 </div>
+<!-- Added from 4535992-->
+<div id="geocode-selector"></div>
 <div class="menu" id="save">
   <img src="${pageContext.request.contextPath}/resources/img/save.png" alt="Salva la configurazione" width="28" onclick="save_handler(null, null, null, true);" />
 </div>
@@ -267,6 +272,14 @@
                   <input type="submit" name="GetMarkersParam" value="getMarkers" />
                 </div>
               </form:form>
+            </li>
+            <li>
+              <label>Search Marker 2 with Leaflet Search plugin + container:</label>
+              <div id="searchMarkerWithJavascript2" ></div>
+            </li>
+            <li>
+              <label>Search Marker 3 with Leaflet GeoCoder plugin + container:</label>
+              <div id="searchMarkerWithJavascript3" ></div>
             </li>
           </ul>
         </div>
@@ -3104,7 +3117,8 @@ N. risultati:
 
   // ASSOCIA FUNZIONI AGGIUNTIVE ALL'APERTURA DI UN POPUP SU PARTICOLARI TIPI DI DATI
   var last_marker = null;
-  map.on('popupopen', function (e) {
+<!-- Modified from 4535992 -->
+  /*map.on('popupopen', function (e) {
 
 
     $('#raggioricerca').prop('disabled', false);
@@ -3168,17 +3182,17 @@ N. risultati:
       $(markerPopup._icon).addClass('selected');
       last_marker = markerPopup;
     }
-    /*if ((tipoServizio != 'fermata')||(tipoServizio != 'parcheggio_auto')||(tipoServizio != 'parcheggio_Coperto')||(tipoServizio != "parcheggio_all'aperto")||(tipoServizio != 'car_park@en')||(tipoServizio != 'sensore')) {
+    /!*if ((tipoServizio != 'fermata')||(tipoServizio != 'parcheggio_auto')||(tipoServizio != 'parcheggio_Coperto')||(tipoServizio != "parcheggio_all'aperto")||(tipoServizio != 'car_park@en')||(tipoServizio != 'sensore')) {
      //showService(currentServiceUri);
      loadServiceInfo(currentServiceUri, divId);
 
-     }*/
+     }*!/
 
     //if ((mode != "query") && (mode != "embed")) {
     loadServiceInfo(currentServiceUri, divId, idServizio, coordinates);
     //}
     coordinateSelezione = markerPopup.feature.geometry.coordinates[1] + ";" + markerPopup.feature.geometry.coordinates[0];
-    /*if (tipoServizio == 'fermata') {
+    /!*if (tipoServizio == 'fermata') {
      selezione = 'Fermata Bus: ' + markerPopup.feature.properties.nome;
      coordinateSelezione = markerPopup.feature.geometry.coordinates[1] + ";" + markerPopup.feature.geometry.coordinates[0];
      $('#selezione').html(selezione);
@@ -3193,21 +3207,23 @@ N. risultati:
      if (tipoServizio == 'sensore') {
      mostraSensoreAJAX(nome, divId);
      }
-     // var stringJsonPopUp=JSON.stringify(markerPopup);*/
+     // var stringJsonPopUp=JSON.stringify(markerPopup);*!/
     listOfPopUpOpen.push(currentServiceUri);
-  });
-  map.on('popupclose', function (e) {
+  });*/
+<!-- Modified from 4535992 -->
+  /*map.on('popupclose', function (e) {
     var popupToRemove = e.popup._source;
     for (var i = listOfPopUpOpen.length - 1; i >= 0; i--) {
       if (listOfPopUpOpen[i] === popupToRemove.feature.properties.serviceUri) {
         listOfPopUpOpen.splice(i, 1);
       }
     }
-  });
-  // AL CLICK CERCO L'INDIRIZZO APPROSSIMATIVO	
-  map.on('click', function (e) {
+  });*/
+  // AL CLICK CERCO L'INDIRIZZO APPROSSIMATIVO
+<!-- Modified from 4535992 -->
+  /*map.on('click', function (e) {
     listOfPopUpOpen = [];
-    if (/*selezioneAttiva == */true) {
+    if (/!*selezioneAttiva == *!/true) {
       if (ricercaInCorso == false) {
         $('#raggioricerca').prop('disabled', false);
         $('#raggioricerca_t').prop('disabled', false);
@@ -3242,10 +3258,11 @@ N. risultati:
         });
       }
     }
-  });
+  });*/
   var selezioneAttiva = false;
   var ricercaInCorso = false;
   var logEndPoint = "http://log.disit.org/service/?sparql=http://servicemap.disit.org/WebAppGrafo/sparql&uri=";
+
   $(document).ready(function () {
     // funzione di inizializzazione all'avvio della mappa
     init();

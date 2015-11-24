@@ -5,7 +5,7 @@
 <head>
 <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery2.1.4.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css" />
 <title>Grafo Strade</title>
 </head>
 <body>

@@ -190,4 +190,95 @@ var leaflet_build_plugin_1 = {
         var control = L.Control.openCageSearch(options).addTo(map);
     }
 
+    /**
+     * Support for the leaflet Geocoder Plugin.,
+     */
+    function select(geocoder, el) {
+        try {
+            if (leafletUtil.geoCoderControl.selection) L.DomUtil.removeClass(leafletUtil.geoCoderControl.selection, 'selected');
+            leafletUtil.geoCoderControl.geoCoderControl.options.geocoder = geocoder;
+            L.DomUtil.addClass(el, 'selected');
+            leafletUtil.geoCoderControl.selection = el;
+        }catch(e){
+            console.error("Exception::select() -> "+e.message);
+        }
+    }
+
+function googleGeocoding(text, callResponse){
+    geocoderSearchGoogle.geocode({address: text}, callResponse);
+}
+
+function formatJSON(rawjson) {
+    var json = {}, key, loc, disp = [];
+    for(var i in rawjson){
+        key = rawjson[i].formatted_address;
+        loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );
+        json[ key ]= loc;	//key,value format
+    }
+    return json;
+}
+/*preparePopupColumn = function(json,popupContent,nameKey){
+    for(var key in json){
+        console.warn("Key:"+key+","+json[key]); //bbbox [object]
+        try {
+            if(json[key] !== null){
+                //if a json array of  ajson object of objects.....
+                if(json[key] instanceof Array){
+                    for(var item,i =0; item = json[key][i++];){
+                        if(typeof item != 'object') {
+                            if(typeof json[key][item] == 'undefined'){
+                                console.info("Item 7:" + json[key] + "," + item);//street_number
+                                nameKey = key;
+                                popupContent += leafletUtil.preparePopupRow(json[key],item);
+                            }else{
+                                console.info("Item 1:" + item + "," + json[key][item]);//street_number
+                                nameKey =key;
+                                popupContent = leafletUtil.preparePopupColumn(json[key][item], popupContent, nameKey);
+                            }
+
+                        }else{
+                            for(var k =0; k < Object.keys(json[key][item]).length; k++){
+                                console.info("Item 6:" + Object.keys(json[key][item])[k] + "," + json[key][item][k]);
+                                nameKey = Object.keys(json[key][item])[k] + key;
+                                popupContent = leafletUtil.preparePopupColumn(json[key][item][k], popupContent, nameKey);
+                            }
+                        }
+                    }
+                }else{
+                    if(typeof json[key] === 'String'){
+                        console.info("Item 4:" + key + "," + json[key]);
+                        nameKey = key;
+                        popupContent += leafletUtil.preparePopupRow(nameKey, json[key]);
+                    }else if(typeof json[key] === 'object' && Object.keys(json[key]).length > 1){
+                        var fields =  Object.keys(json[key]).toString().split(",");
+                        //console.info("Fields:"+fields);
+                        for(var field,i =0; field = fields[i++];){
+                            //console.info("Field:"+field+","+JSON.stringify(json[key],undefined,2));
+                            if(typeof json[key][field] != 'object'
+                                && typeof json[key][field] != 'undefined'
+                                && typeof json[key][field] != 'function' ){
+                                console.info("Item 2:" + key + "," + json[key][field].toString());
+                                nameKey = key;
+                                popupContent += leafletUtil.preparePopupRow(nameKey, json[key][field]);
+                            }else {
+                                console.info("Item 5:" + key + "," + json[key][field].toString());
+                                nameKey = key;
+                                popupContent = leafletUtil.preparePopupColumn(json[key][field], popupContent, nameKey);
+                            }
+                        }
+                    }else {
+                        if(json[key].length > 1) {
+                            console.info("Item 0:" + key + "," + json[key]);
+                            nameKey = key;
+                            popupContent += leafletUtil.preparePopupRow(nameKey, json[key]);
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            console.warn("Exception::preparePopupColumn() ->"+e.message);
+        }
+    }//for
+    return popupContent;
+};*/
 
