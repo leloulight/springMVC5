@@ -51,6 +51,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="mapbox" level="application" />
+    <orderEntry type="library" name="jquery-1.10.1" level="application" />
+    <orderEntry type="library" name="jquery-migrate-1.2.1" level="application" />
+    <orderEntry type="library" name="jquery-ui" level="application" />
     <orderEntry type="library" name="Maven: com.github.p4535992:extractInfo:1.4.4" level="project" />
     <orderEntry type="library" name="Maven: com.github.p4535992:gate-basic:1.4.4" level="project" />
     <orderEntry type="library" name="Maven: uk.ac.gate:gate-core:8.1" level="project" />
@@ -124,8 +128,6 @@
     <orderEntry type="library" name="Maven: net.sf.opencsv:opencsv:2.3" level="project" />
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.avro:avro:1.7.7" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.1.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.avro:avro-compiler:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.7" level="project" />
@@ -345,6 +347,8 @@
     <orderEntry type="library" scope="TEST" name="Maven: javax.el:javax.el-api:2.2.5" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.5.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.5.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.jayway.jsonpath:json-path:2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.minidev:json-smart:2.1.1" level="project" />
@@ -426,9 +430,5 @@
     <orderEntry type="library" name="Maven: org.onebusaway:onebusaway-gtfs-realtime-api:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.transit:gtfs-realtime-bindings:0.0.3" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:2.5.0" level="project" />
-    <orderEntry type="library" name="mapbox" level="application" />
-    <orderEntry type="library" name="jquery-1.10.1" level="application" />
-    <orderEntry type="library" name="jquery-migrate-1.2.1" level="application" />
-    <orderEntry type="library" name="jquery-ui" level="application" />
   </component>
 </module>

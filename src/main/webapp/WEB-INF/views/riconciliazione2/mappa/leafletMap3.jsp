@@ -45,6 +45,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
     <script src="${pageContext.request.contextPath}/resources/js/ServiceMap/utility.js" type="text/javascript"></script>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/syle_support_leaflet.css"/>
+
     <!-- MAPBOX -->
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js' type="text/javascript"></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
@@ -119,8 +121,7 @@
     <a href="http://www.disit.org/servicemap" title="Aiuto Service Map" target="_blank"><img src="${pageContext.request.contextPath}/resources/img/help.png" alt="help SiiMobility ServiceMap" width="28" /></a>
   </div>
 </div>
-<!-- Added from 4535992-->
-<div id="geocode-selector"></div>
+
 <div class="menu" id="save">
   <img src="${pageContext.request.contextPath}/resources/img/save.png" alt="Salva la configurazione" width="28" onclick="save_handler(null, null, null, true);" />
 </div>
@@ -220,6 +221,7 @@
                 <p>LENGTH OF MARKERS: ${arrayMarker.size()}</p>
                 <c:forEach items="${arrayMarker}" var="idMarker">
                   <p id="marker">
+                    <input id="idForm" name="idParam" type="hidden" value="<c:out value="${idMarker.id}" />"/>
                     <input id="nameForm" name="nameParam" type="hidden" value="<c:out value="${idMarker.name}" />"/>
                     <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${idMarker.url}" />"/>
                     <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${idMarker.latitude}" />"/>
@@ -232,25 +234,30 @@
                     <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.email}" />"/>
                     <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.fax}" />"/>
                     <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.iva}" />"/>
+                    <input id="<c:out value="${idMarker.id}" />" name="popupContentParam" type="hidden" value="<c:out  value="${idMarker.popupContent}" />"/>
                   </p>
                   <script type="text/javascript">
                     //leaflet_buildMap_support.initMap();
                     //alert("try to push a marker");
                     try{
-                    leaflet_buildMap_support_2.pushMarkerToArrayMarker(
-                            "${idMarker.name}","${idMarker.url}","${idMarker.latitude}","${idMarker.longitude}",
-                            "${idMarker.markerInfo.region}","${idMarker.markerInfo.province}","${idMarker.markerInfo.city}",
-                            "${idMarker.markerInfo.address}","${idMarker.markerInfo.phone}","${idMarker.markerInfo.email}",
-                            "${idMarker.markerInfo.fax}","${idMarker.markerInfo.iva}");
+                        var content = document.getElementById("<c:out value="${idMarker.id}"/>").value; //need for automatic parse from Spring
+                        alert("Content:" + content);
+                        leaflet_buildMap_support_2.pushMarkerToArrayMarker(
+                                "${idMarker.name}","${idMarker.url}","${idMarker.latitude}","${idMarker.longitude}",
+                                "${idMarker.markerInfo.region}","${idMarker.markerInfo.province}","${idMarker.markerInfo.city}",
+                                "${idMarker.markerInfo.address}","${idMarker.markerInfo.phone}","${idMarker.markerInfo.email}",
+                                "${idMarker.markerInfo.fax}","${idMarker.markerInfo.iva}",content);
                     }catch(e){
-                      alert(e.message);
+                      alert("Error n° 2:"+ e.message);
                     }
                   </script>
                 </c:forEach>
               </c:if>
               TrackMyURL:
               <c:url var="url" value="/map3" />
-              <form:form action="${url}" method="post" >
+              <form:form action="${url}" method="post" id="/map3"
+                        onsubmit="leafletUtil.loadarrayOnInput('/map3','arrayParam')">
+                <input type="hidden" name="arrayParam" value="" title="arrayParam"/>
                 <input type="text" name="urlParam" value=""  title="urlParam"/>
                 <input type="submit" name="urlFormParam" value="urlForm" />
               </form:form>
@@ -266,7 +273,7 @@
             <%--GET MARKERS--%>
             <li>
               <c:url var="url2" value="/map4" />
-              <form:form action="${url2}" method="post" onSubmit="getMarkers();">
+              <form:form action="${url2}" method="post" onSubmit="getMarkers('loadMarker');">
                 <div id="loadMarker">
                     <%--<input type="button" value="Get Markers" id="getMarkers"  />--%>
                   <input type="submit" name="GetMarkersParam" value="getMarkers" />
@@ -280,6 +287,8 @@
             <li>
               <label>Search Marker 3 with Leaflet GeoCoder plugin + container:</label>
               <div id="searchMarkerWithJavascript3" ></div>
+              <!-- Added from 4535992-->
+              <div id="geocode-selector"></div>
             </li>
           </ul>
         </div>
@@ -3077,11 +3086,9 @@ N. risultati:
   var streets = L.tileLayer(mbUrl, {id: 'mapbox.streets', attribution: mbAttr}),
           satellite = L.tileLayer(mbUrl, {id: 'mapbox.streets-satellite', attribution: mbAttr}),
           grayscale = L.tileLayer(mbUrl, {id: 'pbellini.f33fdbb7', attribution: mbAttr});
-  var map = L.map('map', {
-    center: [43.3555664, 11.0290384],
-    zoom: 8,
-    layers: [satellite]
-  });
+  //var map = L.map('map', { center: [43.3555664, 11.0290384],zoom: 8,layers: [satellite]});
+  <!-- Modified from 4535992 -->
+  var map = L.map('map').fitWorld().addLayer(satellite);
   var baseMaps = {
     "Streets": streets,
     "Satellite": satellite,

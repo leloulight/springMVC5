@@ -103,6 +103,7 @@ public class MapRepositoryImpl implements MapRepository {
         if(geoDoc.getDescription()!=null)info.setDescription(geoDoc.getDescription().trim());
 
         marker.setMarkerInfo(info);
+        marker.setPopupContent(info);
         return marker;
 
     }

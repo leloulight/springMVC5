@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,6 +35,7 @@ public class MapController {
 
     Marker marker;
     List<Marker> arrayMarker = new ArrayList<>();
+    List<Marker> supportArray = new ArrayList<>();
     Integer indiceMarker = 0;
 
     /*@RequestMapping(value="/map",method= RequestMethod.GET)
@@ -64,6 +66,7 @@ public class MapController {
 
         String html = mapService.getResponseHTMLString();
         model.addAttribute("HTML",html);
+
         return "riconciliazione2/mappa/leafletMap";
     }
 
@@ -108,8 +111,9 @@ public class MapController {
         model.addAttribute("indiceMarker",indiceMarker);
         model.addAttribute("urlParam",null);
 
-        String html = mapService.getResponseHTMLString();
-        model.addAttribute("HTML",html);
+        //String html = mapService.getResponseHTMLString();
+        //model.addAttribute("HTML",html);
+        model.addAttribute("supportArray",supportArray);
         return "riconciliazione2/mappa/leafletMap3";
     }
 
@@ -120,20 +124,35 @@ public class MapController {
 
     @RequestMapping(value="/map3",method = RequestMethod.POST)
     public String result4(@RequestParam(required=false, value="urlParam")String url,
-                          @ModelAttribute(value="markerParam")Marker markerFromJS){
+                          @RequestParam(required=false,value="arrayParam")String arrayParam
+                          //@ModelAttribute(value="markerParam")Marker markerFromJS
+    ){
         String[] splitter;
+
         if(url.contains(",")) {
             splitter = url.split(",");
             url = splitter[0];
         }
 
         System.out.println("url: " + url);
+        marker = new Marker();
         marker = mapService.createMarkerFromGeoDocument(url);
         // = new Marker("City",url,"43.3555664", "11.0290384");
         //model.addAttribute("marker",marker); //no need is get from the HTTTP GET COMMAND
         arrayMarker.add(marker);
         indiceMarker++;
         return "redirect:/map13";
+    }
+
+    @RequestMapping(value = "/markers", method = RequestMethod.POST,headers = {"Content-type=application/json"})
+    @ResponseBody
+    public  String myTestMethod(@RequestBody List<Marker> markers, HttpServletRequest request, HttpServletResponse response)
+            throws Exception{
+            // my code
+        for(Marker marker : markers){
+            System.out.println(marker.toString());
+        }
+        return "";
     }
 
     @RequestMapping(value="/map4",method = RequestMethod.POST)
@@ -150,13 +169,13 @@ public class MapController {
             List<List<List<String>>> info = JSoupKit.TablesExtractor(description.get(i),false);
             for(List<List<String>> listOfList : info ){
                 for(List<String> list : listOfList){
-                    if(list.get(0).toLowerCase().contains("country")){ mki.setRegion(list.get(1)); continue;}
-                    if(list.get(0).toLowerCase().contains("name")){ mki.setCity(list.get(1)); continue;}
-                    if(list.get(0).toLowerCase().contains("city")){ mki.setCity(list.get(1)); continue;}
-                    if(list.get(0).toLowerCase().contains("email")){ mki.setEmail(list.get(1)); continue;}
-                    if(list.get(0).toLowerCase().contains("phone")){ mki.setPhone(list.get(1));continue;}
-                    if(list.get(0).toLowerCase().contains("fax")){ mki.setFax(list.get(1));continue;}
-                    mki.setDescription(list.get(0)+"="+list.get(1)+";");
+                    if(list.get(0).toLowerCase().contains("country")){ mki.setRegion(list.get(1).replaceAll("\"","")); continue;}
+                    if(list.get(0).toLowerCase().contains("name")){ mki.setCity(list.get(1).replaceAll("\"", "")); continue;}
+                    if(list.get(0).toLowerCase().contains("city")){ mki.setCity(list.get(1).replaceAll("\"", "")); continue;}
+                    if(list.get(0).toLowerCase().contains("email")){ mki.setEmail(list.get(1).replaceAll("\"", "")); continue;}
+                    if(list.get(0).toLowerCase().contains("phone")){ mki.setPhone(list.get(1).replaceAll("\"", ""));continue;}
+                    if(list.get(0).toLowerCase().contains("fax")){ mki.setFax(list.get(1).replaceAll("\"", ""));continue;}
+                    mki.setDescription(list.get(0).replaceAll("\"", "")+"="+list.get(1).replaceAll("\"","")+";");
                 }
             }
             mk = new Marker(name.get(i),fileUrl,lat.get(i),lng.get(i),mki);
