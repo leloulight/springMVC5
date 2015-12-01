@@ -270,15 +270,6 @@ function getMarkers(containerId){
         }catch(e){console.error(e.message);}
     }
     leafletUtil.removeClusterMarker();
-    //alert(document.getElementById('uploader').value);
-    //<input type="submit" name="GetMarkersParam" value="getMarkers" />
-    /*var input = document.createElement('input');
-    input.setAttribute('id', 'supportUploaderForm');
-    input.setAttribute('type', 'hidden');
-    input.setAttribute('value', document.getElementById('uploader').value);
-    input.setAttribute('name',"supportUploaderParam");
-    document.getElementById('loadMarker').appendChild(input);*/
-    //alert("...compiled 2 getMarkers");
 }
 
 function addInput(input_id,val,index,containerId) {
@@ -513,11 +504,11 @@ leafletUtil.chooseIcon = function(category){
                                      phoneVar,emailVar,faxVar,ivaVar,popupContentVar){
         try {
             /*nameVar = document.getElementById('nameForm').value;*/
-            console.log("pushing the element =>" +
+          /*  console.log("pushing the element =>" +
                 "Name:" + nameVar + ',URL:' + urlVar + ',LAT:' + latVar + ',LNG:' + lngVar + "\n" +
                 "Regione:" + regionVar + ', Province:' + provinceVar + ',City:' + cityVar + ', Address:' + addressVar + "\n" +
                 "Phone:" + phoneVar + ', Email:' + emailVar + ', Fax:' + faxVar + ', Iva:' + ivaVar + "\n"
-            );
+            );*/
             leafletUtil.geoDocument = {};
             leafletUtil.geoDocument.name = nameVar;
             leafletUtil.geoDocument.url = urlVar;
@@ -532,13 +523,8 @@ leafletUtil.chooseIcon = function(category){
             leafletUtil.geoDocument.fax = faxVar;
             leafletUtil.geoDocument.iva = ivaVar;
             leafletUtil.geoDocument.popupContent = popupContentVar;
-           /* console.info("(" + specialj + ") titles:" + Object.keys(leafletUtil.geoDocument).toString()
-                + ",Length:" + leafletUtil.arrayGeoDocuments.length);*/
-            var titles = Object.keys(leafletUtil.geoDocument).toString().split(",");
-          /*  console.info("... prepare marker (" + specialj + "):"
-                + leafletUtil.geoDocument.name + ',' + leafletUtil.geoDocument.url +
-                ',' + leafletUtil.geoDocument.lat + ',' + leafletUtil.geoDocument.lng);*/
 
+            var titles = Object.keys(leafletUtil.geoDocument).toString().split(",");
             if(leafletUtil.geoDocument.popupContent ==null || leafletUtil.geoDocument.popupContent ==''){
                 var content = '<div class="popup-content"><table class="table table-striped table-bordered table-condensed">';
                 for (var title, i = 0; title = titles[i++];) {
@@ -563,13 +549,9 @@ leafletUtil.chooseIcon = function(category){
             console.info("... prepare marker (" + specialj + "):"
                 + leafletUtil.geoDocument.name + ',' + leafletUtil.geoDocument.url +
                 ',' + leafletUtil.geoDocument.lat + ',' + leafletUtil.geoDocument.lng + "," + leafletUtil.geoDocument.popupContent);
-            alert(leafletUtil.geoDocument.popupContent);
+
             leafletUtil.arrayGeoDocuments.push(leafletUtil.geoDocument);
             specialj++;
-            /*addSingleMarker( leafletUtil.arrayGeoDocuments[j].name,  leafletUtil.arrayGeoDocuments[j].url,
-             leafletUtil.arrayGeoDocuments[j].lat,  leafletUtil.arrayGeoDocuments[j].lng,null,
-             leafletUtil.arrayGeoDocuments[j].popupContent);*/
-            //}
             console.log("....pushed a marker to the array on javascript side:" + leafletUtil.geoDocument.toString());
         }catch(e){
             console.error("Exception::pushMarkerToArrayMarker ->" +  e.message);
@@ -588,7 +570,7 @@ leafletUtil.chooseIcon = function(category){
             console.warn("Warning:addPluginSearch->"+e.message);
             geocoderSearchGoogle = null;
         }
-        console.info("compile addPluginSearch...");
+        console.log("compile addPluginSearch...");
         try {
             if (!jQuery.isEmptyObject(markerClusters)) {
                 /* controlSearch = new L.Control.Search({layer: markerClusters, initial: false,collapsed: false});*/
@@ -606,7 +588,7 @@ leafletUtil.chooseIcon = function(category){
                 }
                 map.addControl(controlSearch);
             }
-            console.info("...compiled addPluginSearch");
+            console.log("...compiled addPluginSearch");
         }catch(e){
             console.error("Exception:addPluginSearch->"+e.message);
         }
@@ -647,6 +629,7 @@ leafletUtil.chooseIcon = function(category){
 leafletUtil.loadarrayOnInput = function(idForm,nameElementOrIndex){
     //var oFormObject = document.forms[idForm];
     //var oformElement = oFormObject.elements[nameElementOrIndex];
+    alert(67);
     var arrayOfMarker = [];
     for(var j = 0; j < leafletUtil.arrayGeoDocuments.length; j++){
         var marker = {
@@ -658,12 +641,20 @@ leafletUtil.loadarrayOnInput = function(idForm,nameElementOrIndex){
         };
         arrayOfMarker.push(marker);
     }
-    alert(JSON.parse(JSON.stringify(arrayOfMarker,undefined,2)));
+    alert(68);
+    alert("LOAD JSON:"+JSON.parse(JSON.stringify(arrayOfMarker,undefined,2)));
+    /*
+     When sending a single object (not list) that Spring controller will accept as a Java object,
+     the JSON format has to be only pair of curly braces with properties inside , avoid using JSON.stringify()
+     which actually adds one more property with object name and Jackson can't match. Following is the Javascript
+     code snippet to pass an object from Javascript to Spring controller:
+     */
     document.forms[idForm].elements[nameElementOrIndex].value = JSON.stringify(arrayOfMarker,undefined,2);
-    /*$.ajax({
+    jQuery.ajax({
         type: "POST",
         url: "markers",
-        data: JSON.stringify(arrayOfMarker),
+        data: arrayOfMarker,
+        dataType: "html",
         contentType: "application/json",
         mimeType: "application/json",
         success: function(response){
@@ -672,7 +663,7 @@ leafletUtil.loadarrayOnInput = function(idForm,nameElementOrIndex){
         error: function (e) {
             console.info("Error " + e.message);
         }
-    });*/
+    });
     //document.forms[idForm].elements[nameElementOrIndex].value = arrayOfMarker;
     //return arrayOfMarker;
 };

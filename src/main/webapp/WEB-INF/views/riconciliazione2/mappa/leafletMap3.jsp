@@ -87,7 +87,8 @@
    <script src="${pageContext.request.contextPath}/resources/js/ServiceMap/leaflet_buildMap_support_2.js" type="text/javascript"></script>
    <!-- Modified from 4535992 -->
 </head>
-<body class="Chrome" onload="getBusLines();
+<body class="Chrome"
+     <%-- onload="getBusLines();--%> <!-- Modified from 4535992 -->
             changeLanguage('ENG')">
 <script>
 
@@ -226,21 +227,21 @@
                     <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${idMarker.url}" />"/>
                     <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${idMarker.latitude}" />"/>
                     <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${idMarker.longitude}" />"/>
-                    <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.region}" />"/>
+                  <%--  <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.region}" />"/>
                     <input id="provinceForm" name="provinceParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.province}" />"/>
                     <input id="cityForm" name="cityParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.city}" />"/>
                     <input id="addressForm" name="addressParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.address}" />"/>
                     <input id="phoneForm" name="phoneParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.phone}" />"/>
                     <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.email}" />"/>
                     <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.fax}" />"/>
-                    <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.iva}" />"/>
+                    <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.iva}" />"/>--%>
                     <input id="<c:out value="${idMarker.id}" />" name="popupContentParam" type="hidden" value="<c:out  value="${idMarker.popupContent}" />"/>
                   </p>
                   <script type="text/javascript">
                     //leaflet_buildMap_support.initMap();
-                    //alert("try to push a marker");
                     try{
                         var content = document.getElementById("<c:out value="${idMarker.id}"/>").value; //need for automatic parse from Spring
+                        //var content = "<c:out  value="${idMarker.popupContent}" escapeXml="false"/>";
                         alert("Content:" + content);
                         leaflet_buildMap_support_2.pushMarkerToArrayMarker(
                                 "${idMarker.name}","${idMarker.url}","${idMarker.latitude}","${idMarker.longitude}",
@@ -255,8 +256,7 @@
               </c:if>
               TrackMyURL:
               <c:url var="url" value="/map3" />
-              <form:form action="${url}" method="post" id="/map3"
-                        onsubmit="leafletUtil.loadarrayOnInput('/map3','arrayParam')">
+              <form:form action="${url}" method="post" id="/map3">
                 <input type="hidden" name="arrayParam" value="" title="arrayParam"/>
                 <input type="text" name="urlParam" value=""  title="urlParam"/>
                 <input type="submit" name="urlFormParam" value="urlForm" />
@@ -289,6 +289,15 @@
               <div id="searchMarkerWithJavascript3" ></div>
               <!-- Added from 4535992-->
               <div id="geocode-selector"></div>
+            </li>
+            <li>
+              <c:url var="url00" value="/markers" />
+              <form:form action="${url00}" method="post" id="/markers"
+                         onsubmit="leafletUtil.loadarrayOnInput('/markers','arrayParam')">
+                <input type="hidden" name="arrayParam" value="" title="arrayParam"/>
+               <%-- <input type="text" name="urlParam" value=""  title="urlParam"/>--%>
+                <input type="submit" name="loadJsonFormParam" value="loadJsonForm" />
+              </form:form>
             </li>
           </ul>
         </div>

@@ -2,6 +2,7 @@ package com.github.p4535992.mvc.controller;
 
 import com.github.p4535992.mvc.object.model.site.Marker;
 import com.github.p4535992.mvc.object.model.site.MarkerInfo;
+import com.github.p4535992.mvc.object.model.site.MarkerList;
 import com.github.p4535992.mvc.service.dao.MapService;
 import com.github.p4535992.util.html.JSoupKit;
 import com.github.p4535992.util.log.SystemLog;
@@ -144,12 +145,11 @@ public class MapController {
         return "redirect:/map13";
     }
 
-    @RequestMapping(value = "/markers", method = RequestMethod.POST,headers = {"Content-type=application/json"})
-    @ResponseBody
-    public  String myTestMethod(@RequestBody List<Marker> markers, HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(value = "/markers", method = RequestMethod.POST)
+    public @ResponseBody String myTestMethod(@RequestBody MarkerList markers, HttpServletRequest request, HttpServletResponse response)
             throws Exception{
             // my code
-        for(Marker marker : markers){
+        for(Marker marker : markers.getMarkers()){
             System.out.println(marker.toString());
         }
         return "";
