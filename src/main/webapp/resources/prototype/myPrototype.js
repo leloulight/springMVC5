@@ -43,6 +43,25 @@ String.prototype.trim = function () {
     return this.ltrim().rtrim();
 };
 
+String.prototype.contains = function(it,indexStart) {
+    //before ecmescript 6
+    if(isES6Supported()){
+        //after ecmascript 6
+        if(indexStart == null || typeof indexStart == 'undefined'){
+            return this.includes(it);
+        }else{
+            return this.includes(it,indexStart);
+        }
+    }else{
+        if (!String.prototype.contains) {
+            String.prototype.contains = function(s, i) {
+                return this.indexOf(s, i) != -1;
+            }
+        }
+    }
+
+};
+
 //-------------------------------------------------------------------------------------------
 // ARRAY
 //-------------------------------------------------------------------------------------------
@@ -131,5 +150,36 @@ Array.prototype.min = function(array){
     return Math.min.apply(Math, array);
 };
 
+Array.prototype.isEmpty = function(){
+    return !(typeof this != "undefined" && this != null && this.length > 0);
+};
 
 
+//ECMA SCRIPT %,6 Supported alternative methods
+/**
+ * http://www.2ality.com/2014/12/one-javascript.html
+ */
+function isES6Supported() {
+    try {
+        eval("for (var e of ['a']) {}");
+        return true;
+    } catch (e) {
+        // Possibly: check if e instanceof SyntaxError
+    }
+    return false;
+}
+
+function ObjectKeys(){
+    if(!Object.keys) { //ecmascript 5 not supported
+        Object.keys = function (o) {
+            if (o !== Object(o)) throw new TypeError('Object.keys called on non-object');
+            var ret = [];
+            for (var p in o){
+                if (Object.prototype.hasOwnProperty.call(o, p)){
+                    ret.push(p);
+                }
+            }
+            return ret;
+        }
+    }
+}

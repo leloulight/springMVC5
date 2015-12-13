@@ -4,8 +4,10 @@ import com.github.p4535992.mvc.object.model.site.Marker;
 import com.github.p4535992.mvc.object.model.site.MarkerInfo;
 import com.github.p4535992.mvc.object.model.site.MarkerList;
 import com.github.p4535992.mvc.service.dao.MapService;
+import com.github.p4535992.mvc.view.JsonUtilities;
 import com.github.p4535992.util.html.JSoupKit;
 import com.github.p4535992.util.log.SystemLog;
+import com.github.p4535992.util.string.StringUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import java.util.List;
  * Created by 4535992 on 11/06/2015.
  * @author 4535992.
  * @version 2015-07-02.
+ * href: https://gerrydevstory.com/2013/08/14/posting-json-to-spring-mvc-controller/
  */
 @Controller
 @PreAuthorize("hasRole('ROLE_USER')")
@@ -36,7 +39,7 @@ public class MapController {
 
     Marker marker;
     List<Marker> arrayMarker = new ArrayList<>();
-    List<Marker> supportArray = new ArrayList<>();
+    //List<Marker> supportArray = new ArrayList<>();
     Integer indiceMarker = 0;
 
     /*@RequestMapping(value="/map",method= RequestMethod.GET)
@@ -114,7 +117,7 @@ public class MapController {
 
         //String html = mapService.getResponseHTMLString();
         //model.addAttribute("HTML",html);
-        model.addAttribute("supportArray",supportArray);
+        //model.addAttribute("supportArray",supportArray);
         return "riconciliazione2/mappa/leafletMap3";
     }
 
@@ -125,23 +128,38 @@ public class MapController {
 
     @RequestMapping(value="/map3",method = RequestMethod.POST)
     public String result4(@RequestParam(required=false, value="urlParam")String url,
-                          @RequestParam(required=false,value="arrayParam")String arrayParam
+                          @RequestParam(required=false,value="arrayParam")List<String> arrayParam
+                          //@ModelAttribute(value="arrayParam") MarkerList arrayParam
                           //@ModelAttribute(value="markerParam")Marker markerFromJS
     ){
-        String[] splitter;
-
-        if(url.contains(",")) {
-            splitter = url.split(",");
-            url = splitter[0];
+        if(!arrayParam.isEmpty()){
+            for(String smarker : arrayParam){
+                marker = new Marker();
+                try {
+                   marker = JsonUtilities.fromJson(smarker,Marker.class);
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+                arrayMarker.add(marker);
+                indiceMarker++;
+            }
         }
 
-        System.out.println("url: " + url);
-        marker = new Marker();
-        marker = mapService.createMarkerFromGeoDocument(url);
-        // = new Marker("City",url,"43.3555664", "11.0290384");
-        //model.addAttribute("marker",marker); //no need is get from the HTTTP GET COMMAND
-        arrayMarker.add(marker);
-        indiceMarker++;
+        if(!StringUtilities.isNullOrEmpty(url)) {
+            String[] splitter;
+            if (url.contains(",")) {
+                splitter = url.split(",");
+                url = splitter[0];
+            }
+
+            System.out.println("url: " + url);
+            marker = new Marker();
+            marker = mapService.createMarkerFromGeoDocument(url);
+            // = new Marker("City",url,"43.3555664", "11.0290384");
+            //model.addAttribute("marker",marker); //no need is get from the HTTTP GET COMMAND
+            arrayMarker.add(marker);
+            indiceMarker++;
+        }
         return "redirect:/map13";
     }
 
@@ -153,6 +171,45 @@ public class MapController {
             System.out.println(marker.toString());
         }
         return "";
+    }
+
+    @RequestMapping(value="/map42",method = RequestMethod.POST)
+    public String result42(@RequestParam(required=false,value="arrayParam")List<String> arrayParam,
+                         @RequestParam(required=false, value="supportUploaderParam") String fileUrl,
+                         Model model) throws Exception {
+
+        if(!arrayParam.isEmpty()){
+            for(String smarker : arrayParam){
+                marker = new Marker();
+                try {
+                    marker = JsonUtilities.fromJson(smarker,Marker.class);
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+                arrayMarker.add(marker);
+            }
+        }
+        for(Marker marker : arrayMarker){
+            Marker mk;
+            MarkerInfo mki =new MarkerInfo();
+            //System.out.println("name: " + name.get(i) +",lat:"+lat.get(i)+",lng:"+lng.get(i)+",description:"+description.get(i));
+            List<List<List<String>>> info = JSoupKit.TablesExtractor(marker.getPopupContent(),false);
+            for(List<List<String>> listOfList : info ){
+                for(List<String> list : listOfList){
+                    if(list.get(0).toLowerCase().contains("country")){ mki.setRegion(list.get(1).replaceAll("\"","")); continue;}
+                    if(list.get(0).toLowerCase().contains("name")){ mki.setCity(list.get(1).replaceAll("\"", "")); continue;}
+                    if(list.get(0).toLowerCase().contains("city")){ mki.setCity(list.get(1).replaceAll("\"", "")); continue;}
+                    if(list.get(0).toLowerCase().contains("email")){ mki.setEmail(list.get(1).replaceAll("\"", "")); continue;}
+                    if(list.get(0).toLowerCase().contains("phone")){ mki.setPhone(list.get(1).replaceAll("\"", ""));continue;}
+                    if(list.get(0).toLowerCase().contains("fax")){ mki.setFax(list.get(1).replaceAll("\"", ""));continue;}
+                    mki.setDescription(list.get(0).replaceAll("\"", "")+"="+list.get(1).replaceAll("\"","")+";");
+                }
+            }
+            mk = new Marker(marker.getName(),marker.getUrl(),marker.getLatitude(),marker.getLongitude(),mki);
+            arrayMarker.remove(marker);
+            arrayMarker.add(mk);
+        }
+        return "redirect:/map13";
     }
 
     @RequestMapping(value="/map4",method = RequestMethod.POST)

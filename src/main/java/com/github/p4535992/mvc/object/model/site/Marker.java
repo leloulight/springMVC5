@@ -3,6 +3,7 @@ package com.github.p4535992.mvc.object.model.site;
 import com.github.p4535992.util.string.StringUtilities;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -10,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Created by 4535992 on 18/06/2015.
  */
-public class Marker {
+public class Marker  implements Serializable {
 
     private String id;
     private String name;
@@ -22,6 +23,15 @@ public class Marker {
 
     public Marker(){
         this.setId(null);
+    }
+
+    public Marker(String name,String url,String latitude,String longitude,String popupContent){
+        this.name = name;
+        this.url = url;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.popupContent = popupContent;
+        this.setId(name);
     }
 
     public Marker(String name,String url,String latitude,String longitude){
@@ -39,15 +49,6 @@ public class Marker {
         this.latitude = latitude;
         this.longitude = longitude;
         this.markerInfo = markerInfo;
-        this.setId(name);
-    }
-
-    public Marker(String name,String url,String latitude,String longitude,String popupContent){
-        this.name = name;
-        this.url = url;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.popupContent = popupContent;
         this.setId(name);
     }
 
@@ -130,7 +131,7 @@ public class Marker {
         this.popupContent = popupContent;
     }
 
-    public void setPopupContent(MarkerInfo mki) {
+    public void setPopupContentMarker(MarkerInfo mki) {
         String content = "<div class=\"popup-content\"><table class=\"table table-striped table-bordered table-condensed\">";
         content += "<tr><th>City</th><td>" +  ((mki.getCity() == null) ? "" : mki.getCity()) + "</td></tr>";
         content += "<tr><th>Province</th><td>" + ((mki.getProvince() == null) ? "" : mki.getProvince()) + "</td></tr>";

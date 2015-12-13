@@ -94,6 +94,15 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>/resources/*</url-pattern>
 	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+
 
 	<!--To add this servlet to your web-application, add the following lines to its WEB-INF/web.xml file.
 	http://logback.qos.ch/manual/configuration.html -->

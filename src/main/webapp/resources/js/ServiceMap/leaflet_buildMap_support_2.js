@@ -1,6 +1,17 @@
 
 var leafletUtil = {};
 
+var categories = {
+    101 : {desc: "Musées & Châteaux", icon:"museum_archeological.png"},
+    103 : {desc: "Médiathèque", icon:"library.png"},
+    104 : {desc: "Monument", icon:"mural.png"},
+    105 : {desc: "Ecole Culturelle", icon:"music_choral.png"},
+    106 : {desc: "Salle d'exposition", icon:"museum_art.png"},
+    107 : {desc: "Salle de spectacle", icon:"theater.png"},
+    108 : {desc: "Cinéma", icon:"cinema.png"}
+};
+
+
 /***  Set constructor variable for leaflet_buildMap_support */
 var leaflet_buildMap_support_2 = {
     // Get a list of marker with coordinates and a url href and put the marker on the map
@@ -8,14 +19,15 @@ var leaflet_buildMap_support_2 = {
     initMap: function () {
         leafletUtil.initMap();
     },
-    addSingleMarker: function (name, url, lat, lng,bound,popupContent) {addSingleMarker(name,url,lat,lng,bounds,popupContent);},
+    addSingleMarker: function (name, url, lat, lng,bound,popupContent) {
+        leafletUtil.addSingleMarker(name,url,lat,lng,bounds,popupContent);},
     pushMarkerToArrayMarker:
         function(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,
                  cityVar,addressVar,phoneVar,emailVar,faxVar,ivaVar,popupContentVar){
-        leafletUtil.initMap(); //check fast if the map is setted
-        pushMarkerToArrayMarker(
-            nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,
-            addressVar,phoneVar,emailVar,faxVar,ivaVar,popupContentVar);
+            leafletUtil.initMap(); //check fast if the map is setted
+            leafletUtil.pushMarkerToArrayMarker(
+                nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,
+                addressVar,phoneVar,emailVar,faxVar,ivaVar,popupContentVar);
     },
     chooseIcon: function(code){ chooseIcon(code);},
     removeClusterMarker:leafletUtil.removeClusterMarker,
@@ -33,7 +45,8 @@ var mapBoxAPIKey =
 var markerClusters = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50});
 /** Set the Leaflet Plugin Search. https://github.com/p4535992/leaflet-search.*/
 var controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
-var geoCoderGoogle,geocoderSearchGoogle;
+var geoCoderGoogle;
+
 
 
 
@@ -42,13 +55,18 @@ leafletUtil.geoDocument = {name:'',url:'',lat:'',lng:'',region:'',province:'',ci
     address:'',phone:'',email:'',fax:'',iva:'',popupContent:'',other:'',marker:{}};
 
 leafletUtil.arrayGeoDocuments =[]; // array support of makers
-
+leafletUtil.markerList = [];
+leafletUtil.marker = {name:'',url:'',latitude:'',longitude:'',popupContent:'',category:''};
 /*** Set a personal icon marker */
 leafletUtil.deathIcon = L.icon({
         iconUrl: '../leaflet/images/marker-shadow.png',
         //iconRetinaUrl: myURL + 'img/me.png',
         iconSize: [36, 36], iconAnchor: [18, 18],popupAnchor: [0, -18],labelAnchor: [14, 0]
     });
+
+leafletUtil.layers = {};
+leafletUtil.cultureLayer = L.layerGroup();
+leafletUtil.layerCtrl = L.control.layers();
 
 /*** Set the src of the javascript file*/
 //var mySRC = jQuery('script[src$="resources/js_utility/leaflet_buildMap_support.js"]').attr('src').replace('js_utility/leaflet_buildMap_support.js', '');
@@ -61,7 +79,7 @@ leafletUtil.deathIcon = L.icon({
 
     /** if you have add a new marker from spring put in the map. */
     if ((!jQuery.isEmptyObject(leafletUtil.arrayGeoDocuments)) && leafletUtil.arrayGeoDocuments.length > 0) {
-        addMultipleMarker(leafletUtil.arrayGeoDocuments);
+        leafletUtil.addMultipleMarker(leafletUtil.arrayGeoDocuments);
     }
 
     //ABILITA LA RICRECA NEI MARKER CON IL PLUGIN LEAFLET-SEARCH
@@ -79,22 +97,27 @@ leafletUtil.deathIcon = L.icon({
     //<div class="leaflet-control-search leaflet-control search-exp">
     jQuery("#searchMarkerWithJavascript").appendTo(jQuery("#searchMarkerWithJavascript2"));
     leafletUtil.addGeoCoderPluginWithContainer('#searchMarkerWithJavascript3');
-
+    leafletUtil.addPluginFuseSearch('name',null,null);
 
     console.info("Loaded all JQUERY variable");
 
    });
 //};
 
+//Set the Object foe manaage the research by Google,Bing,ecc.
 var btn;
+// Added Controls
 leafletUtil.geoCoderControl ={selection:{},geoCoderControl:{},selector:{},
-geocoders:{
-    'Nominatim': L.Control.Geocoder.nominatim(),
-    'Bing': L.Control.Geocoder.bing( bingAPIKey),
-    'Mapbox': L.Control.Geocoder.mapbox( mapBoxAPIKey),
-    'Google': L.Control.Geocoder.google( googleAPIKey),
-    'Photon': L.Control.Geocoder.photon()
-},containerSelectorId:''};
+                            geocoders:{
+                                'Nominatim': L.Control.Geocoder.nominatim(),
+                                'Bing': L.Control.Geocoder.bing( bingAPIKey),
+                                'Mapbox': L.Control.Geocoder.mapbox( mapBoxAPIKey),
+                                'Google': L.Control.Geocoder.google( googleAPIKey),
+                                'Photon': L.Control.Geocoder.photon()
+                            },containerSelectorId:''};
+
+leafletUtil.fuseSearchCtrl = {};
+
 
 /** Loaded on the ready DOM of the document */
 leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
@@ -139,7 +162,7 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
                             );
                             var popupContent = leafletUtil.preparePopupTable(result);
                             var name = result.name.replaceAll(',',' ');
-                            addSingleMarker(name, '', result.center.lat, result.center.lng, bounds, popupContent);
+                            leafletUtil.addSingleMarker(name, '', result.center.lat, result.center.lng, bounds, popupContent);
                         };
                         //end of select
                     }, btn);
@@ -161,17 +184,113 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
     }
 };
 
-leafletUtil.preparePopupTable = function(json){
+leafletUtil.preparePopupTable = function(object){
     var popupContent2 = '<div class="popup-content">\n<table class="table table-striped table-bordered table-condensed">\n';
     try {
-        var data = JSON.parse(JSON.stringify(json, 2));
-        console.warn("RESULT:" + JSON.stringify(data, 2));
-        popupContent2 += leafletUtil.preparePopupColumn(data, '','');
+        //if is a json object
+        if(leafletUtil.IsJson(object) == true) {
+            var json = JSON.parse(JSON.stringify(object, 2));
+            //console.warn("RESULT:" + JSON.stringify(json, 2));
+            popupContent2 += leafletUtil.preparePopupColumn(json, '', '');
+        }
+        //if is a array
+      /*  else if(leafletUtil.Is(object) == 'array'){
+
+        }*/
+        else if(!leafletUtil.IsNull(object) && leafletUtil.IsObject(object)){
+            var titles = Object.keys(object).toString().split(",");
+            for (var title, i = 0; title = titles[i++];) {
+                try {
+                    // is Array or Object
+                    if (!leafletUtil.IsNull(object[title]) &&
+                        (leafletUtil.IsArray(object[title])|| leafletUtil.IsObject(object[title])))continue;
+                    //if (typeof leafletUtil.geoDocument[title] !== 'String' || leafletUtil.geoDocument[title] == 'popupContent') continue;
+                    if (object[title].toString().indexOf('http') === 0) {
+                        object[title] = '<a target="_blank" href="' + object[title] + '">'
+                            + object[title] + '</a>';
+                    }
+                    content += '<tr><th>' + title + '</th><td>' + object[title] + '</td></tr>';
+                } catch (e) {
+                    console.warn('Warning::preparePopupTable() ->' + e.message);
+                }
+            }//for
+        }else{
+            console.error(
+                'preparePopupTable() -> Try to create a popuptable from a \'null\' object -> '+JSON.stringify(object));
+        }
     }catch(e){
-        console.error("Exception::preparePopupTable() ->"+ e.message);
+        console.error('Exception::preparePopupTable() ->'+ e.message);
     }
     popupContent2 += "</table>\n</div>\n";
     return popupContent2;
+};
+
+leafletUtil.IsEmptyObject = function(object){ return leafletUtil.Is(object,'emptyobject');};
+leafletUtil.IsEmpty = function(object){ return leafletUtil.Is(object,'empty');};
+leafletUtil.IsJson = function(object){ return leafletUtil.Is(object,'json');};
+leafletUtil.IsNull = function(object){ return leafletUtil.Is(object,'null');};
+leafletUtil.IsUndefined =  function(object){return leafletUtil.Is(object,'undefined');};
+leafletUtil.IsString =  function(object){ return leafletUtil.Is(object,'string');};
+leafletUtil.IsArray =  function(object){return leafletUtil.Is(object,'array');};
+leafletUtil.IsEmpty =  function(object){return leafletUtil.Is(object,'empty');};
+leafletUtil.IsObject =  function(object){return leafletUtil.Is(object,'object');};
+leafletUtil.Is = function(object,stringValue){
+    var result = false;
+    try {
+        if (stringValue)stringValue = stringValue.toString().toLowerCase();
+        switch(stringValue){
+            case 'json':{
+                try {
+                    JSON.parse(JSON.stringify(object));
+                    result = true;
+                } catch (e) { result = false;}
+                break;
+            }
+            case 'null':{
+                result =  (object === null || object == null);
+                break;
+            }
+            case 'undefined': {
+                result =  (object === undefined);
+                break;
+            }
+            case 'string': {
+                result =  object.constructor === "test".constructor;
+                break;
+            }
+            case 'array': {
+                result =  (Array.isArray(object) || object.constructor === [].constructor);
+                break;
+            }
+            case 'empty': {
+                if(leafletUtil.IsString(object)){
+                    result = (object.toString() == '')
+                }else if(leafletUtil.IsArray(object)){
+                    result =  !(typeof object != "undefined" && object != null && object.length > 0);
+                }else if(leafletUtil.IsObject(object)){
+                    result = (Object.keys(object).length == 0);
+                }else{
+                    result = (JSON.stringify(object)=='{}');
+                }
+                break;
+            }
+            case 'emptyobject':{
+                var name;
+                for ( name in obj ) { result = false; }
+                result = true;
+                break;
+            }
+            case 'object': {
+                result =  (object.constructor === {}.constructor || typeof object === 'object');
+                break;
+            }
+            default: result =  false;
+        }
+        //console.info('Try Is with '+stringValue+ ' -> ' +result);
+    }catch(e){
+        console.error('Exception::leafletUtil.Is -> Try Is with '+stringValue+ ' -> ' +result +'-> '+e.message);
+    }
+    return result;
 };
 
 leafletUtil.preparePopupColumn = function(data,popupContent,nameKey){
@@ -215,73 +334,80 @@ leafletUtil.preparePopupColumn = function(data,popupContent,nameKey){
 };
 
 leafletUtil.preparePopupRow = function(key,value){
-    key = key.indexOf('+') == 0 ? key.substring(1) : key;
-    value = value.replaceAll(',',' '); //need for clean the result send to the SpringFramework project
-    if (value.toString().indexOf('http') === 0) {
-        value = '<a target="_blank" href="' + value + '">'+ value + '</a>';
+    try{
+        key = key.indexOf('+') == 0 ? key.substring(1) : key;
+        //need for clean the result send to the SpringFramework project
+        value = value.toString().replaceAll(',', ' ');
+
+        //check if is  url to a remote resource...
+        if (value.toString().indexOf('http') === 0) {
+            value = '<a target="_blank" href="' + value + '">'+ value + '</a>';
+        }
+        //console.warn('<tr><th>' + key + '</th><td>' + value + '</td></tr>\n')
+        return '<tr><th>' + key + '</th><td>' + value + '</td></tr>';
+    }catch(e){
+        console.error('leafletUtil.preparePopupRow ->'+ e.message)
     }
-    //console.warn('<tr><th>' + key + '</th><td>' + value + '</td></tr>\n')
-    return '<tr><th>' + key + '</th><td>' + value + '</td></tr>';
 };
 
 /**
  * function to get the information on the marker ont he Layer to a Array to pass
  * by create a list of input to pass to a specific form.
  */
-/*leafletUtil.getMarkers = function(){
-
-};*/
-
-function getMarkers(containerId){
+leafletUtil.inspectMarkerOnLayer = function(myLayerGroup){
     var array = [];
     console.log("compile getMarkers");
     try{
-        if(!$.isEmptyObject(markerClusters)) {
-            console.log("Marker cluster is not empty go to check the Marker.");
-            markerClusters.eachLayer(function (layer) {
-                try {
-                    var lat = layer.getLatLng().lat;
-                    var lng = layer.getLatLng().lng;
-                    var label;
-                    //label = layer.getLabel()._content;
-                    if(lat!=0 && lng !=0) {
-                        label = layer.label._content; //get name with Leaflet.Label
-                        /*var location = layer.getLocation();*/
-                        var popupContent = layer.getPopup().getContent();
-                        console.info("marker number():" + lat + "," + lng + "," + label);
-                        array.push({name: label, lat: lat, lng: lng, description: popupContent});
-                    }
-                    //i++;
-                }catch(e){
-                    console.error("Exception:getMarkers -> "+e.message);
+        myLayerGroup.eachLayer(function (layer) {
+            try {
+                var lat = layer.getLatLng().lat;
+                var lng = layer.getLatLng().lng;
+                var label;
+                //label = layer.getLabel()._content;
+                if(lat!=0 && lng !=0) {
+                    label = layer.label._content; //get name with Leaflet.Label
+                    var popupContent = layer.getPopup().getContent();
+                    console.info("marker number():" + lat + "," + lng + "," + label);
+                    array.push({name: label, latitude: lat, longitude: lng, popupContent: popupContent});
                 }
-            });
-        }
+                //i++;
+            }catch(e){
+                console.error("Exception:getMarkers -> "+e.message);
+            }
+        });
+
     }catch(e){console.error("Exception:getMarkers -> "+e.message);}
     console.info("...compiled getMarkers");
-    //var array = getMarkers();
-    for (var i = 0; i < array.length; i++) {
-        try {
-            console.info("marker number("+i+"):" + array[i].lat + "," + array[i].lng + "," + array[i].name);
-            addInput('nameForm' + i, array[i].name, i,containerId);
-            addInput('latForm' + i, array[i].lat, i,containerId);
-            addInput('lngForm' + i, array[i].lng, i,containerId);
-            addInput('descriptionForm' + i, array[i].description, i,containerId);
-        }catch(e){console.error(e.message);}
-    }
-    leafletUtil.removeClusterMarker();
-}
+    return array;
+};
 
-function addInput(input_id,val,index,containerId) {
+leafletUtil.addNewInput = function(input_id,input_name,input_val,input_type,containerId,index) {
     var input = document.createElement('input');
-    input.setAttribute('id', input_id);
-    input.setAttribute('type', 'hidden');
-    input.setAttribute('value', val);
-    input.setAttribute('name', input_id.replace(index,'').replace('Form','Param1'));
+    if(leafletUtil.IsNull(index)){
+        input.setAttribute('id', input_id+index);
+    }else {
+        input.setAttribute('id', input_id);
+    }
+    input.setAttribute('name', input_name); //same name for all input so Spring get all like a String
+    input.setAttribute('type', input_type);
+    input.setAttribute('value', input_val);
     //document.body.appendChild(input);
     document.getElementById(containerId).appendChild(input);
     //setInputValue(input_id,val);
-}
+};
+
+leafletUtil.addNewArrayOfInputs = function(array,containerId,nameElementOrIndex){
+    for (var i = 0; i < array.length; i++) {
+        var content = JSON.stringify(array[i]);
+        try {
+            if(leafletUtil.Is(nameElementOrIndex) == 'null') {
+                leafletUtil.addNewInput('array' + i, 'array', content, containerId, i);
+            }else{
+                leafletUtil.addNewInput('array' + i, nameElementOrIndex, content,'hidden', containerId, i);
+            }
+        }catch(e){console.error('addNewArrayOfInputs:: Can\'t create the new Input'+e.message);}
+    }
+};
 
 
 /***
@@ -356,86 +482,125 @@ leafletUtil.initMap = function(){
             //other function form Service Map
             console.log("MAP IS SETTED");
             //$('#caricamento').delay(500).fadeOut('slow');
+
+            // Information pane need a div with id='infopane'
+            //L.control.infoPane('infopane', {position: 'bottomright'}).addTo(map);
         } catch (e) {
            console.error('Exception::initMap() -> ' + e.message);
         }
     }
 };
 
+/*** function for add a marker to the leaflet map */
+leafletUtil.addSingleMarker = function(name, url, lat, lng, bounds, popupContent) {
+    /*https://groups.google.com/forum/#!topic/leaflet-js/_oInGLe9uOY*/
+    /*http://gis.stackexchange.com/questions/113076/custom-marker-icon-based-on-attribute-data-in-leaflet-geojson*/
+    var markerVar;
+    var marker = {
+        name:name.toString(),url:url.toString(),latitude:lat.toString(),
+        longitude:lng.toString(),popupContent:popupContent.toString()};
 
-    /*** function for remove all cluster when the map is move */
-    function onMapMove() {
-        //Se muovi la mappa rimuove tutti i marker funziona!!.
-        //removeClusterMarker();
-    }
-
-    /*** function Set a popup when you click on the map*/
-    //var popupGlobal = L.popup();
-    function onMapClick(e) {
-        //popupGlobal.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
-    }
-
-    /*** function for add a marker to the leaflet map */
-    function addSingleMarker(name, url, lat, lng, bounds, popupContent) {
-        if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
-        console.info("... add single marker:" + name + ',' + url + ',' + lat + ',' + lng + ',' + popupContent);
-        var markerVar;
-        try {
-            if (jQuery.isEmptyObject(markerClusters)) {
-                markerClusters = new L.MarkerClusterGroup();
-            }
-            if(!jQuery.isEmptyObject(bounds)){
-                map.setBounds(bounds);
-            }
-            //var marker = L.marker([lat, lng]).bindPopup(popupClick).addTo(map);
-            //var cc = L.latLng(43.7778535, 11.2593572);
-            var text;
-            if(!$.isEmptyObject(url) && url.toString().indexOf('http') === 0) text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
-            else  text = name;
-            var loc;
-            try {
-                /*marker = new L.marker([parseFloat(lat), parseFloat(lng)], {draggable:false}, { icon: deathIcon},{title: name} )
-                    .bindLabel(text, { noHide: true }).addTo(map);
-                */
-                loc = [parseFloat(lat), parseFloat(lng)];		//position found
-                markerVar = new L.Marker(new L.latLng(loc), {title: name} ).bindLabel(text, { noHide: true });//se property searched
-                //marker.bindPopup('title: '+ title );
-            }catch(e){
-                try{
-                    /*marker = new L.marker([lat, lng], {draggable:false}, { icon: deathIcon},{title: name})
-                        .bindLabel(text, { noHide: true }).addTo(map);*/
-                    loc = [lat,lng];	//position found
-                    markerVar = new L.Marker(new L.latLng(loc), {title: name} ).bindLabel(text, { noHide: true });//se property searched
-                }catch(e){
-                    console.error("addSingleMarker"+e.message+ " Sorry the program can't find Geographical coordinates for this Web address,check if the Web address is valid");
-                }
-            }
-            //...set the popup on mouse over
-            //var latlngOver = L.latLng(latVar, lngVar);
-            //...set the popup on mouse click
-            //var popupClick = new L.popup().setContent(text);
-            var popupOver = new L.popup({maxWidth:100,minWidth:50,maxHeight:200}).setContent(popupContent);
-            //marker.bindPopup(popupClick);
-            markerVar.bindPopup(popupOver);
-            //..set some action for the marker
-            //evt.target is the marker where set the action
-            //marker.on('mouseover', function (e) {e.target.bindPopup(popupOver).openPopup();});
-            //marker.on('mouseout', function (e) { e.target.closePopup();});
-            markerVar.on('click', function (e) { e.target.bindPopup(popupOver).openPopup();});
-           //marker.on('dblclick',function (e) { map.removeLayer(e.target)});
-            /*marker.on('click', onMarkerClick(), this);*/
-            //..add marker to the array of cluster marker
-            markerClusters.addLayer(markerVar);
-            //...set to a Global variable for use with different javascript function
-            //map.addLayer(markerClusters);
-            markerClusters.addTo(map);
-            map.setView([lat, lng], 8);
-            //return {name: name, url: url, latitudine: lat, longitudine: lng};
-        }catch(e) {
-            console.error("Exception::addSingleMarker() -> "+e.message +" ,Sorry the program can't create the Marker");
+    //Extend my L.Marker for save some data on the L.marker
+    var customMarkerVar = L.Marker.extend({
+        options: {
+            name: marker.name,
+            popupContent: marker.popupContent
         }
-        console.info("...Compiled addSingleMarker()");
+    });
+
+    if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
+    console.info("... add single marker:" + name + ',' + url + ',' + lat + ',' + lng + ',' + popupContent);
+    try {
+        if (jQuery.isEmptyObject(markerClusters)) {
+            markerClusters = new L.MarkerClusterGroup();
+        }
+        if(!jQuery.isEmptyObject(bounds)){
+            map.setBounds(bounds);
+        }
+        //var marker = L.marker([lat, lng]).bindPopup(popupClick).addTo(map);
+        //var cc = L.latLng(43.7778535, 11.2593572);
+        var text;
+        if(!$.isEmptyObject(url) && url.toString().indexOf('http') === 0) text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
+        else  text = name;
+        var loc;
+        try {
+            loc = [parseFloat(lat), parseFloat(lng)];		//position found
+        }catch(e){
+            try{
+                loc = [lat,lng];	//position found
+            }catch(e){
+                console.error("addSingleMarker"+e.message+ " , probably some error on the value pof the coordinates you using");
+            }
+        }
+        //CREATE A L.Marker
+        /*marker = new L.marker([parseFloat(lat), parseFloat(lng)], {draggable:false}, { icon: deathIcon},{title: name} )
+         .bindLabel(text, { noHide: true }).addTo(map);
+         */
+        /*  markerVar = new L.Marker(new L.latLng(loc), {title: name, icon: new L.Icon.Default()} )
+         .bindLabel(text, { noHide: true });//se property searched*/
+        markerVar = new customMarkerVar(new L.latLng(loc), {title: name, icon: new L.Icon.Default()} )
+            .bindLabel(text, { noHide: true });//se property searched
+
+        //...set the popup on mouse over
+        //var latlngOver = L.latLng(latVar, lngVar);
+        //...set the popup on mouse click
+        //var popupClick = new L.popup().setContent(text);
+        var popupOver = new L.popup(
+            {maxWidth:100,minWidth:50,maxHeight:200}
+        ).setContent(popupContent);
+
+        markerVar.bindPopup(popupOver);
+
+        //..set some action for the marker
+        //evt.target is the marker where set the action
+        //marker.on('mouseover', function (e) {e.target.bindPopup(popupOver).openPopup();});
+        //marker.on('mouseout', function (e) { e.target.closePopup();});
+        markerVar.on('click', function (e) { e.target.bindPopup(popupOver).openPopup();});
+       //marker.on('dblclick',function (e) { map.removeLayer(e.target)});
+        /*marker.on('click', onMarkerClick(), this);*/
+
+        //..add marker to the array of cluster marker
+
+        //Add property dinamically [WORK] .....
+        var geoJsonWithProperties = leafletUtil.loadPropertiesToGeoJson(markerVar,{name:name});
+        var layerGeoJson = L.geoJson(geoJsonWithProperties, {
+            style: function (feature) {
+                return feature.properties.style;
+            },
+            // add a popup content to the marker
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(popupOver);
+                layer.on('click', function (e) { e.target.bindPopup(popupOver).openPopup();});
+            },
+            pointToLayer: function (feature, latlng) {
+                //L.CircleMarker
+                return new L.Marker(new L.latLng(loc), {title: name, icon: new L.Icon.Default()} )
+                    .bindLabel(text, { noHide: true });//se property searched
+            }
+            // correctly map the geojson coordinates on the image
+            /*coordsToLatLng: function(coords) {
+             return rc.unproject(coords);
+             },*/
+        });
+        //Add GeoJson Layer to the layerGroup
+        markerClusters.addLayer(layerGeoJson);
+
+        //Add Marker to the layerGroup
+        //markerClusters.addLayer(markerVar);
+        //...set to a Global variable for use with different javascript function
+        //map.addLayer(markerClusters);
+        markerClusters.addTo(map);
+        //set the view...
+        map.setView([lat, lng], 8);
+    }catch(e) {
+        console.error("Exception::addSingleMarker() -> "+e.message +" ,Sorry the program can't create the Marker");
     }
+    console.info('Content Marker:'+JSON.stringify(markerVar.toGeoJSON()));
+    console.info('Content Layer:'+JSON.stringify(markerClusters.toGeoJSON()));
+    leafletUtil.invokePluginFuseSearch(markerClusters.toGeoJSON(),['name']);
+    leafletUtil.markerList.push(marker);
+    console.info("...Compiled addSingleMarker()");
+};
 
 /*** function for remove all cluster marker on the leaflet map */
 leafletUtil.removeClusterMarker = function(){
@@ -476,39 +641,33 @@ leafletUtil.chooseIcon = function(category){
     /**
      * function to add for every single object marker a Leaflet Marker on the Leaflet Map.
      */
-    function addMultipleMarker(markers){
-        console.log("add multiple marker "+markers.length+"...");
-        try {
-            //var titles = Object.keys(markers[0]).split(",");
-            for (var j = 0; j < markers.length; j++){
-                try {
-                    console.log("... add multiple marker (" + j + "):"
-                        + markers[j].name + ',' + markers[j].url + ',' + markers[j].lat + ',' + markers[j].lng);
-                    addSingleMarker(markers[j].name, markers[j].url, markers[j].lat, markers[j].lng, null,
-                        markers[j].popupContent);
-                }catch(e){
-                    console.warn(e.message);
-                }
+leafletUtil.addMultipleMarker = function(markers){
+    console.log("add multiple marker "+markers.length+"...");
+    try {
+        //var titles = Object.keys(markers[0]).split(",");
+        for (var j = 0; j < markers.length; j++){
+            try {
+                console.log("... add multiple marker (" + j + "):"
+                    + markers[j].name + ',' + markers[j].url + ',' + markers[j].lat + ',' + markers[j].lng);
+                leafletUtil.addSingleMarker(markers[j].name, markers[j].url, markers[j].lat, markers[j].lng, null,
+                    markers[j].popupContent);
+            }catch(e){
+                console.warn(e.message);
             }
-            console.log("... added multiple marker");
-        }catch(e){
-            console.error(e.message);
         }
+        console.log("... added multiple marker");
+    }catch(e){
+        console.error(e.message);
     }
+};
 
-    /**
-     * function to add every single company from java object in JSP page to a javascript array
-     */
-    var specialj =0;
-    function pushMarkerToArrayMarker(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,
+/**
+ * function to add every single company from java object in JSP page to a javascript array
+ */
+var specialj =0;
+leafletUtil.pushMarkerToArrayMarker = function(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,
                                      phoneVar,emailVar,faxVar,ivaVar,popupContentVar){
         try {
-            /*nameVar = document.getElementById('nameForm').value;*/
-          /*  console.log("pushing the element =>" +
-                "Name:" + nameVar + ',URL:' + urlVar + ',LAT:' + latVar + ',LNG:' + lngVar + "\n" +
-                "Regione:" + regionVar + ', Province:' + provinceVar + ',City:' + cityVar + ', Address:' + addressVar + "\n" +
-                "Phone:" + phoneVar + ', Email:' + emailVar + ', Fax:' + faxVar + ', Iva:' + ivaVar + "\n"
-            );*/
             leafletUtil.geoDocument = {};
             leafletUtil.geoDocument.name = nameVar;
             leafletUtil.geoDocument.url = urlVar;
@@ -524,28 +683,10 @@ leafletUtil.chooseIcon = function(category){
             leafletUtil.geoDocument.iva = ivaVar;
             leafletUtil.geoDocument.popupContent = popupContentVar;
 
-            var titles = Object.keys(leafletUtil.geoDocument).toString().split(",");
-            if(leafletUtil.geoDocument.popupContent ==null || leafletUtil.geoDocument.popupContent ==''){
-                var content = '<div class="popup-content"><table class="table table-striped table-bordered table-condensed">';
-                for (var title, i = 0; title = titles[i++];) {
-                    try {
-                        if (Array.isArray(leafletUtil.geoDocument[title])
-                            || (
-                            leafletUtil.geoDocument[title] !== null  && typeof leafletUtil.geoDocument[title] === 'object')
-                        )continue;
-                        //if (typeof leafletUtil.geoDocument[title] !== 'String' || leafletUtil.geoDocument[title] == 'popupContent') continue;
-                        if (leafletUtil.geoDocument[title].toString().indexOf('http') === 0) {
-                            leafletUtil.geoDocument[title] = '<a target="_blank" href="' + leafletUtil.geoDocument[title] + '">'
-                                + leafletUtil.geoDocument[title] + '</a>';
-                        }
-                        content += '<tr><th>' + title + '</th><td>' + leafletUtil.geoDocument[title] + '</td></tr>';
-                    } catch (e) {
-                        console.warn("Exception::pushMarkerToArrayMarker ->" + e.message);
-                    }
-                }//for
-                content += "</table></div>";
-                leafletUtil.geoDocument.popupContent = content;
+            if(leafletUtil.IsNull(leafletUtil.geoDocument.popupContent)) {
+                leafletUtil.geoDocument.popupContent = leafletUtil.preparePopupTable(leafletUtil.geoDocument);
             }
+
             console.info("... prepare marker (" + specialj + "):"
                 + leafletUtil.geoDocument.name + ',' + leafletUtil.geoDocument.url +
                 ',' + leafletUtil.geoDocument.lat + ',' + leafletUtil.geoDocument.lng + "," + leafletUtil.geoDocument.popupContent);
@@ -556,20 +697,21 @@ leafletUtil.chooseIcon = function(category){
         }catch(e){
             console.error("Exception::pushMarkerToArrayMarker ->" +  e.message);
         }
-    }
+    };
 
     /**
      * Add the Leaflet Plugin Search.
      * https://github.com/p4535992/leaflet-search.
      */
+    var geocoderSearchGoogle;
     function addPluginSearch(){
         if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
-        try{
-            geocoderSearchGoogle = new google.maps.Geocoder();
-        }catch(e){
-            console.warn("Warning:addPluginSearch->"+e.message);
-            geocoderSearchGoogle = null;
-        }
+        /*try{
+         geocoderSearchGoogle = new google.maps.Geocoder();
+         }catch(e){
+         console.warn("Warning:addPluginSearch->"+e.message);
+         geocoderSearchGoogle = null;
+         }*/
         console.log("compile addPluginSearch...");
         try {
             if (!jQuery.isEmptyObject(markerClusters)) {
@@ -626,83 +768,306 @@ leafletUtil.chooseIcon = function(category){
     }
 
 /** http://www.javascript-coder.com/javascript-form/javascript-form-value.phtml */
-leafletUtil.loadarrayOnInput = function(idForm,nameElementOrIndex){
-    //var oFormObject = document.forms[idForm];
-    //var oformElement = oFormObject.elements[nameElementOrIndex];
-    alert(67);
-    var arrayOfMarker = [];
-    for(var j = 0; j < leafletUtil.arrayGeoDocuments.length; j++){
-        var marker = {
-            name:leafletUtil.arrayGeoDocuments.length[j].name,
-            url: leafletUtil.geoDocument.url ,
-            latitude: leafletUtil.geoDocument.lat,
-            longitude: leafletUtil.geoDocument.lng ,
-            popupContent: leafletUtil.geoDocument.popupContent
-        };
-        arrayOfMarker.push(marker);
+leafletUtil.loadArrayOnInput2 = function(idForm,nameElementOrIndex){
+    leafletUtil.addNewArrayOfInputs(leafletUtil.markerList,idForm,nameElementOrIndex);
+    return document.forms[idForm].elements[nameElementOrIndex].value = JSON.stringify(leafletUtil.markerList);
+};
+
+leafletUtil.invokePluginFuseSearch = function(geojsonData,propsArray){
+    // Load the data from remote
+   /* jQuery.getJSON("data/lieux_culture_nantes.json", function(data) {
+        displayFeatures(data.features, layers, icons);
+        var props = ['nom_comple', 'libcategor', 'commune'];
+        fuseSearchCtrl.indexFeatures(data.features, props);
+    });*/
+    try {
+        var layers = [];
+        var icons = [];
+        console.info("10 invokePluginFuseSearch:: ->" + JSON.stringify(geojsonData));
+        leafletUtil.displayFeatures(geojsonData.features,layers, icons,null,null);
+        //var props = ['nom_comple', 'libcategor', 'commune'];
+        console.info('11 invokePluginFuseSearch:: ->'+ geojsonData.toString());
+        leafletUtil.fuseSearchCtrl.indexFeatures(geojsonData, propsArray);
+    }catch(e){
+        console.error('invokePluginFuseSearch:: ->'+e.message);
     }
-    alert(68);
-    alert("LOAD JSON:"+JSON.parse(JSON.stringify(arrayOfMarker,undefined,2)));
-    /*
-     When sending a single object (not list) that Spring controller will accept as a Java object,
-     the JSON format has to be only pair of curly braces with properties inside , avoid using JSON.stringify()
-     which actually adds one more property with object name and Jackson can't match. Following is the Javascript
-     code snippet to pass an object from Javascript to Spring controller:
-     */
-    document.forms[idForm].elements[nameElementOrIndex].value = JSON.stringify(arrayOfMarker,undefined,2);
-    jQuery.ajax({
-        type: "POST",
-        url: "markers",
-        data: arrayOfMarker,
-        dataType: "html",
-        contentType: "application/json",
-        mimeType: "application/json",
-        success: function(response){
-            console.info("SUCCESS: " + response);
+};
+
+/**
+ * Function for add to the map a Layer populate with multiple Layer created from the content of the
+ * map category.
+ * e.g.
+ * var categories = {
+ *  101 : {desc: "Musées & Châteaux", icon:"museum_archeological.png"},
+ *  103 : {desc: "Médiathèque", icon:"library.png"},
+ * };
+ * @param layersObject
+ * @param mapCategory
+ * @param layerGroupToPopulate
+ */
+leafletUtil.addLayerControlToMapCategory = function(layersObject,mapCategory,layerGroupToPopulate){
+    // Layer control, setting up 1 layer per category
+    //var layers = {};
+    //var  cultureLayer = L.layerGroup();
+    if(jQuery.isEmptyObject(layerGroupToPopulate)){
+        layerGroupToPopulate = L.layerGroup();
+    }
+    var layerCtrl = L.control.layers();
+    for (var icat in mapCategory) {
+        if(categories.hasOwnProperty(icat)) {
+            var layer = L.featureGroup();
+                layers[icat] = layer;
+                layerGroupToPopulate.addLayer(layer);
+
+            var cat = categories[icat],
+                desc = '<img class="layer-control-img" src="images/' + cat.icon + '"> ' + cat.desc;
+            layerCtrl.addOverlay(layer, desc);
+        }
+    }
+    layerGroupToPopulate.addTo(map);
+    layerCtrl.addTo(map);
+};
+
+leafletUtil.addPluginFuseSearch = function(stringNameToSearch,stringTypeToSearch,stringCategoryToSearch){
+    try {
+        // Add fuse search control
+        var options = {
+            position: 'topright',
+            title: 'Search Marker',
+            placeholder: 'put the name of the marker',
+            maxResultLength: 15,
+            threshold: 0.5,
+            showInvisibleFeatures: true,
+            showResultFct: function (feature, container) {
+                var props = feature.properties;
+                var name = L.DomUtil.create('b', null, container);
+                name.innerHTML = props[stringNameToSearch];
+
+                container.appendChild(L.DomUtil.create('br', null, container));
+                var info;
+                if(leafletUtil.IsNull(stringTypeToSearch) || leafletUtil.IsNull(stringCategoryToSearch)) {
+                    var cat = props[stringTypeToSearch] ? props[stringTypeToSearch] : props[stringCategoryToSearch];
+                    info = '' + cat + ', ' + props[stringNameToSearch];
+                }else{
+                    info = props[stringNameToSearch];
+                }
+                container.appendChild(document.createTextNode(info));
+            }
+        };
+        try {
+            leafletUtil.fuseSearchCtrl = L.control.fuseSearch(options);
+            map.addControl(leafletUtil.fuseSearchCtrl);
+        }catch(e){
+            console.error('addPluginFuseSearch::L.control.fuseSearch ->'+e.message);
+        }
+        //layerCtrl.addTo(map);
+    }catch(e){
+        console.error('addPluginFuseSearch ->'+e.message);
+    }
+};
+
+/**
+ * Method support for the Plugin FuseSearch generate and create the dropdown menu of the research.
+ */
+leafletUtil.displayFeatures = function(features, layers, icons,stringFeatureCategoryLayer,stringFeatureNameMarker) {
+    try {
+        //create div tiny-popup
+        var popup = L.DomUtil.create('div', 'tiny-popup', map.getContainer());
+        if (stringFeatureCategoryLayer == null) stringFeatureCategoryLayer = 'name';
+        if (stringFeatureNameMarker== null) stringFeatureNameMarker = 'name';
+        console.warn('SPECIAL:'+JSON.stringify(features));
+        for (var id in features) {
+            if (features.hasOwnProperty(id)) {
+                var geojsondata = features[id];
+                var cat = geojsondata.properties[stringFeatureCategoryLayer];
+                //Load GeoJson on the map
+                var site = L.geoJson(geojsondata, {
+                    pointToLayer: function (feature, latLng) {
+                        try {
+                            //Set L.Icon
+                            /* var icon;
+                             if(icons.isEmpty()){
+                             icon = new L.Icon.Default();
+                             }else{
+                             if(!jQuery.isEmptyObject(icons[cat])) icon = icons[cat];
+                             else icon = new L.Icon.Default();
+                             }*/
+                            //Set L.Marker
+                            var marker = L.marker(latLng, {
+                                icon: new L.Icon.Default(), keyboard: false, riseOnHover: true
+                            });
+                            //Set event Listener and zoom
+                            if (!L.touch) {
+                                marker.on('mouseover', function (e) {
+                                    var nom = e.target.feature.properties[stringFeatureNameMarker];
+                                    var pos = map.latLngToContainerPoint(e.latlng);
+                                    popup.innerHTML = nom;
+                                    L.DomUtil.setPosition(popup, pos);
+                                    L.DomUtil.addClass(popup, 'visible');
+
+                                }).on('mouseout', function () {
+                                    L.DomUtil.removeClass(popup, 'visible');
+                                });
+                            }
+                            return marker;
+                        }catch(e){
+                            console.error('Exception::leafletUtil.displayFeatures -> '+e.message);
+                        }
+                    },
+                    onEachFeature: function (feature, layer) {
+                        leafletUtil.onEachFeature_bindPopup(feature, layer);
+                    }
+                });
+            }
+            var layer = layers[cat];
+            if (layer !== undefined) layer.addLayer(site);
+        }
+    }catch(e){
+        console.error('displayFeatures ->'+e.message);
+    }
+    console.warn('SPECIAL 2:'+JSON.stringify(layer));
+    return layers;
+};
+
+leafletUtil.onEachFeature_bindPopup = function(feature, layer){
+    try {
+        // Keep track of the layer(marker)
+        feature.layer = layer;
+        var props = feature.properties;
+        if (props) {
+            var popupContent = feature.properties.popupContent;
+            layer.bindPopup(popupContent);
+        }
+    }catch(e){
+        console.error('Exception::leafletUtil.onEachFeature_bindPopup -> '+e.message);
+    }
+};
+
+leafletUtil.setupIcons = function(arrayJsonOrMap) {
+    var icons = {};
+    for (var cat in arrayJsonOrMap) {
+        if(arrayJsonOrMap[cat].hasOwnProperty('icon')) {
+            /*var icon = arrayJsonOrMap[cat]['icon'];
+            var url = "images/" + icon;*/
+            var icon = L.icon({
+                iconUrl: arrayJsonOrMap[cat]['icon'],
+                iconSize: [32, 32],
+                iconAnchor: [16, 37],
+                popupAnchor: [0, -28]
+            });
+            icons[cat] = icon;
+        }
+    }
+    return icons;
+};
+
+leafletUtil.loadPropertiesToGeoJson = function(myLayer,geoJsonPropertiesToAdd){
+    try {
+        //Marker:{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[11.3701787,44.5953705]}}
+        //Layer:{"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[11.3701787,44.5953705]}}]}
+        var geoJsonBase = myLayer.toGeoJSON();
+        if (leafletUtil.IsEmpty(myLayer)) { //if the layer json object is empty
+            myLayer = new L.markerClusterGroup({
+                disableClusteringAtZoom: 19,
+                iconCreateFunction: function (cluster) {
+                    return L.divIcon({
+                        html: cluster.getChildCount(), className: 'mycluster', iconSize: null
+                    });
+                }
+            });
+        }
+        // Add custom popups to each using our custom feature properties
+        /*myLayerGroup.on('layeradd', function (e) {
+            for (var key in objectProperties) {
+                //feature.properties.news = 23; //add/update a properties to the feature.
+                e.layer.properties[key] = objectProperties[key];
+            }
+        });*/
+        //If is the geoJson of a Layer or of a Marker.....
+        if (geoJsonBase.hasOwnProperty('features'))geoJsonBase = geoJsonBase.features;
+        for (var key in geoJsonBase) {
+            if (geoJsonBase.hasOwnProperty(key) && key == 'properties') {
+                //is a empty object.........
+                console.warn('empty?' + JSON.stringify(geoJsonBase.properties));
+                if (leafletUtil.IsEmpty(geoJsonBase.properties)) { //if the properties json object is empty
+                    //console.warn('20:'+JSON.stringify(geoJsonBase));
+                    for (var key2 in geoJsonPropertiesToAdd) {
+                        //add the new property...
+                        geoJsonBase.properties[key2] = geoJsonPropertiesToAdd[key2];
+                        //console.warn('21:'+JSON.stringify(geoJsonBase));
+                    }
+                }
+                console.warn('19:'+JSON.stringify(geoJsonBase));
+            }
+        }
+        console.warn('22:'+JSON.stringify(geoJsonBase));
+        //var layerGeoJsonBase = L.geoJson(geoJsonBase);
+        //myLayer.addLayer(layerGeoJsonBase);
+        return geoJsonBase;
+    }catch(e){
+        console.error('loadPropertiesGeoJson -> '+e.message);
+    }
+};
+
+leafletUtil.getGeoJsonContentFromLayer = function(myLayerGroup){
+    try{
+        if(!$.isEmptyObject(myLayerGroup)) {
+            console.log("Marker cluster is not empty go to check the Marker.");
+            myLayerGroup.eachLayer(function (layer) {
+                //note layer == marker
+                try {
+                    var lat = layer.getLatLng().lat;
+                    var lng = layer.getLatLng().lng;
+                    var label;
+                    if(lat!=0 && lng !=0) {
+                        label = layer.label._content; //get name with Leaflet.Label
+                        var popupContent = layer.getPopup().getContent();
+                        console.info("marker number():" + lat + "," + lng + "," + label);
+                        //array.push({name: label, latitude: lat, longitude: lng, popupContent: popupContent});
+                    }
+                    //i++;
+                }catch(e){
+                    console.error("Exception:getGeoJsonContentOfLayer -> "+e.message);
+                }
+            });
+        }
+    }catch(e){
+        console.error("Exception:getGeoJsonContentOfLayer -> "+e.message);
+    }
+};
+
+leafletUtil.loadGeoJsonToLayer =
+    function(myLayerGroup,geoJsonData,styleFunction,coordsToLatLngFunction,onEachFeatureFunction,pointToLayerFunction){
+    //Customize
+    var myLayer = L.geoJson(undefined, {
+        style: function (feature) {
+            return feature.properties.style;
         },
-        error: function (e) {
-            console.info("Error " + e.message);
+        // correctly map the geojson coordinates on the image
+        coordsToLatLng: function(coords) {
+            return rc.unproject(coords);
+        },
+        // add a popup content to the marker
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature.properties.name);
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: 8,
+                fillColor: "#800080",
+                color: "#D107D1",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            });
         }
     });
-    //document.forms[idForm].elements[nameElementOrIndex].value = arrayOfMarker;
-    //return arrayOfMarker;
+    myLayer.addData(geoJsonData);
+    myLayer.addTo(map);
+
 };
 
 
-    function addPluginFileLayer(){
-        if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
-        // line style
-        var style = {color:'red', fillColor: "#ff7800", opacity: 1.0, fillOpacity: 0.8, weight: 2, clickable: false};
-        L.Control.FileLayerLoad.LABEL = '<i class="fa fa-folder-open"></i>';
-
-        var geoJsonOptions = {
-            onEachFeature: function (feature, layer) {
-                layer.bindPopup(feature.properties.description);},
-
-            style: style,
-            pointToLayer: function (data, latlng) {
-                // setup popup, icons...
-                return L.marker(latlng, {icon: myIcon});
-            }
-        };
-
-        L.Control.fileLayerLoad({layerOptions: geoJsonOption, }).addTo(map);
-    }
-
-    /** Move marker to confirm that label moves when marker moves (first click)
-     * Remove marker on click so we can check that the label is also removed (second click)
-     */
-   /* function onMarkerClick() {
-        var clicks = 0;
-        clicks++;
-        if (clicks === 1) {
-            marker.setLatLng(map.getCenter());
-        } else {
-            marker.off('click', onMarkerClick);
-            map.removeLayer(m);
-            if(clicks > 1) clicks = 0;
-        }
-    }*/
 
 
 
@@ -720,9 +1085,13 @@ String.prototype.format = function(){
 };
 
 String.prototype.replaceAll = function(toSearch,toreplace){
-    return this.split(toSearch).join(toreplace);
+    if(this.includes(toSearch)) return this.split(toSearch).join(toreplace);
+    else return this;
 };
 
+Array.prototype.isEmpty = function(){
+    return !(typeof this != "undefined" && this != null && this.length > 0);
+};
 
 
 

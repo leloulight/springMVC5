@@ -430,5 +430,6 @@
     <orderEntry type="library" name="Maven: org.onebusaway:onebusaway-gtfs-realtime-api:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.transit:gtfs-realtime-bindings:0.0.3" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:2.5.0" level="project" />
+    <orderEntry type="library" name="loader" level="application" />
   </component>
 </module>

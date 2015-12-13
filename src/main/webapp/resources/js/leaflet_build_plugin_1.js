@@ -217,6 +217,76 @@ function formatJSON(rawjson) {
     }
     return json;
 }
+
+/*** function for remove all cluster when the map is move */
+ function onMapMove() {
+     //Se muovi la mappa rimuove tutti i marker funziona!!.
+     removeClusterMarker();
+ }
+
+/*** function Set a popup when you click on the map*/
+function onMapClick(e) {
+    var popupGlobal = L.popup();
+    popupGlobal.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+}
+
+/** Move marker to confirm that label moves when marker moves (first click)
+ * Remove marker on click so we can check that the label is also removed (second click)
+ */
+/* function onMarkerClick() {
+ var clicks = 0;
+ clicks++;
+ if (clicks === 1) {
+ marker.setLatLng(map.getCenter());
+ } else {
+ marker.off('click', onMarkerClick);
+ map.removeLayer(m);
+ if(clicks > 1) clicks = 0;
+ }
+ }*/
+
+/** http://www.javascript-coder.com/javascript-form/javascript-form-value.phtml */
+function loadArrayOnInput1(idForm,nameElementOrIndex){
+    //var oFormObject = document.forms[idForm];
+    //var oformElement = oFormObject.elements[nameElementOrIndex];
+    console.info(67);
+    var arrayOfMarker = [];
+    for(var j = 0; j < leafletUtil.arrayGeoDocuments.length; j++){
+        var marker = {
+            name:leafletUtil.arrayGeoDocuments.length[j].name,
+            url: leafletUtil.geoDocument.url ,
+            latitude: leafletUtil.geoDocument.lat,
+            longitude: leafletUtil.geoDocument.lng ,
+            popupContent: leafletUtil.geoDocument.popupContent
+        };
+        arrayOfMarker.push(marker);
+    }
+    console.info(68);
+    console.info("LOAD JSON:"+JSON.parse(JSON.stringify(arrayOfMarker)));
+    /*
+     When sending a single object (not list) that Spring controller will accept as a Java object,
+     the JSON format has to be only pair of curly braces with properties inside , avoid using JSON.stringify()
+     which actually adds one more property with object name and Jackson can't match. Following is the Javascript
+     code snippet to pass an object from Javascript to Spring controller:
+     */
+    document.forms[idForm].elements[nameElementOrIndex].value = JSON.stringify(arrayOfMarker);
+    jQuery.ajax({
+        type: "POST",
+        url: "markers",
+        data: arrayOfMarker,
+        dataType: "html",
+        contentType: "application/json",
+        mimeType: "application/json",
+        success: function(response){
+            console.info("SUCCESS: " + response);
+        },
+        error: function (e) {
+            console.info("Error " + e.message);
+        }
+    });
+}
+
+
 /*preparePopupColumn = function(json,popupContent,nameKey){
     for(var key in json){
         console.warn("Key:"+key+","+json[key]); //bbbox [object]
@@ -282,3 +352,77 @@ function formatJSON(rawjson) {
     return popupContent;
 };*/
 
+/*
+
+leafletUtil.IsEmpty = function(object){ leafletUtil.Is(object,'empty');};
+leafletUtil.IsJson = function(object){leafletUtil.Is(object,'json');};
+leafletUtil.IsNull = function(object){leafletUtil.Is(object,'null');};
+leafletUtil.IsUndefined =  function(object){leafletUtil.Is(object,'undefined');};
+leafletUtil.IsString =  function(object){leafletUtil.Is(object,'string');};
+leafletUtil.IsArray =  function(object){leafletUtil.Is(object,'array');};
+leafletUtil.IsEmpty =  function(object){leafletUtil.Is(object,'empty');};
+leafletUtil.IsObject =  function(object){leafletUtil.Is(object,'object');};
+leafletUtil.Is = function(object,stringValue){
+    try {
+        if (stringValue)stringValue = stringValue.toString().toLowerCase();
+        switch(stringValue){
+            case 'json':{
+                try { return !!JSON.parse(JSON.stringify(object));
+                } catch (e) { return false;}
+            }
+            case 'null':return (object === null || object == null);
+            case 'undefined': return (object === undefined);
+            case 'string': return object.constructor === "test".constructor;
+            case 'array': return (Array.isArray(object) || object.constructor === [].constructor);
+            case 'empty': return (Object.keys(object).length == 0 || object == '' || JSON.stringify(object)=='{}');
+            case 'object': return (object.constructor === {}.constructor || typeof object === 'object');
+            default: return false;
+        }
+    }catch(e){
+        console.error('Is -> '+e.message);
+    }
+};*/
+
+/*
+leafletUtil.Is = function(object,stringValue){
+    try {
+        if (stringValue)stringValue = stringValue.toString().toLowerCase();
+        switch(stringValue){
+            case 'json':{
+                try {
+                    return !!JSON.parse(JSON.stringify(object));
+                } catch (e) { return false;}
+            }
+            case 'null':return (object === null || object == null);
+            case 'undefined':
+
+        }
+    else if (object === undefined) {
+            if (stringValue)return stringValue == 'undefined';
+            else return 'undefined';
+        }
+        else if (object.constructor === "test".constructor) {
+            if (stringValue)return stringValue == 'string';
+            else return 'string';
+        }
+        else if (Array.isArray(object) || object.constructor === [].constructor) {
+            if (stringValue)return stringValue == 'array';
+            else return 'array';
+        }
+        //is string or json,object empty
+        else if (Object.keys(object).length == 0 || object == '' || JSON.stringify(object)=='{}') {
+            if (stringValue)return stringValue == 'empty';
+            else return 'empty';
+        }
+        else if (object.constructor === {}.constructor || typeof object === 'object') {
+            if (stringValue)return stringValue == 'object';
+            else return 'object';
+        }
+        else {
+            if (stringValue)return false;
+            else return '?';
+        }
+    }catch(e){
+        console.error('Is -> '+e.message);
+    }
+};*/

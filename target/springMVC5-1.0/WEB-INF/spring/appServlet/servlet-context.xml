@@ -44,7 +44,9 @@
     <!-- ================================================================================== -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<!-- For work with html page you can put a static directory on the webapp outside WEB-INF-->
-	<mvc:resources mapping="/static/**" location="/static/" />
+	<!--<mvc:resources mapping="/static/**" location="/static/" />-->
+	<!-- other -->
+	<mvc:resources mapping="/jspm_packages/**" location="/jspm_packages/" />
 	<tx:annotation-driven />
 
 	<!-- ================================================================================== -->
@@ -220,7 +222,7 @@
 	<!-- ================================================================================== -->
 	<!-- SUPPORT GTFS  -->
 	<!-- ================================================================================== -->
-	<beans:bean name="jacksonObjectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+	<!--<beans:bean name="jacksonObjectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
 		<beans:property name="featuresToDisable">
 			<beans:array>
 				<util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS"/>
@@ -233,10 +235,19 @@
 				<beans:property name="objectMapper" ref="jacksonObjectMapper"/>
 			</beans:bean>
 		</mvc:message-converters>
-	</mvc:annotation-driven>
+	</mvc:annotation-driven>-->
 
-	<!-- GTFS Setup -->
-	<!--<beans:bean id="gtfs" class="org.onebusaway.gtfs.impl.GtfsDaoImpl">-->
+	<!-- SUPPORT JACKSON ASL MAPPER -->
+	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<beans:property name="messageConverters">
+			<beans:list>
+				<beans:ref bean="jacksonMessageConverter" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="defaultViews" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 
 
 </beans:beans>

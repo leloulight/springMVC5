@@ -1,11 +1,13 @@
 package com.github.p4535992.mvc.object.model.site;
 
+import java.io.Serializable;
+
 /**
  * Created by 4535992 on 18/06/2015.
  * @author 4535992.
  * @version 2015-07-02.
  */
-public class MarkerInfo {
+public class MarkerInfo  implements Serializable {
 
     private String city;
     private String province;

@@ -8,23 +8,6 @@
 <head>
   <title>ServiceMap</title>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
- <%-- <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <link rel="stylesheet" href="/WebAppGrafo/css/leaflet-gps.css" type="text/css" />
-  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
-  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
-  <link rel="stylesheet" href="/WebAppGrafo/css/leaflet.awesome-markers.css">
-  <script src="/WebAppGrafo/js/leaflet.awesome-markers.min.js"></script>
-  <script src="/WebAppGrafo/js/leaflet-gps.js"></script>
-  <script src="/WebAppGrafo/js/leaflet.markercluster.js"></script>
-  <script src="/WebAppGrafo/js/mustache.js"></script>
-  <script src="/WebAppGrafo/js/mustache.min.js"></script>
-  <link rel="stylesheet" href="/WebAppGrafo/css/MarkerCluster.css" type="text/css" />
-  <link rel="stylesheet" href="/WebAppGrafo/css/MarkerCluster.Default.css" type="text/css" />
-  <link rel="stylesheet" href="/WebAppGrafo/css/style.css" type="text/css" />--%>
 
     <!-- PLUGIN LEAFLET CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/awesome-markers/leaflet.awesome-markers.css"/>
@@ -35,11 +18,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jquery/jquery-ui1.10.04.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/bootstrap/css/bootstrap.css"/>
 
+
     <!-- OTHER -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/Control.Geocoder.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/leaflet.label.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/leaflet/plugin/fuseSearch/src/leaflet.fusesearch.css"/>
 
     <!-- CSS Servicemap -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
@@ -69,15 +54,10 @@
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/label/leaflet.label-src.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/search/leaflet-search.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/leaflet/plugin/control-geocoder/Control.Geocoder.js"></script>
-
+    <script src="${pageContext.request.contextPath}/jspm_packages/github/krisk/Fuse@1.3.1/src/fuse.js"></script>
+    <script src="${pageContext.request.contextPath}/jspm_packages/github/naomap/leaflet-fusesearch@master/src/leaflet.fusesearch.js"></script>
 
     <!-- JS JQUERY SUPPORT -->
-    <%--<script src="${pageContext.request.contextPath}/resources/js/jquery/jquery2.1.4.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery-1.10.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery-migrate-1.2.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery-ui1.10.4.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery.csv-0.71.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery/bootstrap2.3.2.min.js"></script>--%>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -86,10 +66,17 @@
    <!-- JS - leafletmap support -->
    <script src="${pageContext.request.contextPath}/resources/js/ServiceMap/leaflet_buildMap_support_2.js" type="text/javascript"></script>
    <!-- Modified from 4535992 -->
+   <%-- <script> var ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));</script>--%>
 </head>
 <body class="Chrome"
      <%-- onload="getBusLines();--%> <!-- Modified from 4535992 -->
             changeLanguage('ENG')">
+<!-- Work for the futture we can upgrade all the code to the jspm package manager -->
+<%--<script src="${pageContext.request.contextPath}/jspm_packages/system.js"></script>
+<script src="${pageContext.request.contextPath}/config.js"></script>--%>
+<%--<script>
+    System.import("${pageContext.request.contextPath}/resources/js/ServiceMap/leaflet_buildMap_support_2.js");
+</script>--%>
 <script>
 
   (function (i, s, o, g, r, a, m) {
@@ -227,21 +214,13 @@
                     <input id="urlForm" name="urlParam" type="hidden" value="<c:out  value="${idMarker.url}" />"/>
                     <input id="latForm" name="latParam" type="hidden" value="<c:out  value="${idMarker.latitude}" />"/>
                     <input id="lngForm" name="lngParam" type="hidden" value="<c:out  value="${idMarker.longitude}" />"/>
-                  <%--  <input id="regionForm" name="regionParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.region}" />"/>
-                    <input id="provinceForm" name="provinceParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.province}" />"/>
-                    <input id="cityForm" name="cityParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.city}" />"/>
-                    <input id="addressForm" name="addressParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.address}" />"/>
-                    <input id="phoneForm" name="phoneParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.phone}" />"/>
-                    <input id="emailForm" name="emailParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.email}" />"/>
-                    <input id="faxForm" name="faxParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.fax}" />"/>
-                    <input id="ivaForm" name="ivaParam" type="hidden" value="<c:out  value="${idMarker.markerInfo.iva}" />"/>--%>
                     <input id="<c:out value="${idMarker.id}" />" name="popupContentParam" type="hidden" value="<c:out  value="${idMarker.popupContent}" />"/>
                   </p>
                   <script type="text/javascript">
                     //leaflet_buildMap_support.initMap();
                     try{
                         var content = document.getElementById("<c:out value="${idMarker.id}"/>").value; //need for automatic parse from Spring
-                        //var content = "<c:out  value="${idMarker.popupContent}" escapeXml="false"/>";
+                        /*var content = '<c:out  value="${idMarker.popupContent}" escapeXml="false"/>';*/
                         alert("Content:" + content);
                         leaflet_buildMap_support_2.pushMarkerToArrayMarker(
                                 "${idMarker.name}","${idMarker.url}","${idMarker.latitude}","${idMarker.longitude}",
@@ -256,8 +235,10 @@
               </c:if>
               TrackMyURL:
               <c:url var="url" value="/map3" />
-              <form:form action="${url}" method="post" id="/map3">
-                <input type="hidden" name="arrayParam" value="" title="arrayParam"/>
+              <form:form action="${url}" method="post" id="/map3" modelAttribute="arrayParam"
+                         onsubmit="leafletUtil.loadArrayOnInput2('/map3','arrayParam')">
+                <%--<form:input type="hidden" path="${arrayMarker}"/>--%>
+               <%-- <input id="specialArray" type="hidden" name="arrayParam" value="" title="arrayParam"/>--%>
                 <input type="text" name="urlParam" value=""  title="urlParam"/>
                 <input type="submit" name="urlFormParam" value="urlForm" />
               </form:form>
@@ -269,15 +250,19 @@
                   <li>LNG:<c:out value="${marker.longitude}"/></li>
                 </ul>
               </c:if>
+
             </li>
             <%--GET MARKERS--%>
             <li>
-              <c:url var="url2" value="/map4" />
-              <form:form action="${url2}" method="post" onSubmit="getMarkers('loadMarker');">
-                <div id="loadMarker">
-                    <%--<input type="button" value="Get Markers" id="getMarkers"  />--%>
+              <c:url var="url2" value="/map3" />
+              <%--not work with namespace--%>
+              <%--<form:form action="${url2}" method="post" onSubmit="getMarkers('loadMarker');">--%>
+              <form:form action="${url2}" method="post" id="/map4" onsubmit="leafletUtil.loadArrayOnInput2('/map4','arrayParam')">
+               <%-- <div id="loadMarker">
+                    &lt;%&ndash;<input type="button" value="Get Markers" id="getMarkers"  />&ndash;%&gt;
                   <input type="submit" name="GetMarkersParam" value="getMarkers" />
-                </div>
+                </div>--%>
+                  <input type="submit" name="GetMarkersParam" value="getMarkers" />
               </form:form>
             </li>
             <li>
@@ -290,10 +275,11 @@
               <!-- Added from 4535992-->
               <div id="geocode-selector"></div>
             </li>
+              <!-- Add Json Uploader -->
             <li>
               <c:url var="url00" value="/markers" />
               <form:form action="${url00}" method="post" id="/markers"
-                         onsubmit="leafletUtil.loadarrayOnInput('/markers','arrayParam')">
+                         onsubmit="leafletUtil.loadArrayOnInput2('/markers','arrayParam')">
                 <input type="hidden" name="arrayParam" value="" title="arrayParam"/>
                <%-- <input type="text" name="urlParam" value=""  title="urlParam"/>--%>
                 <input type="submit" name="loadJsonFormParam" value="loadJsonForm" />

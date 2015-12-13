@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,6 +8,23 @@
 <title>Grafo Strade</title>
 </head>
 <body>
+<script src="${pageContext.request.contextPath}/jspm_packages/system.js"></script>
+<script src="${pageContext.request.contextPath}/config.js"></script>
+<script src="https://jspm.io/loader.js"></script>
+<script>
+    //http://stackoverflow.com/questions/6615641/how-do-you-get-the-contextpath-from-javascript-the-right-way
+    /*function getContextPath() {
+        return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+    }*/
+    var ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+    //var System = require('jspm').Loader();
+    try{
+        //work
+        System.import(ctx+'/resources/js/ServiceMap/test.js');
+    }catch(e){
+        console.error("1:"+e.message);
+    }
+</script>
 <P>  The time on the server is ${serverTime}. </P>
 <p> Go to the ServiceMap:   <input type="button" value="goMap" id="goMap"  /></p>
 <p> Go to the ServiceMap 2:   <input type="button" value="goMap" id="goMap13"  /></p>
@@ -31,13 +47,13 @@
 			window.location.replace(location+'map13');
 		});
 
-		$('#goGTFSMap').click(function () {
+		/*$('#goGTFSMap').click(function () {
 			window.location.replace(location+'static/test/gtfs.html');
 		});
 
         $('#goGTFSMapH').click(function () {
             window.location.replace(location+'/static/gtfsMap.html');
-        });
+        });*/
 
 		$('#gologBack').click(function () {
 			//alert(location); //http://localhost:8080/
