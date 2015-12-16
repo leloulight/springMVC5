@@ -8,9 +8,10 @@
 <title>Grafo Strade</title>
 </head>
 <body>
-<script src="${pageContext.request.contextPath}/jspm_packages/system.js"></script>
+
+<%--<script src="${pageContext.request.contextPath}/jspm_packages/system.js"></script>
 <script src="${pageContext.request.contextPath}/config.js"></script>
-<script src="https://jspm.io/loader.js"></script>
+<script src="https://jspm.io/loader.js"></script>--%>
 <script>
     //http://stackoverflow.com/questions/6615641/how-do-you-get-the-contextpath-from-javascript-the-right-way
     /*function getContextPath() {
@@ -20,7 +21,8 @@
     //var System = require('jspm').Loader();
     try{
         //work
-        System.import(ctx+'/resources/js/ServiceMap/test.js');
+        //System.import(ctx+'/resources/js/ServiceMap/test.js');
+
     }catch(e){
         console.error("1:"+e.message);
     }
@@ -32,7 +34,30 @@
 <P> Go to to GTFS Map:  <input type="button" value="goGTFSMap" id="goGTFSMap"  /></P>
 <%--<P> Go to to GTFS Map HTML:  <input type="button" value="goGTFSMapH" id="goGTFSMapH"  /></P>--%>
 <script>
+    /*function getContentInput(idContainer){
+        try {
+            var elements = document.getElementById(idContainer).getElementsByTagName('input');
+            var images = document.getElementById(idContainer).getElementsByTagName('img');
+            var cats = [];
+            for (var i = 0; i < elements.length; i++) {
+                var sCat = {};
+                var el = elements[i];
+                var cat = {clazz: el.className, value: el.value, name: el.name, img: images[i].src};
+                sCat[i] = cat;
+                cats.push(sCat);
+            }
+            var json = {categories:cats};
+            console.error(JSON.stringify(json));
+        }catch(e){
+            console.error(e.message);
+        }
+    }*/
+
+
 	$( document ).ready(function() {
+
+        //getContentInput('categorie');
+
 		$('#goMap').click(function () {
 			//alert(location); //http://localhost:8080/
 			//var map = location.toString().split("/");

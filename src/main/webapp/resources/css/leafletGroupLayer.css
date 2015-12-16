@@ -1,0 +1,29 @@
+input.macrocategory {
+    padding: 10px;
+    transform: scale(1.3);
+}
+input.subcategory {
+    padding: 10px;
+    transform: scale(0.9);
+}
+.toggle-subcategory {
+    background-color: #ddd;
+    color: #444;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0 3px;
+}
+.subcategory-content {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    display: none;
+    max-height: 190px;
+    overflow-y: auto;
+    padding: 5px;
+    white-space: nowrap;
+}
+
+.macrocategory-label {
+    font-weight: bold;
+}

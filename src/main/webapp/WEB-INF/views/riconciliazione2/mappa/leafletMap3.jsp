@@ -2290,7 +2290,8 @@ N. risultati:
 <script>
 //jQuery( document ).ready(function() {
   // $("#embed").hide();
-  var ctx = "http://localhost:8181/SpringMVC5";
+  var ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+  //var ctx = "http://localhost:8181/SpringMVC5";
   //var ctx = "http://servicemap.disit.org/WebAppGrafo";
   var query = new Object();
   var parentQuery = "";
@@ -3074,6 +3075,7 @@ N. risultati:
   //http://a.tile.thunderforest.com/landscape/{z}/{x}/{y}.png
   //var osm = L.tileLayer('http://a.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'});
 
+  <!-- Modified from 4535992 -->
   var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
                   '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
                   'Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -3082,15 +3084,15 @@ N. risultati:
           satellite = L.tileLayer(mbUrl, {id: 'mapbox.streets-satellite', attribution: mbAttr}),
           grayscale = L.tileLayer(mbUrl, {id: 'pbellini.f33fdbb7', attribution: mbAttr});
   //var map = L.map('map', { center: [43.3555664, 11.0290384],zoom: 8,layers: [satellite]});
-  <!-- Modified from 4535992 -->
+
   var map = L.map('map').fitWorld().addLayer(satellite);
   var baseMaps = {
     "Streets": streets,
     "Satellite": satellite,
     "Grayscale": grayscale
   };
-  var toggleMap = L.control.layers(baseMaps, null, {position: 'bottomright', width: '50px', height: '50px'});
-  toggleMap.addTo(map);
+  /*var toggleMap = L.control.layers(baseMaps, null, {position: 'bottomright', width: '50px', height: '50px'});
+  toggleMap.addTo(map);*/
   if (getUrlParameter("map") == "streets") {
     map.removeLayer(satellite);
     map.addLayer(streets);
@@ -3100,9 +3102,11 @@ N. risultati:
     map.addLayer(grayscale);
   }
 
+
   // DEFINIZIONE DEI CONFINI MASSIMI DELLA MAPPA
-  var bounds = new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4));
-  map.setMaxBounds(bounds);
+/*  var bounds = new L.LatLngBounds(new L.LatLng(41.7, 8.4), new L.LatLng(44.930222, 13.4));
+  map.setMaxBounds(bounds);*/
+   <!-- end of modification 4535992 -->
   // GENERAZIONE DEI LAYER PRINCIPALI
   var busStopsLayer = new L.LayerGroup();
   var servicesLayer = new L.LayerGroup();
@@ -3270,7 +3274,17 @@ N. risultati:
     init();
       <!-- Added from 4535992 -->
     leaflet_buildMap_support_2.initLeaflet;
+      //var ctxbase =  window.location.toString();
+      //var ctx0 = window.location.pathname; ///mpa13
+      //var ctx1 = window.location.pathname.indexOf("/",2); //-1
+      //ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+      //console.info('ctxBase:'+ctxbase+',ctx0:'+ctx0+',ctx1:'+ctx1+',ctx:'+ctx);
+      ctx = prepareCTX();
+    leafletUtil.setCtx(ctx);
   });
+
+
+
   function init() {
     // CREO LE TABS JQUERY UI NEL MENU IN ALTO
     $("#tabs").tabs();
