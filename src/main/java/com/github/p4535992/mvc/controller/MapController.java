@@ -6,7 +6,6 @@ import com.github.p4535992.mvc.object.model.site.MarkerList;
 import com.github.p4535992.mvc.service.dao.MapService;
 import com.github.p4535992.mvc.view.JsonUtilities;
 import com.github.p4535992.util.html.JSoupKit;
-import com.github.p4535992.util.log.SystemLog;
 import com.github.p4535992.util.string.StringUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,6 +32,9 @@ import java.util.List;
 @Controller
 @PreAuthorize("hasRole('ROLE_USER')")
 public class MapController {
+
+    private static final org.slf4j.Logger logger =
+            org.slf4j.LoggerFactory.getLogger(MapController.class);
 
     @Autowired
     MapService mapService;
@@ -251,7 +253,7 @@ public class MapController {
     @RequestMapping(value="/fileupload",method=RequestMethod.POST )
     public @ResponseBody String uploadFile(@RequestParam("uploader") MultipartFile file){
         try{
-            SystemLog.message("file is " + file.toString());
+            logger.info("file is " + file.toString());
         }catch(Exception e){
             return "error occured "+e.getMessage();
         }
@@ -286,16 +288,16 @@ public class MapController {
                 BufferedOutputStream stream = new BufferedOutputStream( new FileOutputStream(serverFile));
                 stream.write(bytes);
                 stream.close();
-                SystemLog.message("Server File Location=" + serverFile.getAbsolutePath());
-                SystemLog.message("You successfully uploaded file=" + name);
+                logger.info("Server File Location=" + serverFile.getAbsolutePath());
+                logger.info("You successfully uploaded file=" + name);
                 listFiles.add(convertMultiPartFileToFile(file));
                 return "redirect:/map";
             } catch (Exception e) {
-                SystemLog.error("You failed to upload " + name + " => " + e.getMessage());
+                logger.error("You failed to upload " + name + " => " + e.getMessage());
                 return "redirect:/map";
             }
         } else {
-            SystemLog.message("You failed to upload " + name + " because the file was empty.");
+            logger.info("You failed to upload " + name + " because the file was empty.");
             return "redirect:/map13";
         }
     }
@@ -307,7 +309,7 @@ public class MapController {
     public @ResponseBody String uploadMultipleFileHandler(@RequestParam("name") String[] names,
                                      @RequestParam("file") MultipartFile[] files) throws IOException {
         if (files.length != names.length){
-           SystemLog.warning("Mandatory information missing");
+            logger.warn("Mandatory information missing");
            return null;
         }
         String message = "";
@@ -328,15 +330,15 @@ public class MapController {
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
                 stream.write(bytes);
                 stream.close();
-                SystemLog.message("Server File Location=" + serverFile.getAbsolutePath());
+                logger.info("Server File Location=" + serverFile.getAbsolutePath());
                 message = message + "You successfully uploaded file=" + name
                         + "<br />";
             } catch (Exception e) {
-                SystemLog.error("You failed to upload " + name + " => " + e.getMessage());
+                logger.error("You failed to upload " + name + " => " + e.getMessage());
                 return "redirect:/map";
             }
         }
-        SystemLog.message(message);
+        logger.info(message);
         return "redirect:/map13";
     }
 

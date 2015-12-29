@@ -17,3 +17,26 @@ function getContentInput(idContainer){
     }
 }
 
+function parseURL(href){
+   /* var a = document.createElement('a');
+    a.href = 'http://www.example.com:123/foo/bar.html?fox=trot#foo';*/
+
+    var arr = [];
+
+    ['href','protocol','host','hostname','port','pathname','search','hash'].forEach(function(k) {
+        //console.log(k+':', href[k]);
+        arr.push(href[k]);
+    });
+
+    /*//Output:
+     href: http://www.example.com:123/foo/bar.html?fox=trot#foo
+     protocol: http:
+     host: www.example.com:123
+     hostname: www.example.com
+     port: 123
+     pathname: /foo/bar.html
+     search: ?fox=trot
+     hash: #foo
+     */
+}
+

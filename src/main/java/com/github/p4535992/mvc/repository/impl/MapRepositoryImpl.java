@@ -4,7 +4,6 @@ import com.github.p4535992.extractor.estrattori.ExtractInfoWeb;
 import com.github.p4535992.extractor.object.model.GeoDocument;
 import com.github.p4535992.mvc.object.model.site.Marker;
 import com.github.p4535992.util.database.sql.SQLHelper;
-import com.github.p4535992.util.log.SystemLog;
 
 import com.github.p4535992.util.repositoryRDF.sesame.Sesame28Kit;
 import com.github.p4535992.mvc.object.model.site.MarkerInfo;
