@@ -57,6 +57,11 @@
     <script src="${pageContext.request.contextPath}/jspm_packages/github/krisk/Fuse@1.3.1/src/fuse.js"></script>
     <script src="${pageContext.request.contextPath}/jspm_packages/github/naomap/leaflet-fusesearch@master/src/leaflet.fusesearch.js"></script>
 
+    <!-- New Leaflet Plugin -->
+    <script src="${pageContext.request.contextPath}/jspm_packages/github/ismyrnow/Leaflet.groupedlayercontrol@0.4.0/src/leaflet.groupedlayercontrol.js">
+    </script>
+    <link href="${pageContext.request.contextPath}/jspm_packages/github/ismyrnow/Leaflet.groupedlayercontrol@0.4.0/src/leaflet.groupedlayercontrol.css" rel='stylesheet' />
+
     <!-- JS JQUERY SUPPORT -->
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -3279,8 +3284,10 @@ N. risultati:
       //var ctx1 = window.location.pathname.indexOf("/",2); //-1
       //ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
       //console.info('ctxBase:'+ctxbase+',ctx0:'+ctx0+',ctx1:'+ctx1+',ctx:'+ctx);
-      ctx = prepareCTX();
-    leafletUtil.setCtx(ctx);
+
+      //WORK
+      //ctx = leafletUtil.prepareCTX();
+      //leafletUtil.setCtx(ctx);
   });
 
 

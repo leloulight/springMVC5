@@ -565,37 +565,35 @@ var mapBoxAPIKey =
 
 /** Set the Leaflet.markercluster for Leaflet. https://github.com/Leaflet/Leaflet.markercluster */
 var markerClusters = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50});
-/** Set the Leaflet Plugin Search. https://github.com/p4535992/leaflet-search.*/
-var controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
-var geoCoderGoogle;
 
+//var geoCoderGoogle;
 
+//----------------------------------------------------
+//Field object support
+//----------------------------------------------------
 
-
-//Field object suppport
 leafletUtil.geoDocument = {name:'',url:'',lat:'',lng:'',region:'',province:'',city:'',
     address:'',phone:'',email:'',fax:'',iva:'',popupContent:'',other:'',marker:{}};
 leafletUtil.arrayGeoDocuments =[]; // array support of makers
 leafletUtil.markerList = [];
 leafletUtil.marker = {name:'',url:'',latitude:'',longitude:'',popupContent:'',category:'',id:''};
-leafletUtil.overlayMaps = {};
-function prepareCTX(){
-    if(window.location.pathname.indexOf("/",2) == -1){
-        return  window.location.toString().replace(window.location.pathname,'');
-    }else{
-        return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-    }
-}
-leafletUtil.setCtx = function(ctx){
-    alert('set ctx:'+ctx);
-    leafletUtil.ctx = ctx;
-};
+leafletUtil.arrayLatLng =[];
+leafletUtil.icons = {};
 
 leafletUtil.ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 
-//Set the Object foe manaage the research by Google,Bing,ecc.
-var btn;
-// Added Controls
+//----------------------------------------------------
+//Field object support Leaflet Controls
+//----------------------------------------------------
+
+/** Set the Leaflet Plugin Search. https://github.com/p4535992/leaflet-search.*/
+leafletUtil.controlSearch = new L.Control.Search({layer: markerClusters, initial: false, position:'topright'});
+/** Set the Leaflet Overlays Layer Map*/
+leafletUtil.overlayMaps = {}; //Contaiiner of all Overlay Layer Maps
+/** Set the Leaflet Base Layer Map*/
+leafletUtil.baseMaps = null; //invoke setBaseMap on readyDocument
+var btn; // simple glboal var for a button
+/** Set the Leaflet Plugin LeafLet Geocoder. https://github.com/perliedman/leaflet-control-geocoder.*/
 leafletUtil.geoCoderControl ={selection:{},geoCoderControl:{},selector:{},
     geocoders:{
         'Nominatim': L.Control.Geocoder.nominatim(),
@@ -603,11 +601,31 @@ leafletUtil.geoCoderControl ={selection:{},geoCoderControl:{},selector:{},
         'Mapbox': L.Control.Geocoder.mapbox( mapBoxAPIKey),
         'Google': L.Control.Geocoder.google( googleAPIKey),
         'Photon': L.Control.Geocoder.photon()
-    },containerSelectorId:''};
-
+    },containerSelectorId:''
+};
+/** Set the Leaflet Plugin LeafLet FuseSearch. https://github.com/perliedman/leaflet-control-geocoder.*/
 leafletUtil.fuseSearchCtrl = null;
+/** Set the default Leaflet L.control.layers. */
 leafletUtil.toggleMap = null; //invoke setToggleMaps on readyDocument
-leafletUtil.baseMaps = null; //invoke setBaseMap on readyDocument
+/** Set the Leaflet Plugin LeafLet grouped layer control. https://github.com/perliedman/leaflet-control-geocoder.*/
+leafletUtil.groupedLayers = {};
+
+
+
+//-----------------------------------------------------------------------------------
+// SETTER UTILITY
+//-----------------------------------------------------------------------------------
+leafletUtil.setCtx = function(){
+    var ctx;
+    //OLD  leafletUtil.prepareCTX();
+    if(window.location.pathname.indexOf("/",2) == -1){
+        ctx =  window.location.toString().replace(window.location.pathname,'');
+    }else{
+        ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+    }
+    alert('set ctx:'+ctx);
+    leafletUtil.ctx = ctx;
+};
 
 leafletUtil.setBaseMaps = function(){
     var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -623,7 +641,43 @@ leafletUtil.setBaseMaps = function(){
      "Satellite": satellite,
      "Grayscale": grayscale
      };
+    return leafletUtil.baseMaps;
 
+};
+
+
+leafletUtil.setToggleMap = function(){
+    if( leafletUtil.IsNull(leafletUtil.baseMaps) || leafletUtil.IsEmptyObject(leafletUtil.baseMaps)){
+        leafletUtil.setBaseMaps(); //Set up base maps
+    }
+    if(leafletUtil.IsNull(leafletUtil.baseMaps) || leafletUtil.IsEmptyObject(leafletUtil.baseMaps)){
+        leafletUtil.toggleMap = L.control.layers(
+            {position: 'bottomright', width: '50px', height: '50px'});
+    }else if(leafletUtil.IsNull(leafletUtil.overlayMaps) || leafletUtil.IsEmptyObject(leafletUtil.overlayMaps)){
+        leafletUtil.toggleMap = L.control.layers(leafletUtil.baseMaps,null,
+            {position: 'bottomright', width: '50px', height: '50px'});
+    }else{
+        leafletUtil.toggleMap = L.control.layers(leafletUtil.baseMaps,leafletUtil.overlayMaps,
+            {position: 'bottomright', width: '50px', height: '50px'});
+    }
+    return leafletUtil.toggleMap;
+};
+
+leafletUtil.setGroupedLayers = function(){
+    if(leafletUtil.baseMaps && !leafletUtil.IsEmptyObject(leafletUtil.baseMaps)){
+        map.removeLayer(leafletUtil.baseMaps);
+    }
+    if(!leafletUtil.baseMaps || leafletUtil.IsEmptyObject(leafletUtil.baseMaps)){
+        leafletUtil.setBaseMaps(); //Set up base maps
+    }
+    if(!leafletUtil.baseMaps || leafletUtil.IsEmptyObject(leafletUtil.baseMaps)){
+        leafletUtil.groupedLayers = L.control.groupedLayers();
+    }else if(!leafletUtil.overlayMaps || leafletUtil.IsEmptyObject(leafletUtil.overlayMaps)){
+        leafletUtil.groupedLayers = L.control.groupedLayers(leafletUtil.baseMaps);
+    }else{
+        leafletUtil.groupedLayers = L.control.groupedLayers(leafletUtil.baseMaps,leafletUtil.overlayMaps);
+    }
+    return leafletUtil.groupedLayers;
 };
 
 /*** Set the src of the javascript file*/
@@ -632,9 +686,19 @@ leafletUtil.setBaseMaps = function(){
 //leafletUtil.initLeaflet = function() {
 /*** On ready document  */
 jQuery( document ).ready(function() {
+    try {
+        leafletUtil.setCtx(); //Set the request context path
+        leafletUtil.initMap();
+        //leafletUtil.setBaseMaps(); //Set up base maps
+        //leafletUtil.setToggleMap(); //loade from initMap()
+        //leafletUtil.setGroupedLayers(); //Set the groupedLayers
+        leafletUtil.setupIcons(categories.categories); //Set up icons
+    }catch(e){
+        console.error('Error on setting the parameters:'+e.message);
+    }
 
-    leafletUtil.setCtx(prepareCTX());
-    leafletUtil.setBaseMaps();
+
+    //OTHER METHOD TO COMMUNCIATE WITH JSP PAGE
 
     /** if you have add a new marker from spring put in the map. */
     if ((!jQuery.isEmptyObject(leafletUtil.arrayGeoDocuments)) && leafletUtil.arrayGeoDocuments.length > 0) {
@@ -643,7 +707,7 @@ jQuery( document ).ready(function() {
 
     //ABILITA LA RICRECA NEI MARKER CON IL PLUGIN LEAFLET-SEARCH
     jQuery('#textsearch').on('keyup', function (e) {
-        controlSearch.searchText(e.target.value);
+        leafletUtil.controlSearch.searchText(e.target.value);
     });
 
 
@@ -664,9 +728,13 @@ jQuery( document ).ready(function() {
 //};
 
 
-/** Loaded on the ready DOM of the document */
+/**
+ * Function to add the plugin geocoder to the Leaflet Map.
+ * href: https://github.com/perliedman/leaflet-control-geocoder
+ * @param containerId the id of the html container of the plugin.
+ */
 leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
-    if (jQuery.isEmptyObject(containerId)) leafletUtil.geoCoderControl.containerSelectorId = "#searchMarkerWithJavascript3";
+    if (leafletUtil.IsEmptyObject(containerId)) leafletUtil.geoCoderControl.containerSelectorId = "#searchMarkerWithJavascript3";
     else leafletUtil.geoCoderControl.containerSelectorId = containerId;
     try {
         addPluginGeoCoder(); //set the selector
@@ -694,10 +762,6 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
                         leafletUtil.geoCoderControl.geoCoderControl.options.geocoder = leafletUtil.geoCoderControl.geocoders[n];
                         L.DomUtil.addClass(this, 'selected');
                         leafletUtil.geoCoderControl.selection = this;
-                        //convert latlng to Address
-                        //geocodergoogle.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {});
-                        //Address to coordinates
-                        //geoCoderControl.options.geocoder.geocode(address, function(results) {
                         leafletUtil.geoCoderControl.geoCoderControl.markGeocode = function (result) {
                             console.info("add Geocoder marker from event click with geocoder [" + n + "]:"
                                 + result.name + "," + result.center.lat + "," + result.center.lng);
@@ -729,6 +793,11 @@ leafletUtil.addGeoCoderPluginWithContainer = function(containerId){
     }
 };
 
+/**
+ * Function (very good for me) to convert a Object javascript to a html table, for make a pretty popup marker.
+ * @param object the object javascript to convert to a html table.
+ * @returns {string}
+ */
 leafletUtil.preparePopupTable = function(object){
     var popupContent2 = '<div class="popup-content">\n<table class="table table-striped table-bordered table-condensed">\n';
     try {
@@ -770,16 +839,77 @@ leafletUtil.preparePopupTable = function(object){
     return popupContent2;
 };
 
+/**
+ * Function to check a specific object javascript is Empty Object.
+ * NOTE: just a replace function fot the jQuery.isEmptyObject.
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsEmptyObject = function(object){ return leafletUtil.Is(object,'emptyobject');};
-leafletUtil.IsEmpty = function(object){ return leafletUtil.Is(object,'empty');};
+/**
+ * Function to check a specific object javascript is a Json Object.
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsJson = function(object){ return leafletUtil.Is(object,'json');};
+/**
+ * Function to check a specific object javascript is a Json Array.
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsJsonArray =  function(object){ return leafletUtil.Is(object,'jsonarray');};
+/**
+ * Function to check a specific object javascript is null Object.
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsNull = function(object){ return leafletUtil.Is(object,'null');};
+/**
+ * Function to check a specific object javascript is undefined Object.
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsUndefined =  function(object){return leafletUtil.Is(object,'undefined');};
+/**
+ * Function to check a specific object javascript is a String.
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsString =  function(object){ return leafletUtil.Is(object,'string');};
+/**
+ * Function to check a specific object javascript is a Array.
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsArray =  function(object){return leafletUtil.Is(object,'array');};
+/**
+ * Function to check a specific object javascript is empty Object/String/Array/ecc..
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsEmpty =  function(object){return leafletUtil.Is(object,'empty');};
+/**
+ * Function to check a specific object javascript is a Object.
+ * @param object the object javascript to check.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsObject =  function(object){return leafletUtil.Is(object,'object');};
+/**
+ * Function to check a specific object javascript is something.
+ * @param object the object javascript to check.
+ * @param stringValue the String id for check a specific type of objects.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.Is = function(object,stringValue){
     var result = false;
     try {
@@ -829,9 +959,15 @@ leafletUtil.Is = function(object,stringValue){
                 break;
             }
             case 'emptyobject':{
-                var name;
-                for ( name in object ) { result = false; }
-                result = true;
+                function isEmpty(object) {
+                    for(var key in object) {
+                        if(object.hasOwnProperty(key)){
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                result = isEmpty(object);
                 break;
             }
             case 'object': {
@@ -861,17 +997,20 @@ leafletUtil.preparePopupColumn = function(data,popupContent,nameKey){
                     try {
                         if (json[key] !== null) {
                             if (typeof json[key] == 'object') {
-                                //console.warn("Key 3:" +nameKey + "+" + Object.keys(data)[i] + "+" + key + "," + JSON.stringify(json[key],undefined,2));
+                                //console.warn("Key 3:" +nameKey + "+" + Object.keys(data)[i] +
+                                // "+" + key + "," + JSON.stringify(json[key],undefined,2));
                                 popupContent =
                                     leafletUtil.preparePopupColumn(
                                         json[key], popupContent, nameKey + "+" + Object.keys(data)[i] + "+" + key);
                             } else if (Array.isArray(json[key])) {
-                                //console.warn("Key 4:" + nameKey + "+" + Object.keys(data)[i] + "+" + key + "," + JSON.stringify(json[key],undefined,2));
+                                //console.warn("Key 4:" + nameKey + "+" + Object.keys(data)[i] +
+                                // "+" + key + "," + JSON.stringify(json[key],undefined,2));
                                 popupContent =
                                     leafletUtil.preparePopupColumn(
                                         json[key], popupContent, nameKey + "+" + Object.keys(data)[i] + "+" + key);
                             } else {
-                                //console.warn("Key 5:" + nameKey + "+" + Object.keys(data)[i] + "+" + key  + "," + JSON.stringify(json[key],undefined,2));
+                                //console.warn("Key 5:" + nameKey + "+" + Object.keys(data)[i] +
+                                // "+" + key  + "," + JSON.stringify(json[key],undefined,2));
                                 popupContent +=
                                     leafletUtil.preparePopupRow(
                                         nameKey + "+" + Object.keys(data)[i] + "+" + key, json[key]);
@@ -954,7 +1093,7 @@ leafletUtil.addNewArrayOfInputs = function(array,containerId,nameElementOrIndex)
     for (var i = 0; i < array.length; i++) {
         var content = JSON.stringify(array[i]);
         try {
-            if(leafletUtil.Is(nameElementOrIndex) == 'null') {
+            if(leafletUtil.IsNull(nameElementOrIndex)) {
                 leafletUtil.addNewInput('array' + i, 'array', content, containerId, i);
             }else{
                 leafletUtil.addNewInput('array' + i, nameElementOrIndex, content,'hidden', containerId, i);
@@ -968,12 +1107,10 @@ leafletUtil.addNewArrayOfInputs = function(array,containerId,nameElementOrIndex)
  *  Set the map and zoom on the specific location
  */
 leafletUtil.initMap = function(){
-    if(jQuery.isEmptyObject(map)) {
+    if(!map || leafletUtil.IsEmptyObject(map)) {
         console.log("Init Map...");
         try {
-            if (jQuery.isEmptyObject(markerClusters)) {
-                markerClusters = new L.MarkerClusterGroup();
-            }
+            if (leafletUtil.IsEmptyObject(markerClusters))markerClusters = new L.MarkerClusterGroup();
             //Make all popup remain open.
             L.Map = L.Map.extend({
                 openPopup: function(popup) {
@@ -984,19 +1121,7 @@ leafletUtil.initMap = function(){
                     });
                 }
             });
-           /* var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-                    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-                mbUrl = 'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicGJlbGxpbmkiLCJhIjoiNTQxZDNmNDY0NGZjYTk3YjlkNTAzNWQwNzc0NzQwYTcifQ.CNfaDbrJLPq14I30N1EqHg';*/
-            /*var streets = L.tileLayer(mbUrl, {id: 'mapbox.streets', attribution: mbAttr}),
-                satellite = L.tileLayer(mbUrl, {id: 'mapbox.streets-satellite', attribution: mbAttr}),
-                grayscale = L.tileLayer(mbUrl, {id: 'pbellini.f33fdbb7', attribution: mbAttr});*/
 
-            /*var baseMaps = {
-                "Streets": streets,
-                "Satellite": satellite,
-                "Grayscale": grayscale
-            };*/
             var streets = leafletUtil.baseMaps['Streets'],
                 satellite = leafletUtil.baseMaps['Satellite'],
                 grayscale = leafletUtil.baseMaps['Grayscale'];
@@ -1008,16 +1133,7 @@ leafletUtil.initMap = function(){
             });
 
             //Create and add a toggle map
-            //[OLD METHOD WORK]
-           /*var toggleMap;
-            if(!leafletUtil.IsEmptyObject(leafletUtil.overlayMaps)){
-                toggleMap = L.control.layers(baseMaps,leafletUtil.overlayMaps, {position: 'bottomright', width: '50px', height: '50px'});
-            }else{
-                toggleMap = L.control.layers(baseMaps, null, {position: 'bottomright', width: '50px', height: '50px'});
-            }
-            toggleMap.addTo(map);*/
-
-            leafletUtil.setToggleMap();
+            //leafletUtil.setToggleMap();
 
             if (getUrlParameter("map") == "streets") {
                 map.removeLayer(satellite);
@@ -1035,14 +1151,6 @@ leafletUtil.initMap = function(){
             map.setMaxBounds(bounds);
 
             //map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
-            //..add many functionality
-            //addPluginGPSControl();
-            //addPluginCoordinatesControl();
-            //addPluginLayersStamenBaseMaps();
-            //addPluginLocateControl();
-            //addPluginSearch(); //not necessary
-            //addPluginGeoSearch();
-            //addPluginGeoCoder();
 
             //..add other functionality
             //map.on('click', onMapClick);
@@ -1059,50 +1167,38 @@ leafletUtil.initMap = function(){
            console.error('Exception::initMap() -> ' + e.message);
         }
     }
+    //finally
+    if(leafletUtil.IsEmptyObject(leafletUtil.toggleMap)){
+        leafletUtil.setToggleMap();
+        leafletUtil.toggleMap.addTo(map);
+    }
 };
 
-leafletUtil.setToggleMap = function(){
-     if(leafletUtil.toggleMap) map.remove(leafletUtil.toggleMap);
-     if(!leafletUtil.IsEmptyObject(leafletUtil.overlayMaps)){
-         leafletUtil.toggleMap = L.control.layers(leafletUtil.baseMaps,
-             leafletUtil.overlayMaps, {position: 'bottomright', width: '50px', height: '50px'});
-     }else{
-         leafletUtil.toggleMap = L.control.layers(leafletUtil.baseMaps,
-             null, {position: 'bottomright', width: '50px', height: '50px'});
-     }
-    leafletUtil.toggleMap.addTo(map);
 
-};
 
-/*** function for add a marker to the leaflet map */
-leafletUtil.addSingleMarker = function(name,lat, lng, bounds, popupContent) {
+
+leafletUtil.addSingleMarker = function(name,lat,lng,bounds,popupContent) {
     leafletUtil.addSingleMarker(name,null,lat,lng,bounds,popupContent)
 };
-leafletUtil.addSingleMarker = function(name,lat, lng, popupContent) {
+leafletUtil.addSingleMarker = function(name,lat,lng,popupContent) {
     leafletUtil.addSingleMarker(name,null,lat,lng,null,popupContent)
 };
-/*https://groups.google.com/forum/#!topic/leaflet-js/_oInGLe9uOY*/
-/*http://gis.stackexchange.com/questions/113076/custom-marker-icon-based-on-attribute-data-in-leaflet-geojson*/
+
+/**
+ * Function for add a marker to the leaflet map
+ * href: https://groups.google.com/forum/#!topic/leaflet-js/_oInGLe9uOY
+ * href: http://gis.stackexchange.com/questions/113076/custom-marker-icon-based-on-attribute-data-in-leaflet-geojson
+ */
 leafletUtil.addSingleMarker = function(name, url, lat, lng, bounds, popupContent) {
     var text;
     if(!$.isEmptyObject(url) && url.toString().indexOf('http') === 0) text = '<a class="linkToMarkerInfo" href="' + url + '" target="_blank">' + name + '</a>';
     else  text = name;
     var marker = {name:text,url:url,latitude:lat,longitude:lng,popupContent:popupContent,id:'',category:''};
-
-    if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
+    if(leafletUtil.IsEmptyObject(map)) {leafletUtil.initMap();}
     console.info("... add single marker:" + name + ',' + url + ',' + lat + ',' + lng + ',' + popupContent);
     try {
-        if (jQuery.isEmptyObject(markerClusters)) {
-            markerClusters = new L.MarkerClusterGroup();
-        }
-        if(!jQuery.isEmptyObject(bounds)){
-            map.setBounds(bounds);
-        }
-        //var marker = L.marker([lat, lng]).bindPopup(popupClick).addTo(map);
-        //var cc = L.latLng(43.7778535, 11.2593572);
-
-        //var loc1 = leafletUtil.createGeoJsonLatLng(lat,lng); //return  [lng, lat]
-        //var loc = [loc1[1],loc1[0]]; //return  [lat, lng]
+        if (leafletUtil.IsEmptyObject(markerClusters))markerClusters = new L.MarkerClusterGroup();
+        if(bounds) map.setBounds(bounds);
 
         //CREATE A L.Marker
         /*marker = new L.marker([parseFloat(lat), parseFloat(lng)], {draggable:false}, { icon: deathIcon},{title: name} )
@@ -1114,29 +1210,18 @@ leafletUtil.addSingleMarker = function(name, url, lat, lng, bounds, popupContent
        /* markerVar = new customMarkerVar(new L.latLng(loc), {title: name, icon: new L.Icon.Default()} )
             .bindLabel(text, { noHide: true });//se property searched*/
 
-
-        //...set the popup on mouse over
-        //var latlngOver = L.latLng(latVar, lngVar);
-        //...set the popup on mouse click
-        //var popupClick = new L.popup().setContent(text);
-
-        //var popupOver = new L.popup({maxWidth:100,minWidth:50,maxHeight:200}).setContent(popupContent);
-        //markerVar.bindPopup(popupOver);
-        //markerVar.on('click', function (e) { e.target.bindPopup(popupOver).openPopup();});
-
         //..set some action for the marker
         //evt.target is the marker where set the action
+        //markerVar.on('click', function (e) { e.target.bindPopup(popupOver).openPopup();});
         //marker.on('mouseover', function (e) {e.target.bindPopup(popupOver).openPopup();});
         //marker.on('mouseout', function (e) { e.target.closePopup();});
-
-       //marker.on('dblclick',function (e) { map.removeLayer(e.target)});
+        //marker.on('dblclick',function (e) { map.removeLayer(e.target)});
         /*marker.on('click', onMarkerClick(), this);*/
 
         //..add marker to the array of cluster marker
 
         //Add property dinamically [WORK] but inefficient.....
         //var geoJsonWithProperties = leafletUtil.loadPropertiesToGeoJson(markerVar,{name:name});
-
 
         var geoJsonWithProperties = leafletUtil.createGeoJsonFeatureCollection(marker);
 
@@ -1164,7 +1249,7 @@ leafletUtil.addSingleMarker = function(name, url, lat, lng, bounds, popupContent
              return rc.unproject(coords);
              },*/
         });
-        //Add FuseSearch Plugin, N>OTE: the plugin is adde onReady Document, this is the function to invoke on the layer..
+        //Add FuseSearch Plugin, NOTE: the plugin is add onReady Document, this is the function to invoke on the layer..
         if(leafletUtil.fuseSearchCtrl) {
             //USE the plugin FuseSearch for dinamically research fo the amrkers..
             var arrayPropToShowOnResearch =  ['name'];
@@ -1185,23 +1270,22 @@ leafletUtil.addSingleMarker = function(name, url, lat, lng, bounds, popupContent
         console.error("Exception::addSingleMarker() -> "+e.message +" ,Sorry the program can't create the Marker");
     }
     console.info('Content Layer:'+JSON.stringify(markerClusters.toGeoJSON()));
+
     //add object marker th the external cache.....
     leafletUtil.markerList.push(marker);
     console.info("...Compiled addSingleMarker()");
 };
 
 
-leafletUtil.arrayLatLng =[];
 
-leafletUtil.createGeoJsonLatLng =function(lat,lng){
+/**
+ * Function for create a [lng, lat] json Array and a L.LatLng to put on external Array.
+ * @param lat the String value of the latitude coordinates.
+ * @param lng the String value of the longitude coordinates.
+ * @returns {*[]}
+ */
+leafletUtil.createGeoJsonLatLng = function(lat,lng){
     try {
-        //Leaflet already do these operation....
-        /*if(lng ==null) {
-            if (lat instanceof L.LatLng) return [lat.lat, 'lng' in lat ? lat.lng : lat.lon];
-            if (lat && lat.length && typeof lat[0] !== 'object') return [lat[0], lat[1]];
-            if (lat === undefined || a === null) return [NaN, NaN];
-            if (typeof lat === 'object' && 'lat' in lat)  return [lat.lat, 'lng' in lat ? lat.lng : lat.lon];
-        }else{*/
         //Very slow check but you are sure not get wrong coordinates....
         if (/[a-z]/.test(lng.toString().toLowerCase()) ||
             /[a-z]/.test(lat.toString().toLowerCase()) ||
@@ -1214,7 +1298,6 @@ leafletUtil.createGeoJsonLatLng =function(lat,lng){
                 return [NaN, NaN];
             }
         }
-        //leafletUtil.arrayLatLng.push(new L.LatLng(loc[1], loc[0]));
         leafletUtil.arrayLatLng.push(new L.LatLng(lat,lng));
         return [lng, lat];
     } catch (e) {
@@ -1228,10 +1311,15 @@ leafletUtil.createBounds = function(arrayLatLng){
     // map.fitBounds(newBounds);
 };
 
+leafletUtil.removeLayer = function(layerToRemove){
+    map.removeLayer(layerToRemove);
+    layerToRemove.removeFrom(map);
+    if(map.hasLayer( leafletUtil.toggleMap)) map.removeLayer(layerToRemove);
+};
 
 leafletUtil.getLatitudeField = function(jsonData){return leafletUtil.getField(jsonData,'lat');};
-leafletUtil.getLongitudeField = function(jsonData){return leafletUtil.getField(jsonData,'lat');};
-leafletUtil.getIdField = function(jsonData){return leafletUtil.getField(jsonData,'lat');};
+leafletUtil.getLongitudeField = function(jsonData){return leafletUtil.getField(jsonData,'lng');};
+leafletUtil.getIdField = function(jsonData){return leafletUtil.getField(jsonData,'id');};
 leafletUtil.getField = function(jsonData,stringNameFieldToSearch){
     if(!leafletUtil.IsJsonArray(jsonData)) jsonData = leafletUtil.toJsonArray(jsonData);
     var titles = Object.keys(jsonData[0]);
@@ -1242,6 +1330,11 @@ leafletUtil.getField = function(jsonData,stringNameFieldToSearch){
     }
 };
 
+/**
+ * Function to convert a json object to a json Array.
+ * @param jsonData the json object or Array.
+ * @returns {*}
+ */
 leafletUtil.toJsonArray = function(jsonData){
     if(!leafletUtil.IsJsonArray(jsonData)){
         var markers  = jsonData;
@@ -1251,17 +1344,38 @@ leafletUtil.toJsonArray = function(jsonData){
     return jsonData;
 };
 
+/**
+ * Function for check if the field is the latitude field.
+ * @param field the name of the field to inspect.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsLat = function(field) { return !!field.match(/(L|l)(at)(itude)?/gi); };
+/**
+ * Function for check if the field is the longitude field.
+ * @param field the name of the field to inspect.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsLon = function(field) { return !!field.match(/(L|l)(on|ng)(gitude)?/i); };
-leafletUtil.IsLng = function(field) { return !!field.match(/(L|l)(on|ng)(gitude)?/i); };
+/**
+ * Function for check if the field is the longitude field.
+ * @param field the name of the field to inspect.
+ * @returns {boolean}
+ * @constructor
+ */
+leafletUtil.IsLng = function(field) { return leafletUtil.IsLon(field) };
+/**
+ * Function for check if the field is the id field.
+ * @param field the name of the field to inspect.
+ * @returns {boolean}
+ * @constructor
+ */
 leafletUtil.IsId = function(field) { return !!field.match(/([m|M]arker)?(id|Id)/i); };
 
 leafletUtil.createGeoJsonFeatureCollection = function(jsonData){
     if(!leafletUtil.IsJsonArray(jsonData)) jsonData = leafletUtil.toJsonArray(jsonData);
     var titles = Object.keys(jsonData[0]);
-    /*function isLat(f) { return !!f.match(/(L|l)(at)(itude)?/gi); }
-    function isLon(f) { return !!f.match(/(L|l)(on|ng)(gitude)?/i); }
-    function isId(f) { return !!f.match(/([m|M]arker)?(id|Id)/i); }*/
     var latField,lngField,markerId;
     for (var f,i=0; f = titles[i++];) {
         if (leafletUtil.IsLat(f)) latField = f;
@@ -1271,6 +1385,15 @@ leafletUtil.createGeoJsonFeatureCollection = function(jsonData){
     return leafletUtil.createGeoJsonFeatureCollections(jsonData,latField,lngField,markerId)
 };
 
+/**
+ * Method to create a geoJson data from a json, for LeafletMap.
+ * @param jsonData the json data to convert to a geoJson data.
+ * @param latField the field/attribute name of the latitude.
+ * @param lngField the field/attribute name of the longitude.
+ * @param markerId the field/attribute name of the markerId
+ *       (just a id for retrieve the single information).
+ * @returns {{type: string, features: Array}}
+ */
 leafletUtil.createGeoJsonFeatureCollections = function(jsonData,latField,lngField,markerId){
     try {
         jsonData = leafletUtil.toJsonArray(jsonData);
@@ -1285,11 +1408,15 @@ leafletUtil.createGeoJsonFeatureCollections = function(jsonData,latField,lngFiel
             features: Object.keys(jsonData).map(function (id) {
                 //id 0,1,2,3,4,5,.....
                 var obj = jsonData[id]; //json object to analyze....
+                //make sure is a json object
+                if(!leafletUtil.IsJson(obj)) console.error('Can\'t create a correct geoJson data with this object:'+obj);
+                //make sure you not work with a array single colletion
+                if(leafletUtil.IsJsonArray()) obj = obj[0];
                 //{"name":"a","url":"","latitude":44.5953705,"longitude":11.3701787,"popupContent":"}
-                //console.warn('34: '+JSON.stringify(obj));
+                //console.warn('34: '+JSON.stringify(obj.latitude)+','+JSON.stringify(obj[latField]));
                 //console.warn('35: '+JSON.stringify(obj[markerId]));
                 //TODO for now in developer test i get a random value
-                var icon = leafletUtil.icons().icons[Math.floor(Math.random() * leafletUtil.icons().icons.length)];
+                var icon = leafletUtil.icons.icons[Math.floor(Math.random() * leafletUtil.icons.icons.length)];
                 if (obj === null || typeof obj === 'undefined') {
                     console.warn("Ignore line "+ obj[markerId]+ " invalid data");
                 } else {
@@ -1315,7 +1442,11 @@ leafletUtil.createGeoJsonFeatureCollections = function(jsonData,latField,lngFiel
                                 if (obj.popupContent) return obj.popupContent;
                                 else return leafletUtil.preparePopupTable(obj);
                             })(),
-                            //Added category
+                            //Added category information and icon from the icon object
+                            //e.g. {name: name, icon: icon, iconUrl: url,categoryId:eleCat,
+                            //category:value,categoryName:element.name,subCategoryOf:subCategory}
+                            //category: icon.category,categoryId: icon.categoryId,categoryName: icon.categoryName,
+                            //subCategoryOf: icon.subCategoryOf
                             category: icon.category,
                             categoryId: icon.categoryId,
                             categoryName: icon.categoryName,
@@ -1338,7 +1469,9 @@ leafletUtil.createGeoJsonFeatureCollections = function(jsonData,latField,lngFiel
     return json;
 };
 
-/*** function for remove all cluster marker on the leaflet map */
+/**
+ *  Function for remove all cluster marker on the leaflet map
+ */
 leafletUtil.removeClusterMarker = function(){
     console.log("compile removeClusterMarker...");
     if(leafletUtil.arrayGeoDocuments.length > 0) {
@@ -1359,15 +1492,14 @@ leafletUtil.removeClusterMarker = function(){
 
 
 /**
- * function to add for every single object marker a Leaflet Marker on the Leaflet Map.
+ * Function to add for every single object marker a Leaflet Marker on the Leaflet Map.
+ * @param markers the Array collection of Marker object to add to the leafletMap
+ *                e.g. {"name":name,"url":url,"lat":lat,"lng":lng,"popupContent":popupContent}
  */
 leafletUtil.addMultipleMarker = function(markers){
     try {
-        //var titles = Object.keys(markers[0]).split(",");
         for (var j = 0; j < markers.length; j++){
             try {
-                /*console.log("... add multiple marker (" + j + "):"
-                    + markers[j].name + ',' + markers[j].url + ',' + markers[j].lat + ',' + markers[j].lng);*/
                 leafletUtil.addSingleMarker(markers[j].name, markers[j].url, markers[j].lat, markers[j].lng, null,
                     markers[j].popupContent);
             }catch(e){
@@ -1380,9 +1512,8 @@ leafletUtil.addMultipleMarker = function(markers){
 };
 
 /**
- * function to add every single company from java object in JSP page to a javascript array
+ * Function to create a GeoDocument object for the javascript.
  */
-var specialj =0;
 leafletUtil.pushMarkerToArrayMarker = function(nameVar,urlVar,latVar,lngVar,regionVar,provinceVar,cityVar,addressVar,
                                      phoneVar,emailVar,faxVar,ivaVar,popupContentVar){
         try {
@@ -1404,139 +1535,140 @@ leafletUtil.pushMarkerToArrayMarker = function(nameVar,urlVar,latVar,lngVar,regi
             if(leafletUtil.IsNull(leafletUtil.geoDocument.popupContent)) {
                 leafletUtil.geoDocument.popupContent = leafletUtil.preparePopupTable(leafletUtil.geoDocument);
             }
-
-            console.info("... prepare marker (" + specialj + "):"
+          /*  console.info("... prepare marker (" + specialj + "):"
+                + leafletUtil.geoDocument.name + ',' + leafletUtil.geoDocument.url +
+                ',' + leafletUtil.geoDocument.lat + ',' + leafletUtil.geoDocument.lng + "," + leafletUtil.geoDocument.popupContent);*/
+            console.info("... prepare marker:"
                 + leafletUtil.geoDocument.name + ',' + leafletUtil.geoDocument.url +
                 ',' + leafletUtil.geoDocument.lat + ',' + leafletUtil.geoDocument.lng + "," + leafletUtil.geoDocument.popupContent);
-
             leafletUtil.arrayGeoDocuments.push(leafletUtil.geoDocument);
-            specialj++;
             console.log("....pushed a marker to the array on javascript side:" + leafletUtil.geoDocument.toString());
         }catch(e){
             console.error("Exception::pushMarkerToArrayMarker ->" +  e.message);
         }
     };
 
-    /**
-     * Add the Leaflet Plugin Search.
-     * https://github.com/p4535992/leaflet-search.
-     */
-    var geocoderSearchGoogle;
-    function addPluginSearch(){
-        if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
-        /*try{
-         geocoderSearchGoogle = new google.maps.Geocoder();
-         }catch(e){
-         console.warn("Warning:addPluginSearch->"+e.message);
-         geocoderSearchGoogle = null;
-         }*/
-        console.log("compile addPluginSearch...");
-        try {
-            if (!jQuery.isEmptyObject(markerClusters)) {
-                /* controlSearch = new L.Control.Search({layer: markerClusters, initial: false,collapsed: false});*/
-                if (jQuery.isEmptyObject(geocoderSearchGoogle)) {
-                    controlSearch = new L.Control.Search({
-                        container: "searchMarkerWithJavascript", layer: markerClusters, initial: false, collapsed: false
-                    });
-                } else {
-                    controlSearch = new L.Control.Search({
-                        container: "searchMarkerWithJavascript",
-                        layer: markerClusters,initial: false,collapsed: false,
-                        sourceData: googleGeocoding,formatData: formatJSON,
-                        markerLocation: true,autoType: false,autoCollapse: true, minLength: 2,zoom: 10
-                    });
-                }
-                map.addControl(controlSearch);
-            }
-            console.log("...compiled addPluginSearch");
-        }catch(e){
-            console.error("Exception:addPluginSearch->"+e.message);
-        }
-    }
-
-    /**
-     * Add the Leaflet leaflet-control-geocoder.
-     * https://github.com/perliedman/leaflet-control-geocoder
-     * https://github.com/patrickarlt/leaflet-control-geocoder
-     */
-    function addPluginGeoCoder() {
-        if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
-        console.info("Compile addPluginGeoCoder...");
-        try {
-            if (jQuery.isEmptyObject(leafletUtil.geoCoderControl.geoCoderControl)) {
-                leafletUtil.geoCoderControl.selector = L.DomUtil.get('geocode-selector');
-                leafletUtil.geoCoderControl.geoCoderControl = new L.Control.Geocoder({ geocoder: null },{collapsed: false});
-                leafletUtil.geoCoderControl.geoCoderControl.addTo(map);
+/**
+ * Function to Add the Leaflet Plugin Search.
+ * href: https://github.com/p4535992/leaflet-search.
+ */
+var geocoderSearchGoogle;
+leafletUtil.addPluginSearch= function(){
+    if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
+    /*try{
+     geocoderSearchGoogle = new google.maps.Geocoder();
+     }catch(e){
+     console.warn("Warning:addPluginSearch->"+e.message);
+     geocoderSearchGoogle = null;
+     }*/
+    try {
+        if (!jQuery.isEmptyObject(markerClusters)) {
+            /* controlSearch = new L.Control.Search({layer: markerClusters, initial: false,collapsed: false});*/
+            if (jQuery.isEmptyObject(geocoderSearchGoogle)) {
+                leafletUtil.controlSearch = new L.Control.Search({
+                    container: "searchMarkerWithJavascript", layer: markerClusters, initial: false, collapsed: false
+                });
             } else {
-                map.addControl(leafletUtil.geoCoderControl.geoCoderControl);
+                leafletUtil.controlSearch = new L.Control.Search({
+                    container: "searchMarkerWithJavascript",
+                    layer: markerClusters,initial: false,collapsed: false,
+                    sourceData: googleGeocoding,formatData: formatJSON,
+                    markerLocation: true,autoType: false,autoCollapse: true, minLength: 2,zoom: 10
+                });
             }
-            /*leafletUtil.geoCoderControl.geoCoderControl.markGeocode = function(result) {
-                alert("add Geocoder marker:" + result.name + "," + result.center.lat + "," + result.center.lng +
-                    "," + result.bbox.toString()+","+result.html);
-                var bounds = L.Bounds(
-                    L.point( result.bbox.getSouthEast(),result.bbox.getNorthEast() ),
-                    L.point( result.bbox.getNorthWest(),result.bbox.getSouthWest())
-                );
-                addSingleMarker(result.name,result.name,result.center.lat,result.center.lng,bounds,'');
-            };*/
-            console.info("...compiled addPluginGeoCoder");
-        }catch(e){
-            console.error("Exception:addPluginGeoCoder->"+e.message);
+            map.addControl(leafletUtil.controlSearch);
         }
+        console.log("...compiled addPluginSearch");
+    }catch(e){
+        console.error("Exception:addPluginSearch->"+e.message);
     }
+};
 
-/** http://www.javascript-coder.com/javascript-form/javascript-form-value.phtml */
-leafletUtil.loadArrayOnInput2 = function(idForm,nameElementOrIndex){
-    leafletUtil.addNewArrayOfInputs(leafletUtil.markerList,idForm,nameElementOrIndex);
+/**
+ * Function to Add the Leaflet plugin leaflet-control-geocoder.
+ * href: https://github.com/perliedman/leaflet-control-geocoder
+ */
+function addPluginGeoCoder() {
+    if(jQuery.isEmptyObject(map)) {leafletUtil.initMap();}
+    console.info("Compile addPluginGeoCoder...");
+    try {
+        if (jQuery.isEmptyObject(leafletUtil.geoCoderControl.geoCoderControl)) {
+            leafletUtil.geoCoderControl.selector = L.DomUtil.get('geocode-selector');
+            leafletUtil.geoCoderControl.geoCoderControl = new L.Control.Geocoder({ geocoder: null },{collapsed: false});
+            leafletUtil.geoCoderControl.geoCoderControl.addTo(map);
+        } else {
+            map.addControl(leafletUtil.geoCoderControl.geoCoderControl);
+        }
+        //TODO try to set a geocoder on the startup
+        /*leafletUtil.geoCoderControl.geoCoderControl.markGeocode = function(result) {
+            alert("add Geocoder marker:" + result.name + "," + result.center.lat + "," + result.center.lng +
+                "," + result.bbox.toString()+","+result.html);
+            var bounds = L.Bounds(
+                L.point( result.bbox.getSouthEast(),result.bbox.getNorthEast() ),
+                L.point( result.bbox.getNorthWest(),result.bbox.getSouthWest())
+            );
+            addSingleMarker(result.name,result.name,result.center.lat,result.center.lng,bounds,'');
+        };*/
+        console.info("...compiled addPluginGeoCoder");
+    }catch(e){
+        console.error("Exception:addPluginGeoCoder->"+e.message);
+    }
+}
+
+/**
+ * Function to load a Array object like json String object to the value of a input.
+ * href: http://www.javascript-coder.com/javascript-form/javascript-form-value.phtml
+ * @param arrayOfObject the Array collection to set like value of a input.
+ * @param idForm the String id of the Form where set the value on the input.
+ * @param nameElementOrIndex the String name of the element or the index number of the input to set.
+ * @returns {*}
+ */
+leafletUtil.loadArrayOnInput2 = function(arrayOfObject,idForm,nameElementOrIndex){
+    leafletUtil.addNewArrayOfInputs(arrayOfObject,idForm,nameElementOrIndex);
     return document.forms[idForm].elements[nameElementOrIndex].value = JSON.stringify(leafletUtil.markerList);
 };
 
-leafletUtil.invokePluginFuseSearch = function(geojsonData,propsArray){
-    var iconsJson = leafletUtil.icons(); //Get all the icons setted....
-    // Load the data from remote
-   /* jQuery.getJSON("data/lieux_culture_nantes.json", function(data) {
-        displayFeatures(data.features, layers, icons);
-        var props = ['nom_comple', 'libcategor', 'commune'];
-        fuseSearchCtrl.indexFeatures(data.features, props);
-    });*/
+leafletUtil.loadArrayOnInput2 = function(idForm,nameElementOrIndex){
+    return leafletUtil.loadArrayOnInput2(leafletUtil.markerList,idForm,nameElementOrIndex)
+};
+
+/**
+ * Function to invoke a the plugin leaflet.Fusearch of Leaflet on a specofoc geoJson data with
+ * specific array of properties to search.
+ * @param geoJsonData the GeoJson data to applied to FuseSearch.
+ * @param propsArray the Array of tags to Search on the GeoJson data.
+ */
+leafletUtil.invokePluginFuseSearch = function(geoJsonData,propsArray){
+    //Get all the icons already setted....
+    var iconsJsonArray = leafletUtil.icons;
     try {
-        var layerCtrl = L.control.layers();
-        // Layer control, setting up 1 layer per name
-       /* var layers = {},
-            fuseLayer = L.layerGroup(),
-            layerCtrl = L.control.layers();*/
-
+        //WORK
+        //var layerCtrl = L.control.layers();
+        leafletUtil.removeLayer(leafletUtil.toggleMap);
+        leafletUtil.toggleMap = leafletUtil.setToggleMap();
+        //NEW METHOD TRY TO USE WORK GROUP LAYER
+        //leafletUtil.setGroupedLayers();
         //for each properties feature in the geojson...
-        for (var feat,i=0; feat = geojsonData.features[i++];) {
-            if(feat.hasOwnProperty('properties') && feat.properties.hasOwnProperty('name')) {
-                var layer = L.featureGroup();
-
-                //[WORK] old method
-                /*layers[feat.properties.name] = layer;
-                fuseLayer.addLayer(layer);
-                //var cat = categories[icat],desc = '<img class="layer-control-img" src="images/' + cat.icon + '"> ' + cat.desc;
-                layerCtrl.addOverlay(layer, feat.properties.name);*/
-
-                //[NEW METHOD]
+        for (var feat,i=0; feat = geoJsonData.features[i++];) {
+            if(feat.hasOwnProperty('properties') && feat.properties.hasOwnProperty('categoryName')) {
+                var layer = new L.featureGroup();
+                //populate the overlayMaps object
                 leafletUtil.overlayMaps[feat.properties.categoryName] = layer;
                 if(!markerClusters.hasLayer(layer)){
                     markerClusters.addLayer(layer);
                 }
-
-               //get the icon element with the same category of the feature  properties of the geojson....
-                var elIcon = leafletUtil.searchJsonByKeyAndValue(iconsJson.icons,'name',feat.properties.categoryName);
+                //get the icon element with the same category of the feature  properties of the geojson....
+                var elIcon = leafletUtil.searchJsonByKeyAndValue(iconsJsonArray.icons,'name',feat.properties.categoryName);
+                //if elIcon is 'undefined' set a random category
                 if(leafletUtil.IsUndefined(elIcon)){
                     console.warn('For build the toogle button is get a random value');
                     //TODO for now in developer test i get a random value
-                    elIcon = iconsJson.icons[Math.floor(Math.random() * iconsJson.icons.length)];
-                    //el = leafletUtil.searchJsonByKeyAndValue(iconsJson.icons,'name','Accom');
-                    //leafletUtil.overlayMaps[el.name] = layer;
+                    elIcon = iconsJsonArray.icons[Math.floor(Math.random() * iconsJsonArray.icons.length)];
                     if(!markerClusters.hasLayer(layer)){
                         markerClusters.addLayer(layer);
                     }
                 }
                 console.warn('44:'+JSON.stringify(elIcon));
-
                 var iconMarkerUrl;
                 //Set url of the icon
                 if(elIcon.iconUrl == null) iconMarkerUrl = leafletUtil.ctx + '/resources/js/leaflet/images/marker-icon.png';
@@ -1544,32 +1676,36 @@ leafletUtil.invokePluginFuseSearch = function(geojsonData,propsArray){
                 var category = elIcon.name;
                 var desc = '<img class="layer-control-img" src="'+ iconMarkerUrl +'" height=24>' + category;
                 console.warn('45:'+JSON.stringify(desc));
-                layerCtrl.addOverlay(layer, desc);
-                //leafletUtil.setupOverlays(layer,el.iconUrl);
+                //WORK
+                //layerCtrl.addOverlay(layer, desc);
+                leafletUtil.toggleMap.addOverlay(layer, desc);
+                //TRY NEW METHOD
+                //leafletUtil.groupedLayers.addOverlay(layer,desc);
             }else{
                 console.warn('the geojson not have a correct structure for the leafletUtil.invokePluginFuseSearch method');
             }
         }
-
-        //layerCtrl = L.control.layers(null,leafletUtil.overlayMaps,{collapsed:true});
-        layerCtrl.addTo(map);
-
-        //[WORK] old method
-        /*fuseLayer.addTo(map);
-        layerCtrl.addTo(map);
-         var newLayer = leafletUtil.displayFeatures(geojsonData.features,layers);
-        */
-
+        //WORK
+        //layerCtrl.addTo(map);
+        leafletUtil.toggleMap.addTo(map);
+        //TRY NEW METHOD
+        //leafletUtil.groupedLayers.addTo(map);
         //Feature,layers,icons
-        leafletUtil.displayFeatures(geojsonData.features,leafletUtil.overlayMaps,iconsJson);
+        leafletUtil.displayFeatures(geoJsonData.features,leafletUtil.overlayMaps,iconsJsonArray.icons);
         //var props = ['nom_comple', 'libcategor', 'commune'];
-        leafletUtil.fuseSearchCtrl.indexFeatures(geojsonData, propsArray);
+        leafletUtil.fuseSearchCtrl.indexFeatures(geoJsonData, propsArray);
     }catch(e){
         console.error('invokePluginFuseSearch:: ->'+e.message);
     }
 };
 
-
+/**
+ * Function to Add the Leaflet plugin.
+ * href: https://github.com/naomap/leaflet-fusesearch.
+ * @param stringNameToSearch the String Name to Search.
+ * @param stringTypeToSearch the String type to Search.
+ * @param stringCategoryToSearch the String category to Search.
+ */
 leafletUtil.addPluginFuseSearch = function(stringNameToSearch,stringTypeToSearch,stringCategoryToSearch){
     try {
         // Add fuse search control
@@ -1617,10 +1753,23 @@ leafletUtil.addPluginFuseSearch = function(stringNameToSearch,stringTypeToSearch
     }
 };
 
+/**
+ * Function to get the json element of a json array from a key/value parameter.
+ * @param jsonData the Json data where invoke the search.
+ * @param key the key of the parameter to search.
+ * @return the json data with the specific key/value parameter.
+ */
 leafletUtil.searchJsonByKeyAndValue = function(jsonData,key){
     return leafletUtil.searchJsonByKeyAndValue(jsonData,key,null);
 };
 
+/**
+ * Function to get the json element of a json array from a key/value parameter.
+ * @param jsonData the Json data where invoke the search.
+ * @param key the key of the parameter to search.
+ * @param value the value of the parameter to search.
+ * @return the json data with the specific key/value parameter.
+ */
 leafletUtil.searchJsonByKeyAndValue = function(jsonData,key,value){
     if(!leafletUtil.IsJsonArray(jsonData)) jsonData = leafletUtil.toJsonArray(jsonData);
     for (var i = 0; i < jsonData.length; i++) {
@@ -1640,51 +1789,62 @@ leafletUtil.searchJsonByKeyAndValue = function(jsonData,key,value){
 
 /**
  * Method support for the Plugin FuseSearch generate and create the dropdown menu of the research.
+ * @param features the Features on the geoJson data to load to the Leaflet Map
+ *         e.g. var features = geojsonData.features.
+ * @param layers the json object collection of L.LayerGroup on the leaflet Map
+ *          e.g. {"Hotel":L.featureGroup(),"Casino":L.featureGroup()}.
+ * @param icons the json array of object who contains the relation from name key of the single layer and a L.Icon
+ *      	e.g. icons[
+ *      	Object {"0" :{name="Accommodation",  icon={...},  iconUrl="http://localhost:8181/re...icons/Accommodation.png",  altri elementi...}}
+ *      	]
+ * @returns {*}
  */
-/*leafletUtil.displayFeatures = function(features, layers) {
-    return leafletUtil.displayFeatures(features,layers,null,null,null);
-};
-leafletUtil.displayFeatures = function(features, layers,stringFeatureNameMarker) {
-    return leafletUtil.displayFeatures(features,layers,null,null,stringFeatureNameMarker);
-};*/
 leafletUtil.displayFeatures = function(features, layers, icons) {
     try {
         //create div tiny-popup
         var popup = L.DomUtil.create('div', 'tiny-popup', map.getContainer());
-        //if (stringCategoryName == null) stringCategoryName = 'Accomodation';
-        //if (stringFeatureProperty== null) stringFeatureProperty = 'name';
         for (var feature,i=0; feature = features[i++];) {
             //var feature = features[id];
             if(leafletUtil.IsUndefined(feature)) {
                 console.error('The Properties feature of geoJson not have a \'id\' property field');
             }
             if (feature.properties.hasOwnProperty('id')) {
-                var cat = feature.properties.categoryName; //get id int for get the object....
+                var category = feature.properties.categoryName; //get id int for get the object....
                 //Load GeoJson on the map
                 var site = L.geoJson(feature, {
                     pointToLayer: function (feature, latLng) {
                         try {
                             var icon;
-                            if(icons) {
-                                for (var myIcon in icons) {
-                                    if (icons.hasOwnProperty(myIcon) && myIcon.categoryName == cat) {
-                                        console.info('Load the category of the layer!');
-                                        icon = myIcon.icon; //myIcon[cat];
-                                        break;
+                            if(icons && leafletUtil.IsJsonArray(icons)) {
+                                try {
+                                    for (var i = 0, myIcon; myIcon = icons[i++];) {
+                                        //console.log('43:' + JSON.stringify(myIcon));
+                                        //id icons object contains 'icons' property
+                                        if (myIcon.hasOwnProperty('icon') &&
+                                            myIcon.hasOwnProperty('categoryName') &&
+                                            myIcon.categoryName == category) {
+                                            console.info('Load the category of the layer:' + JSON.stringify(myIcon));
+                                            icon = myIcon.icon; //myIcon[cat];
+                                            break;
+                                        }
                                     }
+                                }catch(e){
+                                    console.error('Some problem to load the category of the layer we use the Default Icon of leaflet.');
+                                    icon = new L.Icon.Default();
                                 }
+                            }else{
+                                console.error('The \'icons\' json Array we use is NULL or is not a Array, we use the default Leaflet Icon.');
                             }
-                            if(!icons || !icon){
-                                console.warn('Some problem to load the category of the layer!');
+                            if(!icon){
+                                console.warn('The \'icon\' we use is NULL, we use the default Leaflet Icon');
                                 icon = new L.Icon.Default();
                             }
-
+                            //Create default marker with customize  icon
                             var marker = L.marker(latLng, {
                                 icon: icon,
                                 keyboard: false,
                                 riseOnHover: true
                             });
-
                             //Set event Listener and zoom
                             if (!L.touch) {
                                 marker.on('mouseover', function (e) {
@@ -1708,7 +1868,8 @@ leafletUtil.displayFeatures = function(features, layers, icons) {
                     }
                 });
             }
-            var layer = layers[cat];
+            //Add geojson to the specific layer category.
+            var layer = layers[category];
             if (layer !== undefined) {
                 layer.addLayer(site);
             }
@@ -1717,9 +1878,13 @@ leafletUtil.displayFeatures = function(features, layers, icons) {
     }catch(e){
         console.error('displayFeatures ->'+e.message);
     }
-    //console.warn('SPECIAL 2:'+JSON.stringify(layer));
 };
 
+/**
+ * Method support the onEachFeature loop of Leaflet.
+ * @param feature the Feature to analyze on the collection geojson.features of the geojson.
+ * @param layer the Layer to analyze on the Leaflet Map (the markers).
+ */
 leafletUtil.onEachFeature_bindPopup = function(feature, layer){
     try {
         // Keep track of the layer(marker)
@@ -1737,7 +1902,7 @@ leafletUtil.onEachFeature_bindPopup = function(feature, layer){
     }
 };
 
-leafletUtil.icons = function(){return leafletUtil.setupIcons(categories.categories)};
+
 leafletUtil.setupIcons = function(arrayJsonOrMap) {
     try {
         var icons = {icons:[]};
@@ -1781,69 +1946,56 @@ leafletUtil.setupIcons = function(arrayJsonOrMap) {
     }catch(e){
         console.error(e);
     }
-    return icons;
+    leafletUtil.icons = icons;
+    return leafletUtil.icons;
 };
 
-leafletUtil.setupOverlays = function(layer,iconMarkerUrl) {
-    /*var overlayMaps = {
-    "<img src='http://mollietaylor.com/skills/js/leaflet/train.png' height=24>Train": trainLayer,
-        "<img src='http://mollietaylor.com/skills/js/leaflet/arbol.png' height=24>Tree": treeLayer
-    };*/
-    if(iconMarkerUrl == null){
-        //Default icon
-        iconMarkerUrl = leafletUtil.ctx + '/resources/js/leaflet/images/marker-icon.png';
+/**
+ * Method for set some geoJson properties on L.LayerGroup of Leaflet (very slow)
+ * //TODO try to avoid this function.
+ * @param myLayer the L.LayerGroup to update.
+ * @param geoJsonPropertiesToAdd the geoJson data with the properties ti upload on the L.LayerGroup.
+ * @returns the new geoJsonData to upload to a LayerGroup.
+ */
+/*leafletUtil.loadPropertiesToGeoJson = function (myLayer, geoJsonPropertiesToAdd) {
+    try {
+        var geoJsonBase = myLayer.toGeoJSON();
+        if (leafletUtil.IsEmpty(myLayer)) { //if the layer json object is empty
+            myLayer = new L.markerClusterGroup({
+                disableClusteringAtZoom: 19,
+                iconCreateFunction: function (cluster) {
+                    return L.divIcon({
+                        html: cluster.getChildCount(), className: 'mycluster', iconSize: null
+                    });
+                }
+            });
+        }
+        // Add custom popups to each using our custom feature properties
+        /!*myLayerGroup.on('layeradd', function (e) {
+         for (var key in objectProperties) {
+         //feature.properties.news = 23; //add/update a properties to the feature.
+         e.layer.properties[key] = objectProperties[key];
+         }
+         });*!/
+        //If is the geoJson of a Layer or of a Marker.....
+        if (geoJsonBase.hasOwnProperty('features'))geoJsonBase = geoJsonBase.features;
+        for (var key in geoJsonBase) {
+            if (geoJsonBase.hasOwnProperty(key) && key == 'properties') {
+                console.warn('empty?' + JSON.stringify(geoJsonBase.properties));
+                if (leafletUtil.IsEmpty(geoJsonBase.properties)) { //if the properties json object is empty
+                    for (var key2 in geoJsonPropertiesToAdd) {
+                        if (geoJsonPropertiesToAdd.hasOwnProperty(key2)) {
+                            geoJsonBase.properties[key2] = geoJsonPropertiesToAdd[key2];   //add the new property...
+                        }
+                    }
+                }
+            }
+        }
+        return geoJsonBase;
+    } catch (e) {
+        console.error('loadPropertiesGeoJson -> ' + e.message);
     }
-    var imageSrc =  "<img src='"+iconMarkerUrl+"' height=24>";
-    leafletUtil.overlayMaps[imageSrc] = layer;
-    return leafletUtil.overlayMaps;
-};
-
-/*leafletUtil.loadPropertiesToGeoJson = function(myLayer,geoJsonPropertiesToAdd){
- try {
- //Marker:{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[11.3701787,44.5953705]}}
- //Layer:{"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[11.3701787,44.5953705]}}]}
- var geoJsonBase = myLayer.toGeoJSON();
- if (leafletUtil.IsEmpty(myLayer)) { //if the layer json object is empty
- myLayer = new L.markerClusterGroup({
- disableClusteringAtZoom: 19,
- iconCreateFunction: function (cluster) {
- return L.divIcon({
- html: cluster.getChildCount(), className: 'mycluster', iconSize: null
- });
- }
- });
- }
- // Add custom popups to each using our custom feature properties
- /!*myLayerGroup.on('layeradd', function (e) {
- for (var key in objectProperties) {
- //feature.properties.news = 23; //add/update a properties to the feature.
- e.layer.properties[key] = objectProperties[key];
- }
- });*!/
- //If is the geoJson of a Layer or of a Marker.....
- if (geoJsonBase.hasOwnProperty('features'))geoJsonBase = geoJsonBase.features;
- for (var key in geoJsonBase) {
- if (geoJsonBase.hasOwnProperty(key) && key == 'properties') {
- //is a empty object.........
- console.warn('empty?' + JSON.stringify(geoJsonBase.properties));
- if (leafletUtil.IsEmpty(geoJsonBase.properties)) { //if the properties json object is empty
- for (var key2 in geoJsonPropertiesToAdd) {
- if(geoJsonPropertiesToAdd.hasOwnProperty(key2)) {
- //add the new property...
- geoJsonBase.properties[key2] = geoJsonPropertiesToAdd[key2];
- //console.warn('21:'+JSON.stringify(geoJsonBase));
- }
- }
- }
- }
- }
- //var layerGeoJsonBase = L.geoJson(geoJsonBase);
- //myLayer.addLayer(layerGeoJsonBase);
- return geoJsonBase;
- }catch(e){
- console.error('loadPropertiesGeoJson -> '+e.message);
- }
- };*/
+};*/
 
 leafletUtil.getArrayObjectMarkerFromLayer = function(myLayerGroup){
     var markers = [];
@@ -1910,10 +2062,47 @@ leafletUtil.setMaxBoundsMap = function(bounds){
 };*/
 
 
+/**
+ * href: http://jsfiddle.net/HbGM2/
+ * e.g.<a href="#" onclick="hide('mydiv')">Close</a>
+ * @param idElement the String of the id element to hide.
+ */
+leafletUtil.hide = function(idElement){document.getElementById(idElement).style.display = 'none';};
+
+/**
+ * href: http://jsfiddle.net/HbGM2/
+ * e.g. <a href="#" onclick="show('mydiv')">Open</a>
+ * @param idElement the String of the id element to hide.
+ */
+leafletUtil.show = function(idElement){document.getElementById(idElement).style.display = 'block';};
+
+/**
+ * href: http://jsfiddle.net/HbGM2/
+ * e.g. <a href="#" onclick="show('mydiv')">Open</a>
+ * e.g  <a href="#" onclick="hide('mydiv')">Close</a>
+ * @param idElement the String of the id element to hide.
+ */
+leafletUtil.showAndHide = function(idElement){
+    //document.getElementById(idElement).onclick = ;
+    //or use addEventListener:
+    //document.getElementById(idElement).addEventListener('click', begin, false);
+    //If you need to pass a parameter, then:
+    //document.getElementById(idElement).onclick = function() {begin(i);};
+
+
+    if (!document.getElementById) {
+        if (document.getElementById(idElement).style.display == 'block')
+            document.getElementById(idElement).style.display = 'none';
+        else
+            document.getElementById(idElement).style.display = 'block';
+    }else{
+        console.error('Exception::showAndHide -> not supported on this browser');
+    }
+};
 
 
 
-//UTILITY
+//UTILITY PROTOTYPE
 
 /**
  * JavaScript format string functio
