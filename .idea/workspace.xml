@@ -7,23 +7,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eae6a51e-feb1-4ee7-bfa9-607aee19e907" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/old/secure_copy_1_leaflet_buildMap_support_2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/old_ServiceMap.zip" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/Adapter.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/Adapter/Curl.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/Adapter/Mock.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/Adapter/Socket.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/CookieJar.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/Exception.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/MultipartBody.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/Observer/Log.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/Observer/UncompressingDownload.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/Response.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/SOCKS5.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/HTTP/Request2/SocketWrapper.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/old_2_leafletMap3.jsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/old_leafletMap3.jsp" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap3.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap3.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/.loaderversions" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/.loaderversions" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-csp-production.js" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-csp-production.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-csp-production.js.map" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-csp-production.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-csp-production.src.js" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-csp-production.src.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-polyfills.js" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-polyfills.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-polyfills.js.map" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-polyfills.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-polyfills.src.js" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system-polyfills.src.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system.js" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system.js.map" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system.src.js" afterPath="$PROJECT_DIR$/src/main/webapp/jspm_packages/system.src.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/leafletGroupLayer.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/leafletGroupLayer.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/leaflet_buildMap_support_2.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/leaflet_buildMap_support_2.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/phpSesame.php" afterPath="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/phpSesame.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/prototype/myPrototype.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/prototype/myPrototype.js" />
     </list>
     <ignored path="springMVC5.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,18 +54,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MapRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/dao/MapRepository.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MapRepositoryImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -107,15 +97,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="leaflet_buildMap_support_2.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="leaflet_buildMap_support_2.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/leaflet_buildMap_support_2.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71246004">
-              <caret line="1386" column="0" selection-start-line="1386" selection-start-column="0" selection-end-line="1386" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="902" column="3" selection-start-line="902" selection-start-column="3" selection-end-line="902" selection-end-column="3" />
               <folding>
-                <marker date="1451489063729" expanded="true" signature="103520:103573" placeholder="..." />
-                <marker date="1451489063729" expanded="true" signature="154302:156125" placeholder="..." />
+                <marker date="1451574904244" expanded="true" signature="103429:103482" placeholder="..." />
+                <marker date="1451574904244" expanded="true" signature="154268:156091" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="myPrototype.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/prototype/myPrototype.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="phpSesame.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/phpSesame.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.972125">
+              <caret line="229" column="5" selection-start-line="229" selection-start-column="5" selection-end-line="229" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -133,7 +143,7 @@
       <file leaf-file-name="leafletGroupLayer.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/css/leafletGroupLayer.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.6153846">
+            <state vertical-scroll-proportion="0.0">
               <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
               <folding />
             </state>
@@ -143,13 +153,9 @@
       <file leaf-file-name="leafletMap3.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap3.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.2181818">
+            <state vertical-scroll-proportion="0.0">
               <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding>
-                <element signature="n#ul#0;n#div#0;n#div#1;n#div#7;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#7;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#fieldset#0;n#div#1;n#div#7;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#fieldset#1;n#div#1;n#div#7;n#html#0;n#!!top" expanded="false" />
                 <marker date="1451477963958" expanded="true" signature="334354:334420" placeholder="..." />
                 <marker date="1451477963958" expanded="true" signature="334523:334864" placeholder="..." />
                 <marker date="1451477963958" expanded="false" signature="334619:334633" placeholder="..." />
@@ -250,7 +256,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/bean/AppConfig.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/geoSearch/js/l.control.geosearch.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/plugin/geoSearch/js/l.geosearch.provider.google.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/leaflet_build_old.js" />
@@ -289,7 +294,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/config.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/test.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/prototype/myPrototype.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_build_plugin_1.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/jspm_packages/github/Leaflet/Leaflet@0.7.7/src/dom/DomUtil.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/prototype/myDomUtil.jsp" />
@@ -300,7 +304,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/css/leafletGroupLayer.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap3.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/prototype/myPrototype.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/leaflet_buildMap_support_2.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/phpSesame.php" />
       </list>
     </option>
   </component>
@@ -416,6 +422,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -610,6 +617,70 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springMVC5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springMVC5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="php" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phpSesame-master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springMVC5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springMVC5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -751,7 +822,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -771,12 +841,11 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/EAT" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -786,19 +855,19 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\ServiceMap\old" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\leaflet\plugin\fuseSearch" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\WEB-INF\views\riconciliazione2\mappa" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js" />
-      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\leaflet" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp" />
       <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\leaflet\plugin\filelayer" />
       <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\mustache" />
       <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\css\img\mapicons" />
       <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\static" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\php\phpSesame-master" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\ServiceMap\old" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js\leaflet\plugin\fuseSearch" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\WEB-INF\views\riconciliazione2\mappa" />
+      <recent name="C:\Users\tenti\Documents\GitHub\springMVC5\src\main\webapp\resources\js" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.springMVC5">
@@ -1156,6 +1225,13 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
     <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -1452,15 +1528,26 @@
       <workItem from="1450426203260" duration="1716000" />
       <workItem from="1450454237619" duration="732000" />
       <workItem from="1451407954551" duration="9995000" />
-      <workItem from="1451464004189" duration="21984000" />
+      <workItem from="1451464004189" duration="24970000" />
+      <workItem from="1451552182807" duration="909000" />
+      <workItem from="1451555810236" duration="7115000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="986221000" />
+    <option name="totallyTimeSpent" value="997231000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1372" height="744" extended-state="1" />
+    <frame x="-8" y="-8" width="1372" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1473,17 +1560,17 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36752138" sideWeight="0.49316108" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36752138" sideWeight="0.49316108" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4453925" sideWeight="0.5068389" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25683892" sideWeight="0.51706487" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32649574" sideWeight="0.49544072" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25597268" sideWeight="0.50759876" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17378049" sideWeight="0.49076518" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17378049" sideWeight="0.49076518" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26457056" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25609756" sideWeight="0.48293516" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25609756" sideWeight="0.48293516" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45051193" sideWeight="0.4924012" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1556,7 +1643,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/leaflet_buildMap_support_2.js</url>
-          <line>1693</line>
+          <line>1696</line>
           <option name="timeStamp" value="267" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1707,7 +1794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="47" column="18" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1743,13 +1829,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1630" column="85" selection-start-line="1630" selection-start-column="85" selection-end-line="1630" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/prototype/myPrototype.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="153" column="25" selection-start-line="153" selection-start-column="3" selection-end-line="153" selection-end-column="76" />
         </state>
       </provider>
     </entry>
@@ -1799,13 +1878,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet/images/marker-icon.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/old_2_leafletMap3.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4363636">
-          <caret line="2308" column="2" selection-start-line="2308" selection-start-column="2" selection-end-line="2308" selection-end-column="2" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/leaflet_build_plugin_1.js">
@@ -1875,7 +1947,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1883,7 +1954,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1891,7 +1961,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1899,7 +1968,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1907,6 +1975,108 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.769231">
           <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/dao/MapRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <marker date="1451409877555" expanded="true" signature="5582:5671" placeholder="SELECT ID,NO..tbl_service_category..." />
+            <marker date="1451409877555" expanded="true" signature="6832:6951" placeholder="SELECT * FRO..tbl_service_subcategory..." />
+            <marker date="1451409877555" expanded="true" signature="20979:21469" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="25612:26029" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="35168:35204" placeholder="select * fro..riconciliazione_strade..." />
+            <marker date="1451409877555" expanded="true" signature="40791:41221" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="45419:45498" placeholder="SELECT URI_A..riconciliazione_bus..." />
+            <marker date="1451409877555" expanded="true" signature="48913:49348" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="53006:53275" placeholder="SELECT DISTI..riconciliazione_servizi_non_trovati..." />
+            <marker date="1451409877555" expanded="true" signature="53228:53274" placeholder="SELECT DISTI..tbl_elenco_comuni..." />
+            <marker date="1451409877555" expanded="true" signature="64282:64772" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="69006:69429" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="72312:72422" placeholder="SELECT * FRO..riconciliazione_ultima_parola_ok..." />
+            <marker date="1451409877555" expanded="true" signature="75561:76001" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="76921:77030" placeholder="UPDATE ricon..." />
+            <marker date="1451409877555" expanded="true" signature="78350:78832" placeholder="SELECT * FRO..riconciliazione_servizi_non_trovati..." />
+            <marker date="1451409877555" expanded="true" signature="78523:78569" placeholder="SELECT DISTI..tbl_elenco_comuni..." />
+            <marker date="1451409877555" expanded="true" signature="78639:78708" placeholder="SELECT DISTI..riconciliazione_servizi_ultima_parola..." />
+            <marker date="1451409877555" expanded="true" signature="78756:78814" placeholder="SELECT DISTI..riconciliazione_coordinate..." />
+            <marker date="1451409877555" expanded="true" signature="82788:82872" placeholder="SELECT URI_A..riconciliazione_geocode..." />
+            <marker date="1451409877555" expanded="true" signature="86020:86444" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="87267:87493" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="92478:92575" placeholder="SELECT * fro..riconciliazione_servizi_non_trovati..." />
+            <marker date="1451409877555" expanded="true" signature="96461:96892" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="98668:98791" placeholder="SELECT * fro..backupriconciliazione_servizi_non_trovati..." />
+            <marker date="1451409877555" expanded="true" signature="102723:103179" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="106209:106592" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="108168:108204" placeholder="select * fro..riconciliazione_strade..." />
+            <marker date="1451409877555" expanded="true" signature="113363:113780" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="116070:116194" placeholder="SELECT * FRO..riconciliazione_servizi_non_trovati..." />
+            <marker date="1451409877555" expanded="true" signature="119138:119578" placeholder="INSERT INTO ..." />
+            <marker date="1451409877555" expanded="true" signature="119627:119686" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.IntelliJIdea14/system/extLibs/http_code.jquery.com_jquery-1.10.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.8070173">
+          <caret line="506" column="4" selection-start-line="506" selection-start-column="4" selection-end-line="506" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jspm_packages/github/ismyrnow/Leaflet.groupedlayercontrol@0.4.0/src/leaflet.groupedlayercontrol.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/css/leafletGroupLayer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap3.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding>
+            <marker date="1451477963958" expanded="true" signature="334354:334420" placeholder="..." />
+            <marker date="1451477963958" expanded="true" signature="334523:334864" placeholder="..." />
+            <marker date="1451477963958" expanded="false" signature="334619:334633" placeholder="..." />
+            <marker date="1451477963958" expanded="false" signature="334751:334804" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/prototype/myDomUtil.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="22" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1955,122 +2125,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/dao/MapRepository.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/prototype/myPrototype.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/prototype/myDomUtil.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="22" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/controller/MapController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/css/leafletGroupLayer.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6153846">
-          <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/riconciliazione2/mappa/leafletMap3.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.2181818">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding>
-            <element signature="n#ul#0;n#div#0;n#div#1;n#div#7;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#7;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#fieldset#0;n#div#1;n#div#7;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#fieldset#1;n#div#1;n#div#7;n#html#0;n#!!top" expanded="false" />
-            <marker date="1451477963958" expanded="true" signature="334354:334420" placeholder="..." />
-            <marker date="1451477963958" expanded="true" signature="334523:334864" placeholder="..." />
-            <marker date="1451477963958" expanded="false" signature="334619:334633" placeholder="..." />
-            <marker date="1451477963958" expanded="false" signature="334751:334804" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/p4535992/mvc/repository/impl/MapRepositoryImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding>
-            <marker date="1451409877555" expanded="true" signature="5582:5671" placeholder="SELECT ID,NO..tbl_service_category..." />
-            <marker date="1451409877555" expanded="true" signature="6832:6951" placeholder="SELECT * FRO..tbl_service_subcategory..." />
-            <marker date="1451409877555" expanded="true" signature="20979:21469" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="25612:26029" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="35168:35204" placeholder="select * fro..riconciliazione_strade..." />
-            <marker date="1451409877555" expanded="true" signature="40791:41221" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="45419:45498" placeholder="SELECT URI_A..riconciliazione_bus..." />
-            <marker date="1451409877555" expanded="true" signature="48913:49348" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="53006:53275" placeholder="SELECT DISTI..riconciliazione_servizi_non_trovati..." />
-            <marker date="1451409877555" expanded="true" signature="53228:53274" placeholder="SELECT DISTI..tbl_elenco_comuni..." />
-            <marker date="1451409877555" expanded="true" signature="64282:64772" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="69006:69429" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="72312:72422" placeholder="SELECT * FRO..riconciliazione_ultima_parola_ok..." />
-            <marker date="1451409877555" expanded="true" signature="75561:76001" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="76921:77030" placeholder="UPDATE ricon..." />
-            <marker date="1451409877555" expanded="true" signature="78350:78832" placeholder="SELECT * FRO..riconciliazione_servizi_non_trovati..." />
-            <marker date="1451409877555" expanded="true" signature="78523:78569" placeholder="SELECT DISTI..tbl_elenco_comuni..." />
-            <marker date="1451409877555" expanded="true" signature="78639:78708" placeholder="SELECT DISTI..riconciliazione_servizi_ultima_parola..." />
-            <marker date="1451409877555" expanded="true" signature="78756:78814" placeholder="SELECT DISTI..riconciliazione_coordinate..." />
-            <marker date="1451409877555" expanded="true" signature="82788:82872" placeholder="SELECT URI_A..riconciliazione_geocode..." />
-            <marker date="1451409877555" expanded="true" signature="86020:86444" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="87267:87493" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="92478:92575" placeholder="SELECT * fro..riconciliazione_servizi_non_trovati..." />
-            <marker date="1451409877555" expanded="true" signature="96461:96892" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="98668:98791" placeholder="SELECT * fro..backupriconciliazione_servizi_non_trovati..." />
-            <marker date="1451409877555" expanded="true" signature="102723:103179" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="106209:106592" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="108168:108204" placeholder="select * fro..riconciliazione_strade..." />
-            <marker date="1451409877555" expanded="true" signature="113363:113780" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="116070:116194" placeholder="SELECT * FRO..riconciliazione_servizi_non_trovati..." />
-            <marker date="1451409877555" expanded="true" signature="119138:119578" placeholder="INSERT INTO ..." />
-            <marker date="1451409877555" expanded="true" signature="119627:119686" placeholder="DELETE FROM ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jspm_packages/github/ismyrnow/Leaflet.groupedlayercontrol@0.4.0/src/leaflet.groupedlayercontrol.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.IntelliJIdea14/system/extLibs/http_code.jquery.com_jquery-1.10.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.8070173">
-          <caret line="506" column="4" selection-start-line="506" selection-start-column="4" selection-end-line="506" selection-end-column="4" />
+          <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/ServiceMap/leaflet_buildMap_support_2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71246004">
-          <caret line="1386" column="0" selection-start-line="1386" selection-start-column="0" selection-end-line="1386" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="902" column="3" selection-start-line="902" selection-start-column="3" selection-end-line="902" selection-end-column="3" />
           <folding>
-            <marker date="1451489063729" expanded="true" signature="103520:103573" placeholder="..." />
-            <marker date="1451489063729" expanded="true" signature="154302:156125" placeholder="..." />
+            <marker date="1451574904244" expanded="true" signature="103429:103482" placeholder="..." />
+            <marker date="1451574904244" expanded="true" signature="154268:156091" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/php/phpSesame-master/phpSesame.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.972125">
+          <caret line="229" column="5" selection-start-line="229" selection-start-column="5" selection-end-line="229" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>

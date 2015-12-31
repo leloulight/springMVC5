@@ -73,8 +73,8 @@ class phpSesame
 
 	/**
 	 * Gets a list of all the available repositories on the Sesame installation
-	 *
-	 * @return	phpSesame_SparqlRes
+	 * @return phpSesame_SparqlRes
+	 * @throws Exception
 	 */
 	public function listRepositories()
 	{
@@ -107,9 +107,10 @@ class phpSesame
 	}
 
 	/**
-	 * @todo	Add in the other potentially supported formats once handlers have been written.
+	 * @todo    Add in the other potentially supported formats once handlers have been written.
 	 *
-	 * @param	string	$format
+	 * @param    string $format
+	 * @throws Exception
 	 */
 	private function checkResultFormat($format)
 	{
@@ -141,19 +142,19 @@ class phpSesame
 			throw new Exception ('Please supply a valid input format.');
 		}
 	}
-	
+
 	/**
 	 * Performs a simple Query.
 	 *
 	 * Performs a query and returns the result in the selected format. Throws an
-	 * exception if the query returns an error. 
+	 * exception if the query returns an error.
 	 *
-	 * @param	string	$query			String used for query
-	 * @param	string	$resultFormat	Returned result format, see const definitions for supported list.
-	 * @param	string	$queryLang		Language used for querying, SPARQL and SeRQL supported
-	 * @param	bool	$infer			Use inference in the query
-	 *
-	 * @return	phpSesame_SparqlRes
+	 * @param    string $query String used for query
+	 * @param    string $resultFormat Returned result format, see const definitions for supported list.
+	 * @param    string $queryLang Language used for querying, SPARQL and SeRQL supported
+	 * @param    bool $infer Use inference in the query
+	 * @return phpSesame_SparqlRes
+	 * @throws Exception
 	 */
 	public function query($query, $resultFormat = self::SPARQL_XML, $queryLang = 'sparql', $infer = true)
 	{
@@ -179,11 +180,10 @@ class phpSesame
 	/**
 	 * Appends data to the selected repository
 	 *
-	 *
-	 *
-	 * @param	string	$data			Data in the supplied format
-	 * @param	string	$context		The context the query should be run against
-	 * @param	string	$inputFormat	See class const definitions for supported formats.
+	 * @param    string $data Data in the supplied format
+	 * @param    string $context The context the query should be run against
+	 * @param    string $inputFormat See class const definitions for supported formats.
+	 * @throws Exception
 	 */
 	public function append($data, $context = 'null', $inputFormat = self::RDFXML)
 	{
@@ -220,9 +220,11 @@ class phpSesame
 	/**
 	 * Overwrites data in the selected repository, can optionally take a context parameter
 	 *
-	 * @param	string	$data			Data in the supplied format
-	 * @param	string	$context		The context the query should be run against
-	 * @param	string	$inputFormat	See class const definitions for supported formats.
+	 * @param    string $data Data in the supplied format
+	 * @param    string $context The context the query should be run against
+	 * @param    string $inputFormat See class const definitions for supported formats.
+	 * @throws Exception
+	 * @throws HTTP_Request2_LogicException
 	 */
 	public function overwrite($data, $context = 'null', $inputFormat = self::RDFXML)
 	{
@@ -255,8 +257,9 @@ class phpSesame
 	}
 
 	/**
-	 * @param	string	$filePath	The filepath of data, can be a URL
-	 * @return	string
+	 * @param    string $filePath The filepath of data, can be a URL
+	 * @return string
+	 * @throws Exception
 	 */
 	private function getFile($filePath)
 	{
@@ -271,9 +274,9 @@ class phpSesame
 	/**
 	 * Gets the namespace URL for the supplied prefix
 	 *
-	 * @param	string	$prefix			Data in the supplied format
-	 *
-	 * @return	string	The URL of the namespace
+	 * @param    string $prefix Data in the supplied format
+	 * @return string The URL of the namespace
+	 * @throws Exception
 	 */
 	public function getNS($prefix)
 	{
@@ -299,8 +302,9 @@ class phpSesame
 	/**
 	 * Sets the the namespace for the specified prefix
 	 *
-	 * @param	string	$prefix			Data in the supplied format
-	 * @param	string	$namespace		The context the query should be run against
+	 * @param    string $prefix Data in the supplied format
+	 * @param    string $namespace The context the query should be run against
+	 * @throws Exception
 	 */
 	public function setNS($prefix, $namespace)
 	{
@@ -325,7 +329,8 @@ class phpSesame
 	/**
 	 * Deletes the the namespace for the specified prefix
 	 *
-	 * @param	string	$prefix			Data in the supplied format
+	 * @param    string $prefix Data in the supplied format
+	 * @throws Exception
 	 */
 	public function deleteNS($prefix)
 	{
@@ -348,9 +353,9 @@ class phpSesame
 	/**
 	 * Returns a list of all the contexts in the repository.
 	 *
-	 * @param	string	$resultFormat	Returned result format, see const definitions for supported list.
-	 *
-	 * @return	phpSesame_SparqlRes
+	 * @param    string $resultFormat Returned result format, see const definitions for supported list.
+	 * @return phpSesame_SparqlRes
+	 * @throws Exception
 	 */
 	public function contexts($resultFormat = self::SPARQL_XML)
 	{
@@ -372,9 +377,9 @@ class phpSesame
 	/**
 	 * Returns the size of the repository
 	 *
-	 * @param	string	$context		The context the query should be run against
-	 *
-	 * @return	int
+	 * @param    string $context The context the query should be run against
+	 * @return int
+	 * @throws Exception
 	 */
 	public function size($context = 'null')
 	{
@@ -397,7 +402,7 @@ class phpSesame
 	 *
 	 * Removes all data from the selected repository from ALL contexts.
 	 *
-	 * @return	void
+	 * @throws Exception
 	 */
 	public function clear()
 	{
@@ -417,8 +422,9 @@ class phpSesame
 	 *
 	 * Removes all data from the selected repository from a specific context.
 	 *
-	 * @return	void
-	 */	
+	 * @param $context
+	 * @throws Exception
+	 */
 	public function clearContext($context) {
 	
 		$this->checkRepository();

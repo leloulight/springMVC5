@@ -807,10 +807,6 @@ leafletUtil.preparePopupTable = function(object){
             //console.warn("RESULT:" + JSON.stringify(json, 2));
             popupContent2 += leafletUtil.preparePopupColumn(json, '', '');
         }
-        //if is a array
-      /*  else if(leafletUtil.Is(object) == 'array'){
-
-        }*/
         else if(!leafletUtil.IsNull(object) && leafletUtil.IsObject(object)){
             var titles = Object.keys(object).toString().split(",");
             for (var title, i = 0; title = titles[i++];) {
@@ -837,6 +833,71 @@ leafletUtil.preparePopupTable = function(object){
     }
     popupContent2 += "</table>\n</div>\n";
     return popupContent2;
+};
+/**
+ * Function to prepare the column value key of the HTMl Table used for  the popup.
+ * @param data the JSON data to inspect.
+ * @param popupContent the String of the PopupContent already set.
+ * @param nameKey the String name key of the column to append to the popupContent.
+ * @returns {*}
+ */
+leafletUtil.preparePopupColumn = function(data,popupContent,nameKey){
+    for(var i = 0; i < Object.keys(data).length; i++){
+        var json = data[Object.keys(data)[i]];
+        if(typeof json != 'object' && !Array.isArray(json)){
+            popupContent += leafletUtil.preparePopupRow(nameKey + "+" + Object.keys(data)[i], JSON.stringify(json,2));
+        }else {
+            for (var key in json) {
+                if (json.hasOwnProperty(key)) {
+                    try {
+                        if (json[key] !== null) {
+                            if (typeof json[key] == 'object') {
+                                popupContent =
+                                    leafletUtil.preparePopupColumn(
+                                        json[key], popupContent, nameKey + "+" + Object.keys(data)[i] + "+" + key);
+                            } else if (Array.isArray(json[key])) {
+                                popupContent =
+                                    leafletUtil.preparePopupColumn(
+                                        json[key], popupContent, nameKey + "+" + Object.keys(data)[i] + "+" + key);
+                            } else {
+                                popupContent +=
+                                    leafletUtil.preparePopupRow(
+                                        nameKey + "+" + Object.keys(data)[i] + "+" + key, json[key]);
+                            }
+                        }
+                    } catch (e) {
+                        console.warn("Exception::preparePopupColumn() ->" + e.message);
+                    }
+                }//hasOwnProperty
+            }//for
+        }//else
+    }//for
+    return popupContent;
+};
+
+/**
+ * Function to Set the Row of the HTMl Table used for  the popup.
+ * @param key the String name of the key of the json attribute.
+ * @param value the String name o f the value of the json attribute.
+ * @returns {string}
+ */
+leafletUtil.preparePopupRow = function(key,value){
+    try{
+        key = key.indexOf('+') == 0 ? key.substring(1) : key;
+        //need for clean the result send to the SpringFramework project
+        value = value.toString().replaceAll(',', ' ');
+
+        //check if is  url to a remote resource...
+        if (value.toString().indexOf('http') === 0) {
+            value = '<a target="_blank" href="' + value + '">'+ value + '</a>';
+        }
+        if(value.startsWith('\"') && value.endsWith('\"')){
+            value = value.slice(1,value.length -1);
+        }
+        return '<tr><th>' + key + '</th><td>' + value + '</td></tr>';
+    }catch(e){
+        console.error('leafletUtil.preparePopupRow ->'+ e.message)
+    }
 };
 
 /**
@@ -983,65 +1044,7 @@ leafletUtil.Is = function(object,stringValue){
     return result;
 };
 
-leafletUtil.preparePopupColumn = function(data,popupContent,nameKey){
-    for(var i = 0; i < Object.keys(data).length; i++){
-        var json = data[Object.keys(data)[i]];
-        if(typeof json != 'object' && !Array.isArray(json)){
-            //console.warn("Key 1:" + nameKey + "+" + Object.keys(data)[i] + "," + JSON.stringify(json,undefined,2));
-            popupContent +=
-                leafletUtil.preparePopupRow(
-                    nameKey + "+" + Object.keys(data)[i], JSON.stringify(json,2));
-        }else {
-            for (var key in json) {
-                if (json.hasOwnProperty(key)) {
-                    try {
-                        if (json[key] !== null) {
-                            if (typeof json[key] == 'object') {
-                                //console.warn("Key 3:" +nameKey + "+" + Object.keys(data)[i] +
-                                // "+" + key + "," + JSON.stringify(json[key],undefined,2));
-                                popupContent =
-                                    leafletUtil.preparePopupColumn(
-                                        json[key], popupContent, nameKey + "+" + Object.keys(data)[i] + "+" + key);
-                            } else if (Array.isArray(json[key])) {
-                                //console.warn("Key 4:" + nameKey + "+" + Object.keys(data)[i] +
-                                // "+" + key + "," + JSON.stringify(json[key],undefined,2));
-                                popupContent =
-                                    leafletUtil.preparePopupColumn(
-                                        json[key], popupContent, nameKey + "+" + Object.keys(data)[i] + "+" + key);
-                            } else {
-                                //console.warn("Key 5:" + nameKey + "+" + Object.keys(data)[i] +
-                                // "+" + key  + "," + JSON.stringify(json[key],undefined,2));
-                                popupContent +=
-                                    leafletUtil.preparePopupRow(
-                                        nameKey + "+" + Object.keys(data)[i] + "+" + key, json[key]);
-                            }
-                        }
-                    } catch (e) {
-                        console.warn("Exception::preparePopupColumn() ->" + e.message);
-                    }
-                }//hasOwnProperty
-            }//for
-        }//else
-    }//for
-    return popupContent;
-};
 
-leafletUtil.preparePopupRow = function(key,value){
-    try{
-        key = key.indexOf('+') == 0 ? key.substring(1) : key;
-        //need for clean the result send to the SpringFramework project
-        value = value.toString().replaceAll(',', ' ');
-
-        //check if is  url to a remote resource...
-        if (value.toString().indexOf('http') === 0) {
-            value = '<a target="_blank" href="' + value + '">'+ value + '</a>';
-        }
-        //console.warn('<tr><th>' + key + '</th><td>' + value + '</td></tr>\n')
-        return '<tr><th>' + key + '</th><td>' + value + '</td></tr>';
-    }catch(e){
-        console.error('leafletUtil.preparePopupRow ->'+ e.message)
-    }
-};
 
 /**
  * function to get the information on the marker ont he Layer to a Array to pass
@@ -1718,10 +1721,15 @@ leafletUtil.addPluginFuseSearch = function(stringNameToSearch,stringTypeToSearch
             showInvisibleFeatures: true,
             showResultFct: function (feature, container) {
                 var props = feature.properties;
-                var name = L.DomUtil.create('b', 'result_item', container);
+             /*   var name = L.DomUtil.create('b', 'result_item', container);
                 name.innerHTML = props[stringNameToSearch];
+                container.appendChild(L.DomUtil.create('br', 'result_item'));*/
 
-                container.appendChild(L.DomUtil.create('br', 'result_item'));
+                var name = L.DomUtil.create('b', null, container);
+                name.innerHTML = props[stringNameToSearch];
+                container.appendChild(L.DomUtil.create('br', null, container));
+
+
                 //Add some supplement listener
               /*  L.DomEvent.addListener(name, 'click', function () {
                         alert('set view to the marker');
@@ -2060,6 +2068,16 @@ leafletUtil.setMaxBoundsMap = function(bounds){
     myLayer.addTo(map);
 
 };*/
+
+/**
+ * Function to delete the double quotes from a String .
+ * @param stringText the Strign where delete all the double quotes.
+ * @returns {*}
+ */
+leafletUtil.deleteDoubleQuotes = function(stringText) {
+    stringText = stringText.trim().replace(/^"/,"").replace(/"$/,"");
+    return stringText;
+};
 
 
 /**

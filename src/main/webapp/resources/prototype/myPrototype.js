@@ -13,6 +13,14 @@ String.prototype.format = function(){
     });
 };
 
+String.prototype.startsWith = function(prefix) {
+    return this.indexOf(prefix) === 0;
+};
+
+String.prototype.endsWith = function(suffix) {
+    return this.match(suffix+"$") == suffix;
+};
+
 String.prototype.replaceAll = function(find,replace){
     //if replace is not sent, return original string otherwise it will
     //replace search string with 'undefined'.
